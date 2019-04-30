@@ -5,4 +5,5 @@ export default {
     secret: process.env.CLIENT_SECRET
   },
   oauth: process.env.OAUTH_URL,
+  api: process.env.API_URL,
 }

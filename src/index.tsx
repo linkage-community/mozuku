@@ -24,14 +24,14 @@ import usePromise from 'react-use-promise'
 import { createBrowserHistory } from "history"
 
 import Config from './config'
+import Auth from './auth'
 
-const auth = {
-  authorization: null,
-}
+import My from './components/My'
+
 function PrivateRoute ({ component: Component, ...props }) {
   return (
     <Route {...props} render={props =>
-      auth.authorization
+      Auth.authorization
         ? (<Component {...props} />)
         : (<Redirect to={{
             pathname: '/login',
@@ -48,7 +48,10 @@ const Login = ({ location }) => {
   authURL.searchParams.set('client_id', Config.app.id)
   authURL.searchParams.set('response_type', 'code')
 
-  return (<button onClick={() => window.location.replace(authURL.href)}>Login</button>)
+  return (<>
+    <h1>Sign in to Mozuku</h1>
+    <button onClick={() => window.location.replace(authURL.href)}>Login</button>
+  </>)
 }
 const Callback = ({ location }) => {
   const state = (new URLSearchParams(location.search)).get('state') || ''
@@ -84,7 +87,8 @@ const Callback = ({ location }) => {
       <Link to={`/login?next=${encodeURI(state)}`} />
     </>)
   }
-  auth.authorization = token.token_type + ' ' + token.access_token
+  const { token_type: tokenType, access_token: accessToken } = token
+  Auth.authorization = tokenType + ' ' + accessToken
   return (<Redirect to={{ pathname: state || '/' }} />)
 }
 
@@ -93,6 +97,7 @@ render((
   <Router history={history}>
     <Switch>
       <PrivateRoute exact path="/" component={Login} />
+      <PrivateRoute exact path="/my" component={My} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/callback" component={Callback} />
     </Switch>

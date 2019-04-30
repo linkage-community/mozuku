@@ -9,6 +9,7 @@
   "dependencies": {
     "parcel": "^1.12.3",
     "react": "^16.8.6",
+    "react-bulma-components": "^2.3.0",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
