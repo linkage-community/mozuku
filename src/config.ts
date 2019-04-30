@@ -1,3 +1,4 @@
+
 export default {
   app: {
     id: process.env.CLIENT_ID,

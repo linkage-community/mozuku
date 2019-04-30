@@ -26,22 +26,22 @@ import { createBrowserHistory } from "history"
 import Config from './config'
 
 const auth = {
-  token: null,
+  authorization: null,
 }
 function PrivateRoute ({ component: Component, ...props }) {
   return (
     <Route {...props} render={props =>
-      auth.token
+      auth.authorization
         ? (<Component {...props} />)
         : (<Redirect to={{
             pathname: '/login',
-            state: { from: props.location }
+            state: { from: props.location.pathname }
           }} />)
     }/>)
 }
 
 const Login = ({ location }) => {
-  const next = location.state && 'from' in location.state ? location.state.from.path : (new URLSearchParams(location.search)).get('next')
+  const next = location.state && location.state.from || (new URLSearchParams(location.search)).get('next')
 
   const authURL = new URL(Config.oauth + '/authorize')
   if (next) authURL.searchParams.set('state', next)
@@ -70,7 +70,7 @@ const Callback = ({ location }) => {
     []
   )
 
-  if (fetchState === 'pending') return (<>pend...</>)
+  if (fetchState === 'pending') return (<>You are being redirected...</>)
   if (error) {
     return (<>
       <h1>あほしね</h1>
@@ -84,7 +84,7 @@ const Callback = ({ location }) => {
       <Link to={`/login?next=${encodeURI(state)}`} />
     </>)
   }
-  auth.token = token
+  auth.authorization = token.token_type + ' ' + token.access_token
   return (<Redirect to={{ pathname: state || '/' }} />)
 }
 
