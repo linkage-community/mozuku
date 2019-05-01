@@ -18,10 +18,9 @@
 
 import * as React from 'react'
 import { render } from 'react-dom'
-import { Router, Route, Switch, Redirect, RouteComponentProps } from "react-router"
-import { Link } from 'react-router-dom'
+import { Route, Switch, Redirect, RouteComponentProps } from "react-router"
+import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
-import { createBrowserHistory } from "history"
 
 import seaClient from './util/seaClient'
 
@@ -39,7 +38,6 @@ const RedirectToLogin = ({ location }: RouteComponentProps) => (
 const Login = ({ location }: RouteComponentProps) => {
   const next = location.state && location.state.from || (new URLSearchParams(location.search)).get('next') || ''
   const authURL = seaClient.getAuthorizeURL(next)
-
   return (<>
     <h1>Sign in to Mozuku</h1>
     <button onClick={() => window.location.replace(authURL)}>Login</button>
@@ -72,16 +70,15 @@ const Callback = ({ location }: RouteComponentProps) => {
 
 const App = () => {
   return useObserver(() => (
-    <Router history={history}>
+    <BrowserRouter>
       <Switch>
         <Route exact path="/callback" component={Callback} />
-        { appStore.loggedIn && <Route component={Layout} /> }
-        <Route exact path="/login" component={Login} />
-        <Route component={RedirectToLogin} />
+        { !appStore.loggedIn && <Route exact path="/login" component={Login} /> }
+        { !appStore.loggedIn && <Route component={RedirectToLogin} /> }
+        <Route component={Layout} />
       </Switch>
-    </Router>
+    </BrowserRouter>
   ))
 }
 
-const history = createBrowserHistory()
 render((<App />), document.getElementById('app'))

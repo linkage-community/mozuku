@@ -8,9 +8,6 @@ import { Post } from '../models'
 
 import Home from '../components/Home'
 
-import Timeline from '../components/Home/Timeline'
-import PostForm from '../components/Home/PostForm'
-
 export default () => {
   const [timeline,,fetchTimelineState] = usePromise<Post[]>(() => seaClient.get('/v1/timelines/public').then(
     posts => posts.map((post: any) => new Post(post))
