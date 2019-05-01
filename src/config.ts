@@ -1,3 +1,9 @@
+if (
+  !process.env.CLIENT_ID ||
+  !process.env.CLIENT_SECRET ||
+  !process.env.OAUTH_URL ||
+  !process.env.API_URL
+) throw new Error('Application can not be booted.')
 
 export default {
   app: {

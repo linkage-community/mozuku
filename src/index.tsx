@@ -18,30 +18,26 @@
 
 import * as React from 'react'
 import { render } from 'react-dom'
-import { Router, Switch, Redirect } from "react-router"
-import { Route, Link } from 'react-router-dom'
+import { Router, Route, Switch, Redirect, RouteComponentProps } from "react-router"
+import { Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 import { createBrowserHistory } from "history"
 
 import seaClient from './util/seaClient'
+
+import { useObserver } from "mobx-react-lite"
+import appStore from './stores/app'
+
 import Layout from './containers/Layout'
 
-function PrivateRoute ({ component: Component, ...props }) {
-  console.dir(seaClient.authd)
-  console.dir(seaClient)
-  return (
-    <Route {...props} render={props =>
-      seaClient.authd
-        ? (<Component {...props} />)
-        : (<Redirect to={{
-            pathname: '/login',
-            state: { from: props.location.pathname }
-          }} />)
-    }/>)
-}
-
-const Login = ({ location }) => {
-  const next = location.state && location.state.from || (new URLSearchParams(location.search)).get('next')
+const RedirectToLogin = ({ location }: RouteComponentProps) => (
+  <Redirect to={{
+    pathname: '/login',
+    state: { from: location.pathname }
+  }} />
+)
+const Login = ({ location }: RouteComponentProps) => {
+  const next = location.state && location.state.from || (new URLSearchParams(location.search)).get('next') || ''
   const authURL = seaClient.getAuthorizeURL(next)
 
   return (<>
@@ -49,12 +45,16 @@ const Login = ({ location }) => {
     <button onClick={() => window.location.replace(authURL)}>Login</button>
   </>)
 }
-const Callback = ({ location }) => {
+const Callback = ({ location }: RouteComponentProps) => {
   const code = (new URLSearchParams(location.search)).get('code')
-  const state = (new URLSearchParams(location.search)).get('state')
+  const state = (new URLSearchParams(location.search)).get('state') || ''
 
   const [,error,fetchState] = usePromise(
-    () => seaClient.obtainToken(code, state),
+    async () => {
+      if (!code) throw new Error('Missing code.')
+      await seaClient.obtainToken(code, state)
+      appStore.login()
+    },
     []
   )
 
@@ -63,20 +63,25 @@ const Callback = ({ location }) => {
     return (<>
       <h1>Bad Request</h1>
       <p>{error.message}</p>
-      <Link to={`/login?next=${encodeURI(state)}`}>Retry</Link>
+      <Link to={state ? `/login?next=${encodeURI(state)}` : '/login'}>Retry</Link>
     </>)
   }
 
   return (<Redirect to={{ pathname: state || '/' }} />)
 }
 
+const App = () => {
+  return useObserver(() => (
+    <Router history={history}>
+      <Switch>
+        <Route exact path="/callback" component={Callback} />
+        { !appStore.loggedIn && <Route exact path="/login" component={Login} /> }
+        { !appStore.loggedIn && <Route component={RedirectToLogin} /> }
+        <Route component={Layout} />
+      </Switch>
+    </Router>
+  ))
+}
+
 const history = createBrowserHistory()
-render((
-  <Router history={history}>
-    <Switch>
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/callback" component={Callback} />
-      <PrivateRoute component={Layout} />
-    </Switch>
-  </Router>
-), document.getElementById('app'))
+render((<App />), document.getElementById('app'))

@@ -9,6 +9,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cafy": "^15.1.1",
+    "mobx": "^5.9.4",
+    "mobx-react-lite": "^1.3.0",
+    "moment": "^2.24.0",
     "parcel": "^1.12.3",
     "react": "^16.8.6",
     "react-bulma-components": "^2.3.0",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/moment": "^2.13.0",
     "@types/node": "^11.13.8",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",

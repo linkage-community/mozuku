@@ -5,10 +5,10 @@ export class SeaClient {
   private oauth: string
   private clientId: string
   private clientSecret: string
-
   private api: string
-  private token?: string = null
-  private tokenType?: string = null
+
+  private token?: string
+  private tokenType?: string
 
   constructor (oauthRoot: string, apiRoot: string, clientId: string, clientSecret: string) {
     this.oauth = oauthRoot
@@ -17,11 +17,27 @@ export class SeaClient {
     this.clientSecret = clientSecret
   }
 
-  get authd () {
-    return this.token !== null
+  clear () {
+    this.token = undefined
+    this.tokenType = undefined
+  }
+  pack () {
+    return JSON.stringify({ tokenType: this.tokenType, token: this.token })
+  }
+  unpack (s: string) {
+    const { tokenType, token } = $.obj({
+      token: $.str,
+      tokenType: $.str,
+    }).throw(JSON.parse(s))
+    this.token = token
+    this.tokenType = tokenType
   }
 
-  getAuthorizeURL(state: string = '') {
+  get authd () {
+    return !!this.token
+  }
+
+  getAuthorizeURL(state: string) {
     const authURL = new URL(this.oauth + '/authorize')
     authURL.searchParams.set('state', state)
     authURL.searchParams.set('client_id', this.clientId)
@@ -29,7 +45,7 @@ export class SeaClient {
     return authURL.href
   }
 
-  async obtainToken (code: string, state: string = '') {
+  async obtainToken (code: string, state: string) {
     const tokenURL = new URL(this.oauth + '/token')
     const form = new URLSearchParams()
     form.set('client_id', this.clientId)
@@ -60,7 +76,7 @@ export class SeaClient {
     })
   }
 
-  private genApiHref (path) {
+  private genApiHref (path: string) {
     const url = new URL(this.api + path)
     url.pathname.replace(/\/+/g, '/')
     return url.href
@@ -71,7 +87,7 @@ export class SeaClient {
   }
 
   post (path: string, data: any) {
-    return this.createAxiosInstance().post(this.genApiHref(path), { data }).then(r => r.data)
+    return this.createAxiosInstance().post(this.genApiHref(path), data).then(r => r.data)
   }
 }
 
