@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { Moment } from 'moment'
 
-export default ({name, screenName}: { name: string, screenName: string }) => {
+export default ({name, screenName, createdAt }: { name: string, screenName: string, createdAt: Moment }) => {
   return (
     <>
-      {name} @{screenName}
+      You are "{name}" (@{screenName}). This account was created at {createdAt.toLocaleString()}.
     </>
   )
 }
