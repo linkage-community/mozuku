@@ -9,5 +9,5 @@ export default () => {
   useEffect(() => {
     App.loadMe()
   }, [])
-  return useObserver(() => (<Layout me={App.me} />))
+  return useObserver(() => (<Layout me={App.me} onClickLogout={(e) => { e.preventDefault(); App.logout() }} />))
 }

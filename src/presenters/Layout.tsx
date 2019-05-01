@@ -8,12 +8,13 @@ import Home from '../containers/Home'
 import Me from '../containers/Me'
 import NotFound from '../components/NotFound'
 
-export default ({ me }: { me?: Account }) => {
+export default ({ me, onClickLogout }: { me?: Account, onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void }) => {
   return (
     <div className="mozuku-layout">
       <h1>Mozuku</h1>
       <p>
-        { me ? (<span>Login as @{me.screenName}</span>) : (<span>[誰?]</span>) }
+        { me ? (<span>@{me.screenName}</span>) : (<span>[誰?]</span>) }
+        <button style={{ marginLeft: 4 }} onClick={onClickLogout}>マサラタウンから去る</button>
       </p>
 
       <Switch>
