@@ -27,6 +27,7 @@ import Config from './config'
 import Auth from './auth'
 
 import My from './components/My'
+import Layout from './components/Layout'
 
 function PrivateRoute ({ component: Component, ...props }) {
   return (
@@ -96,10 +97,9 @@ const history = createBrowserHistory()
 render((
   <Router history={history}>
     <Switch>
-      <PrivateRoute exact path="/" component={Login} />
-      <PrivateRoute exact path="/my" component={My} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/callback" component={Callback} />
+      <PrivateRoute path="/" component={Layout} />
     </Switch>
   </Router>
 ), document.getElementById('app'))

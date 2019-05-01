@@ -17,27 +17,25 @@
 */
 
 import * as React from 'react'
-import usePromise from 'react-use-promise'
+const { useState } = React
 
-import Config from '../config'
-import Auth from '../auth'
+import { Switch, Redirect } from "react-router"
+import { Route, Link } from 'react-router-dom'
 
-export default () => {
-  const { authorization } = Auth
-  const [my, error, state] = usePromise(
-    () => fetch(Config.api + '/accounts/my', {
-      headers: {
-        authorization
-      }
-    }).then(r => r.json()),
-    []
-  )
+import My from './My'
 
-  if (state !== 'resolved') return (<>Being shown...</>)
-
-  return (
-    <>
-      {my.name} @{my.screenName}
-    </>
-  )
-}
+export default () => (
+  <Switch>
+    <Route exact path="/my" component={My} />
+    <Route component={() => {
+      const [path, setPath] = useState('')
+      const [go, setGo] = useState(false)
+      return (<>
+        <h1>Not Found</h1>
+        <input onChange={(ev) => setPath(ev.target.value)} />
+        <button onClick={(ev) => { ev.preventDefault(); setGo(true) }} />
+        { go && <Redirect to={{ pathname: path }} /> }
+      </>)
+    }} />
+  </Switch>
+)
