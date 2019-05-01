@@ -1,17 +1,13 @@
 import * as React from 'react'
-import usePromise from 'react-use-promise'
+import { useObserver } from 'mobx-react-lite'
 
-import seaClient from '../util/seaClient'
-import Me from '../components/Me'
+import App from '../stores/app'
 
-import { Account } from '../models'
+import Me from '../presenters/Me'
 
 export default () => {
-  const [me,,state] = usePromise<Account>(
-    () => seaClient.get('/v1/accounts/my').then((d: any) => new Account(d)),
-    []
-  )
-
-  if (state !== 'resolved') return (<>Being shown...</>)
-  return (<Me name={me.name} screenName={me.screenName} />)
+  return useObserver(() => {
+    if (!App.me) return (<>Being shown...</>)
+    return (<Me name={App.me.name} screenName={App.me.screenName} />)
+  })
 }

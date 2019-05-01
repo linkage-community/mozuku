@@ -3,7 +3,7 @@ const { useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
 import App from '../stores/app'
-import Layout from '../components/Layout'
+import Layout from '../presenters/Layout'
 
 export default () => {
   useEffect(() => {

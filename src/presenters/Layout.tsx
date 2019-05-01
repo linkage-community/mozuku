@@ -6,7 +6,7 @@ import { Account } from '../models'
 
 import Home from '../containers/Home'
 import Me from '../containers/Me'
-import NotFound from './NotFound'
+import NotFound from '../components/NotFound'
 
 export default ({ me }: { me?: Account }) => {
   return (

@@ -6,7 +6,7 @@ import seaClient from '../util/seaClient'
 
 import { Post } from '../models'
 
-import Home from '../components/Home'
+import Home from '../presenters/Home'
 
 export default () => {
   const [timeline,,fetchTimelineState] = usePromise<Post[]>(() => seaClient.get('/v1/timelines/public').then(
