@@ -23,16 +23,15 @@ import { Route, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 import { createBrowserHistory } from "history"
 
-import Config from './config'
-import Auth from './auth'
-
-import My from './components/My'
-import Layout from './components/Layout'
+import seaClient from './util/seaClient'
+import Layout from './containers/Layout'
 
 function PrivateRoute ({ component: Component, ...props }) {
+  console.dir(seaClient.authd)
+  console.dir(seaClient)
   return (
     <Route {...props} render={props =>
-      Auth.authorization
+      seaClient.authd
         ? (<Component {...props} />)
         : (<Redirect to={{
             pathname: '/login',
@@ -43,53 +42,31 @@ function PrivateRoute ({ component: Component, ...props }) {
 
 const Login = ({ location }) => {
   const next = location.state && location.state.from || (new URLSearchParams(location.search)).get('next')
-
-  const authURL = new URL(Config.oauth + '/authorize')
-  if (next) authURL.searchParams.set('state', next)
-  authURL.searchParams.set('client_id', Config.app.id)
-  authURL.searchParams.set('response_type', 'code')
+  const authURL = seaClient.getAuthorizeURL(next)
 
   return (<>
     <h1>Sign in to Mozuku</h1>
-    <button onClick={() => window.location.replace(authURL.href)}>Login</button>
+    <button onClick={() => window.location.replace(authURL)}>Login</button>
   </>)
 }
 const Callback = ({ location }) => {
-  const state = (new URLSearchParams(location.search)).get('state') || ''
   const code = (new URLSearchParams(location.search)).get('code')
+  const state = (new URLSearchParams(location.search)).get('state')
 
-  const tokenURL = new URL(Config.oauth + '/token')
-  const form = new URLSearchParams()
-  form.set('client_id', Config.app.id)
-  form.set('client_secret', Config.app.secret)
-  form.set('state', state)
-  form.set('code', code)
-  form.set('grant_type', 'authorization_code')
-
-  const [token, error, fetchState] = usePromise(
-    () => fetch(tokenURL.href, {
-      method: 'POST',
-      body: form,
-    }).then(r => r.json()),
+  const [,error,fetchState] = usePromise(
+    () => seaClient.obtainToken(code, state),
     []
   )
 
   if (fetchState === 'pending') return (<>You are being redirected...</>)
   if (error) {
     return (<>
-      <h1>あほしね</h1>
+      <h1>Bad Request</h1>
       <p>{error.message}</p>
+      <Link to={`/login?next=${encodeURI(state)}`}>Retry</Link>
     </>)
   }
 
-  if (!token) {
-    return (<>
-      <h1>あほしね</h1>
-      <Link to={`/login?next=${encodeURI(state)}`} />
-    </>)
-  }
-  const { token_type: tokenType, access_token: accessToken } = token
-  Auth.authorization = tokenType + ' ' + accessToken
   return (<Redirect to={{ pathname: state || '/' }} />)
 }
 
@@ -99,7 +76,7 @@ render((
     <Switch>
       <Route exact path="/login" component={Login} />
       <Route exact path="/callback" component={Callback} />
-      <PrivateRoute path="/" component={Layout} />
+      <PrivateRoute component={Layout} />
     </Switch>
   </Router>
 ), document.getElementById('app'))
