@@ -24,18 +24,22 @@ import { Route, Link } from 'react-router-dom'
 
 import My from './My'
 
-export default () => (
-  <Switch>
-    <Route exact path="/my" component={My} />
-    <Route component={() => {
-      const [path, setPath] = useState('')
-      const [go, setGo] = useState(false)
-      return (<>
-        <h1>Not Found</h1>
-        <input onChange={(ev) => setPath(ev.target.value)} />
-        <button onClick={(ev) => { ev.preventDefault(); setGo(true) }} />
-        { go && <Redirect to={{ pathname: path }} /> }
-      </>)
-    }} />
-  </Switch>
-)
+export default () => {
+  return (
+    <div className="mozuku-layout">
+      <Switch>
+        <Route exact path="/my" component={My} />
+        <Route component={() => {
+          const [path, setPath] = useState('')
+          const [go, setGo] = useState(false)
+          return (<>
+            <h1>Not Found</h1>
+            <input onChange={(ev) => setPath(ev.target.value)} />
+            <button onClick={(ev) => { ev.preventDefault(); setGo(true) }} />
+            { go && <Redirect to={{ pathname: path }} /> }
+          </>)
+        }} />
+      </Switch>
+    </div>
+  )
+}

@@ -13,7 +13,8 @@
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "react-use-promise": "^0.2.0"
+    "react-use-promise": "^0.2.0",
+    "tailwindcss": "^0.7.4"
   },
   "devDependencies": {
     "@types/node": "^11.13.8",
