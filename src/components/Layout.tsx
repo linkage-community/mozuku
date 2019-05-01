@@ -3,7 +3,8 @@ import * as React from 'react'
 import { Switch } from "react-router"
 import { Route, Link } from 'react-router-dom'
 
-import My from '../containers/My'
+import Me from '../containers/Me'
+import Home from '../containers/Home'
 import NotFound from './NotFound'
 
 export default ({ path, onChange }: { path: string, onChange: Function }) => {
@@ -15,7 +16,8 @@ export default ({ path, onChange }: { path: string, onChange: Function }) => {
       </p>
 
       <Switch>
-        <Route exact path="/my" component={My} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/me" component={Me} />
         <Route component={NotFound} />
       </Switch>
     </div>

@@ -75,9 +75,9 @@ const App = () => {
     <Router history={history}>
       <Switch>
         <Route exact path="/callback" component={Callback} />
-        { !appStore.loggedIn && <Route exact path="/login" component={Login} /> }
-        { !appStore.loggedIn && <Route component={RedirectToLogin} /> }
-        <Route component={Layout} />
+        { appStore.loggedIn && <Route component={Layout} /> }
+        <Route exact path="/login" component={Login} />
+        <Route component={RedirectToLogin} />
       </Switch>
     </Router>
   ))
