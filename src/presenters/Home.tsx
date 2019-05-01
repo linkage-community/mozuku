@@ -5,12 +5,13 @@ import { Post } from '../models'
 import PostForm from './Home/PostForm'
 import Timeline from './Home/Timeline'
 
-export default ({ timeline, isTimelineLoaded, onSubmitDraft, onUpdateDraft }: {
+export default ({ timeline, onSubmitDraft, onUpdateDraft, draftText, draftDisabled }: {
   timeline: Post[],
-  isTimelineLoaded: boolean,
+  draftText: string,
+  draftDisabled: boolean,
   onSubmitDraft: (e: React.FormEvent<HTMLFormElement>) => void,
   onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }) => (<>
-  <PostForm onSubmit={onSubmitDraft} onUpdateDraft={onUpdateDraft} />
-  { isTimelineLoaded && <Timeline timeline={timeline} /> }
+  <PostForm draft={draftText} draftDisabled={draftDisabled} onSubmit={onSubmitDraft} onUpdateDraft={onUpdateDraft} />
+  <Timeline timeline={timeline} />
 </>)

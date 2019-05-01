@@ -1,34 +1,40 @@
 import * as React from 'react'
-const { useState } = React
-import usePromise from 'react-use-promise'
+const { useState, useEffect } = React
+import { useObserver } from 'mobx-react-lite'
 
 import seaClient from '../util/seaClient'
-
-import { Post } from '../models'
+import App from '../stores/app'
 
 import Home from '../presenters/Home'
 
 export default () => {
-  const [timeline,,fetchTimelineState] = usePromise<Post[]>(() => seaClient.get('/v1/timelines/public').then(
-    posts => posts.map((post: any) => new Post(post))
-  ), [])
+  useEffect(() => {
+    App.startTimelinePolling()
+    return () => {
+      App.stopTimelinePolling()
+    }
+  }, [])
 
   const [draftText, setDraftText] = useState('')
+  const [draftDisabled, setDraftDisabled] = useState(false)
   const onUpdateDraft = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault()
     setDraftText(event.target.value)
   }
   const onSubmitDraft = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setDraftDisabled(true)
     await seaClient.post('/v1/posts', { text: draftText })
     setDraftText('')
+    setDraftDisabled(false)
   }
 
-  return (
+  return useObserver(() => (
     <Home
+      draftText={draftText}
+      draftDisabled={draftDisabled}
       onSubmitDraft={onSubmitDraft}
       onUpdateDraft={onUpdateDraft}
-      timeline={timeline}
-      isTimelineLoaded={fetchTimelineState === 'resolved'}
-    />)
+      timeline={App.timeline}
+    />))
 }

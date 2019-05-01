@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { Switch, Route } from "react-router"
+import { Link } from 'react-router-dom'
 
 import { Account } from '../models'
 
@@ -12,9 +13,10 @@ export default ({ me, onClickLogout }: { me?: Account, onClickLogout: (e: React.
   return (
     <div className="mozuku-layout">
       <h1>Mozuku</h1>
+      <Link to={{pathname: '/'}}>Home</Link> <Link to={{pathname: '/me'}}>About me</Link>
       <p>
-        { me ? (<span>@{me.screenName}</span>) : (<span>[誰?]</span>) }
-        <button style={{ marginLeft: 4 }} onClick={onClickLogout}>マサラタウンから去る</button>
+        { me ? (<span>@{me.screenName}</span>) : (<span><i>[誰?]</i></span>) }
+        <button style={{ marginLeft: 4 }} onClick={onClickLogout}>👋</button>
       </p>
 
       <Switch>
