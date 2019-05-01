@@ -18,9 +18,10 @@ export default () => {
     event.preventDefault()
     setDraftText(event.target.value)
   }
-  const onSubmitDraft = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitDraft = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    seaClient.post('/v1/posts', { text: draftText })
+    await seaClient.post('/v1/posts', { text: draftText })
+    setDraftText('')
   }
 
   return (

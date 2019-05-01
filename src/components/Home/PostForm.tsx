@@ -5,7 +5,7 @@ export default ({ onSubmit, onUpdateDraft }: {
   onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void }
 ) => (
   <form onSubmit={onSubmit}>
-    <textarea onChange={onUpdateDraft}></textarea>
+    <textarea onChange={onUpdateDraft}></textarea><br />
     <button type="submit">投下する</button>
   </form>
 )

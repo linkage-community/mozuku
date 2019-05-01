@@ -1,9 +1,13 @@
 import * as React from 'react'
-const { useState } = React
+const { useEffect } = React
+import { useObserver } from 'mobx-react-lite'
 
+import App from '../stores/app'
 import Layout from '../components/Layout'
 
 export default () => {
-  const [path,updatePath] = useState('')
-  return (<Layout path={path} onChange={updatePath} />)
+  useEffect(() => {
+    App.loadMe()
+  }, [])
+  return useObserver(() => (<Layout me={App.me} />))
 }

@@ -1,18 +1,19 @@
 import * as React from 'react'
 
-import { Switch } from "react-router"
-import { Route, Link } from 'react-router-dom'
+import { Switch, Route } from "react-router"
 
-import Me from '../containers/Me'
+import { Account } from '../models'
+
 import Home from '../containers/Home'
+import Me from '../containers/Me'
 import NotFound from './NotFound'
 
-export default ({ path, onChange }: { path: string, onChange: Function }) => {
+export default ({ me }: { me?: Account }) => {
   return (
     <div className="mozuku-layout">
       <h1>Mozuku</h1>
       <p>
-        <input onChange={(ev) => onChange(ev.target.value)} /> <Link to={{ pathname: path }}>Jump</Link>
+        { me ? (<span>Login as @{me.screenName}</span>) : (<span>[誰?]</span>) }
       </p>
 
       <Switch>
