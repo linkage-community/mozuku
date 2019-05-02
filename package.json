@@ -15,6 +15,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
     "parcel": "^1.12.3",
+    "prettier": "^1.17.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
@@ -33,6 +34,7 @@
     "typescript": "^3.4.5"
   },
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "format": "prettier --write \"./src/**/*.{html,css,ts,tsx}\""
   }
 }
