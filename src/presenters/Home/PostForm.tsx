@@ -4,12 +4,14 @@ export default ({
   onSubmit,
   onUpdateDraft,
   draft,
-  draftDisabled
+  draftDisabled,
+  onKeyDown
 }: {
   draft: string
   draftDisabled: boolean
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
 }) => (
   <form className="postForm" onSubmit={onSubmit}>
     <textarea
@@ -17,6 +19,7 @@ export default ({
       onChange={onUpdateDraft}
       value={draft}
       disabled={draftDisabled}
+      onKeyDown={onKeyDown}
       placeholder="What's up Otaku?"
     />
     <button className="postForm__button" type="submit" disabled={draftDisabled}>
