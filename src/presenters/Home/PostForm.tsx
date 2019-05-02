@@ -1,29 +1,42 @@
 import * as React from 'react'
 
 export default ({
-  onSubmit,
-  onUpdateDraft,
   draft,
   draftDisabled,
-  onKeyDown
+  submitDraft,
+  setDraft,
 }: {
   draft: string
   draftDisabled: boolean
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
-}) => (
-  <form className="postForm" onSubmit={onSubmit}>
-    <textarea
-      className="postForm__textarea"
-      onChange={onUpdateDraft}
-      value={draft}
-      disabled={draftDisabled}
-      onKeyDown={onKeyDown}
-      placeholder="What's up Otaku?"
-    />
-    <button className="postForm__button" type="submit" disabled={draftDisabled}>
-      Send to Sea
-    </button>
-  </form>
-)
+  submitDraft: () => void,
+  setDraft: (t: string) => void,
+}) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    submitDraft()
+  }
+  const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode == 13) {
+      submitDraft()
+    }
+  }
+  const onChangeDraft = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDraft(event.target.value)
+  }
+
+  return (
+    <form className="postForm" onSubmit={onSubmit}>
+      <textarea
+        className="postForm__textarea"
+        onChange={onChangeDraft}
+        value={draft}
+        disabled={draftDisabled}
+        onKeyDown={onKeyDown}
+        placeholder="What's up Otaku?"
+      />
+      <button className="postForm__button" type="submit" disabled={draftDisabled}>
+        Send to Sea
+      </button>
+    </form>
+  )
+}

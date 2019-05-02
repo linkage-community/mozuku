@@ -7,26 +7,23 @@ import Timeline from './Home/Timeline'
 
 export default ({
   timeline,
-  onSubmitDraft,
-  onUpdateDraft,
-  draftText,
+  draft,
   draftDisabled,
-  onKeyDown
+  setDraft,
+  submitDraft,
 }: {
   timeline: Post[]
-  draftText: string
+  draft: string
   draftDisabled: boolean
-  onSubmitDraft: (e: React.FormEvent<HTMLFormElement>) => void
-  onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
+  submitDraft: () => void
+  setDraft: (t: string) => void
 }) => (
   <>
     <PostForm
-      draft={draftText}
+      draft={draft}
       draftDisabled={draftDisabled}
-      onSubmit={onSubmitDraft}
-      onUpdateDraft={onUpdateDraft}
-      onKeyDown={onKeyDown}
+      setDraft={setDraft}
+      submitDraft={submitDraft}
     />
     <Timeline timeline={timeline} />
   </>

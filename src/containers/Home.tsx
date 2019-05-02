@@ -15,37 +15,23 @@ export default () => {
     }
   }, [])
 
-  const [draftText, setDraftText] = useState('')
+  const [draft, setDraft] = useState('')
   const [draftDisabled, setDraftDisabled] = useState(false)
-  const onUpdateDraft = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    event.preventDefault()
-    setDraftText(event.target.value)
-  }
-  const onSubmitDraft = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    submitPost()
-  }
-  const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((event.ctrlKey || event.metaKey) && event.keyCode == 13) {
-      submitPost()
-    }
-  }
-  const submitPost = async () => {
+  const submitDraft = async () => {
     setDraftDisabled(true)
-    if (draftText.trim().length > 0) {
-      await seaClient.post('/v1/posts', { text: draftText })
-      setDraftText('')
+    if (draft.trim().length > 0) {
+      await seaClient.post('/v1/posts', { text: draft })
+      setDraft('')
     }
     setDraftDisabled(false)
   }
 
   return useObserver(() => (
     <Home
-      draftText={draftText}
+      draft={draft}
       draftDisabled={draftDisabled}
-      onSubmitDraft={onSubmitDraft}
-      onUpdateDraft={onUpdateDraft}
-      onKeyDown={onKeyDown}
+      setDraft={setDraft}
+      submitDraft={submitDraft}
       timeline={App.timeline}
     />
   ))
