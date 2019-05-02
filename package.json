@@ -1,7 +1,7 @@
 {
   "name": "mozuku",
-  "version": "0.0.0",
-  "description": "One Mozuku",
+  "version": "1.0.0",
+  "description": "One of seaweed, client of rinsuki/sea.",
   "repository": "https://github.com/otofune/mozuku.git",
   "author": "otofune <otofune@otofune.me>",
   "license": "GPL-3.0",
