@@ -7,11 +7,13 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
+    "@types/moment-timezone": "^0.5.12",
     "axios": "^0.18.0",
     "cafy": "^15.1.1",
     "mobx": "^5.9.4",
     "mobx-react-lite": "^1.3.0",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.25",
     "parcel": "^1.12.3",
     "react": "^16.8.6",
     "react-bulma-components": "^2.3.0",
@@ -19,6 +21,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-use-promise": "^0.2.0",
+    "sanitize.css": "^8.0.0",
     "tailwindcss": "^0.7.4"
   },
   "devDependencies": {
