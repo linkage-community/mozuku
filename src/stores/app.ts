@@ -9,7 +9,8 @@ import { Account, Post, BODYPART_TYPE_BOLD, BODYPART_TYPE_TEXT } from '../models
 
 class SApp {
   @observable loggedIn: boolean = false
-  @observable meId?: number
+  @observable initialized: boolean = false
+  @observable meId!: number
 
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
@@ -23,8 +24,6 @@ class SApp {
       seaClient.unpack(ss)
       this.loggedIn = true
     }
-
-    this.meId
   }
 
   @action
@@ -43,12 +42,13 @@ class SApp {
   @computed get me() {
     return this.meId ? this.accounts.get(this.meId) : undefined
   }
-  async loadMe() {
+  async init() {
     const me = await seaClient
       .get('/v1/account/verify_credentials')
       .then((d: any) => new Account(d))
     this.accounts.set(me.id, me)
     this.meId = me.id
+    this.initialized = true
   }
 
   @computed get timeline () {
@@ -83,9 +83,11 @@ class SApp {
               return [p]
             }
             if (!this.me) return [p]
-            const r = p.payload.split(new RegExp(`(@${this.me.screenName})`, 'gi'))
+            const { screenName } = this.me
+            const target = '@' + screenName
+            const r = p.payload.split(new RegExp(`(${target})`, 'gi'))
             return r.map((t) => {
-              if (t.startsWith('@')) {
+              if (t === target) {
                 return {
                   type: BODYPART_TYPE_BOLD,
                   payload: t

@@ -7,15 +7,17 @@ import Layout from '../presenters/Layout'
 
 export default () => {
   useEffect(() => {
-    App.loadMe()
+    App.init()
   }, [])
-  return useObserver(() => (
-    <Layout
-      me={App.me}
-      onClickLogout={e => {
-        e.preventDefault()
-        App.logout()
-      }}
-    />
-  ))
+  return useObserver(() => {
+    if (!App.initialized) return <>Loading...</>
+    return (
+      <Layout
+        me={App.me}
+        onClickLogout={e => {
+          e.preventDefault()
+          App.logout()
+        }} />
+    )
+  })
 }
