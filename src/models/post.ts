@@ -7,8 +7,11 @@ import Account from './account'
 
 export const BODYPART_TYPE_TEXT = 0
 export const BODYPART_TYPE_LINK = 1
+export const BODYPART_TYPE_BOLD = 3
 export interface PostBodyPart {
-  type: typeof BODYPART_TYPE_TEXT | typeof BODYPART_TYPE_LINK,
+  type: typeof BODYPART_TYPE_TEXT |
+        typeof BODYPART_TYPE_LINK |
+        typeof BODYPART_TYPE_BOLD,
   payload: string,
 }
 type PostBodyMiddleware = (p: PostBodyPart) => PostBodyPart[]

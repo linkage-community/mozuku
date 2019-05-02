@@ -5,7 +5,7 @@ import $ from 'cafy'
 import seaClient from '../util/seaClient'
 const SEA_CLIENT_STATE_NAME = 'mozuku::seaClientState'
 
-import { Account, Post } from '../models'
+import { Account, Post, BODYPART_TYPE_BOLD, BODYPART_TYPE_TEXT } from '../models'
 
 class SApp {
   @observable loggedIn: boolean = false
@@ -73,7 +73,33 @@ class SApp {
       p => !this.timelineIds.includes(p.id)
     ).map(
       // cast to Post model
-      p => new Post(p)
+      p => {
+        const post = new Post(p)
+        post.body.process([
+          // Make bold me
+          // これは model に閉じれないのでここにおきます
+          (p) => {
+            if (p.type !== BODYPART_TYPE_TEXT) {
+              return [p]
+            }
+            if (!this.me) return [p]
+            const r = p.payload.split(new RegExp(`(@${this.me.screenName})`, 'gi'))
+            return r.map((t) => {
+              if (t.startsWith('@')) {
+                return {
+                  type: BODYPART_TYPE_BOLD,
+                  payload: t
+                }
+              }
+              return {
+                type: BODYPART_TYPE_TEXT,
+                payload: t
+              }
+            })
+          }
+        ])
+        return post
+      }
     )
     const newIds = news.map(p => {
       this.posts.set(p.id, p)

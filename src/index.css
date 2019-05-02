@@ -151,6 +151,10 @@ select {
   overflow-wrap: break-word;
 }
 
+.post__body__bold {
+  font-weight: bold;
+}
+
 .post__meta {
   display: none;
 }

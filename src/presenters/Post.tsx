@@ -1,7 +1,7 @@
 import * as React from 'react'
 import moment from 'moment-timezone'
 
-import { Post, BODYPART_TYPE_LINK } from '../models'
+import { Post, BODYPART_TYPE_LINK, BODYPART_TYPE_BOLD } from '../models'
 
 export default ({ post }: { post: Post }) => (
   <div className="post">
@@ -22,6 +22,8 @@ export default ({ post }: { post: Post }) => (
       switch (p.type) {
         case BODYPART_TYPE_LINK:
           return (<a key={i} href={p.payload} target="_blank">{p.payload}</a>)
+        case BODYPART_TYPE_BOLD:
+          return (<span key={i} className="post__body__bold">{p.payload}</span>)
         default:
           return (<React.Fragment key={i}>{p.payload}</React.Fragment>)
       }
