@@ -20,8 +20,13 @@ export default () => {
   const submitDraft = async () => {
     setDraftDisabled(true)
     if (draft.trim().length > 0) {
-      await seaClient.post('/v1/posts', { text: draft })
-      setDraft('')
+      try {
+        await seaClient.post('/v1/posts', { text: draft })
+        setDraft('')
+      } catch (e) {
+        // TODO: Add error reporting
+        console.error(e)
+      }
     }
     setDraftDisabled(false)
   }
