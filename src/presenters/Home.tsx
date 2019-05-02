@@ -10,13 +10,15 @@ export default ({
   onSubmitDraft,
   onUpdateDraft,
   draftText,
-  draftDisabled
+  draftDisabled,
+  onKeyDown
 }: {
   timeline: Post[]
   draftText: string
   draftDisabled: boolean
   onSubmitDraft: (e: React.FormEvent<HTMLFormElement>) => void
   onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
 }) => (
   <>
     <PostForm
@@ -24,6 +26,7 @@ export default ({
       draftDisabled={draftDisabled}
       onSubmit={onSubmitDraft}
       onUpdateDraft={onUpdateDraft}
+      onKeyDown={onKeyDown}
     />
     <Timeline timeline={timeline} />
   </>
