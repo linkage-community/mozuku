@@ -13,17 +13,17 @@ export default ({ post }: { post: Post }) => (
         </span>
       </div>
       <div className="post-head__time">
-        {moment(post.createdAt.toString())
+        {moment(post.createdAt)
           .tz('Asia/Tokyo')
           .format('HH:mm:ss · D MMM YYYY')}
       </div>
     </div>
-    <div className="post__body">{post.body.parts.map(p => {
+    <div className="post__body">{post.body.parts.map((p,i) => {
       switch (p.type) {
         case BODYPART_TYPE_LINK:
-          return (<a href={p.payload} target="_blank">{p.payload}</a>)
+          return (<a key={i} href={p.payload} target="_blank">{p.payload}</a>)
         default:
-          return (<>{p.payload}</>)
+          return (<React.Fragment key={i}>{p.payload}</React.Fragment>)
       }
     })}</div>
     <div className="post__meta">This post from {post.application.name}</div>
