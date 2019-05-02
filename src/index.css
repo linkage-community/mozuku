@@ -1,7 +1,3 @@
-@tailwind prefilight;
-@tailwind components;
-@tailwind utilities;
-
 @import "../node_modules/sanitize.css/sanitize.css";
 
 :root {
