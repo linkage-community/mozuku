@@ -9,9 +9,11 @@ import Home from '../presenters/Home'
 
 export default () => {
   useEffect(() => {
-    App.startTimelinePolling()
+    App.openTimelineSocket()
+    App.fetchTimeline()
     return () => {
-      App.stopTimelinePolling()
+      App.closeTimelineSocket()
+      App.resetTimeline()
     }
   }, [])
 
