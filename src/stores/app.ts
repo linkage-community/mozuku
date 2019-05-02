@@ -1,5 +1,7 @@
 import { observable, computed, action } from 'mobx'
 
+import $ from 'cafy'
+
 import seaClient from '../util/seaClient'
 const SEA_CLIENT_STATE_NAME = 'mozuku::seaClientState'
 
@@ -62,14 +64,22 @@ class SApp {
       .get('/v1/timelines/public')
       .then((p: any) => {
         if (!Array.isArray(p)) throw new Error()
-        return p.map((v: any) => new Post(v))
+        return p.map((v: any) => $.obj({
+          id: $.num
+        }).throw(v))
       })
-    const newIds = timeline.map((t) => {
-      this.posts.set(t.id, t)
-      return t.id
+    const news = timeline.filter(
+      // prevent to parse same post too many times
+      p => !this.timelineIds.includes(p.id)
+    ).map(
+      // cast to Post model
+      p => new Post(p)
+    )
+    const newIds = news.map(p => {
+      this.posts.set(p.id, p)
+      return p.id
     })
     const idsSet = new Set([...newIds, ...this.timelineIds])
-    console.dir(Array.from(idsSet.values()))
     this.timelineIds = Array.from(idsSet.values())
   }
   @action
