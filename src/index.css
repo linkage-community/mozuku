@@ -143,6 +143,7 @@ input, button, textarea, select {
 
 .post__body {
   margin: 4px 0 0;
+  white-space: pre;
 }
 
 .post__meta {

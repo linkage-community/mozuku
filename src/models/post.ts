@@ -32,7 +32,7 @@ export default class Post implements Model {
     const account = new Account(post.user)
 
     this.id = post.id
-    this.text = post.text
+    this.text = post.text.replace(/\n{2,}/g, '\n\n')
     this.createdAt = moment(post.createdAt)
     this.updatedAt = moment(post.updatedAt)
     this.application = app
