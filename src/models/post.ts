@@ -3,7 +3,7 @@ import moment, { Moment } from 'moment'
 import Model, { validateDate } from './_model'
 
 import Application from './application'
-import Account from './Account'
+import Account from './account'
 
 export const BODYPART_TYPE_TEXT = 0
 export const BODYPART_TYPE_LINK = 1
