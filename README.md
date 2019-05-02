@@ -1,3 +1,3 @@
 mozuku
 ===
-:whale: One of seaweed, client of rinsuki/sea.
+:whale: One of seaweed, client of [rinsuki/sea](https://github.com/rinsuki/sea).
