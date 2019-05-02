@@ -38,5 +38,6 @@ export default () => {
       onSubmitDraft={onSubmitDraft}
       onUpdateDraft={onUpdateDraft}
       timeline={App.timeline}
-    />))
+    />
+  ))
 }

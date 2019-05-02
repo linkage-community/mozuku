@@ -14,7 +14,7 @@ export default class Post implements Model {
   application: Application
   author: Account
 
-  private validate (post: any) {
+  private validate(post: any) {
     return $.obj({
       id: $.num,
       text: $.str,
@@ -22,10 +22,12 @@ export default class Post implements Model {
       updatedAt: validateDate,
       user: $.any,
       application: $.any
-    }).strict().throw(post)
+    })
+      .strict()
+      .throw(post)
   }
 
-  constructor (p: any) {
+  constructor(p: any) {
     const post = this.validate(p)
 
     const app = new Application(post.application)
@@ -39,7 +41,7 @@ export default class Post implements Model {
     this.author = account
   }
 
-  update (p: any) {
+  update(p: any) {
     const post = this.validate(p)
     if (this.id && this.id !== post.id) throw new Error()
 

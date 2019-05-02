@@ -14,58 +14,66 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 import * as React from 'react'
 import { render } from 'react-dom'
-import { Route, Switch, Redirect, RouteComponentProps } from "react-router"
+import { Route, Switch, Redirect, RouteComponentProps } from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 
 import seaClient from './util/seaClient'
 
-import { useObserver } from "mobx-react-lite"
+import { useObserver } from 'mobx-react-lite'
 import appStore from './stores/app'
 
 import Layout from './containers/Layout'
 
 const RedirectToLogin = ({ location }: RouteComponentProps) => (
-  <Redirect to={{
-    pathname: '/login',
-    state: { from: location.pathname }
-  }} />
+  <Redirect
+    to={{
+      pathname: '/login',
+      state: { from: location.pathname }
+    }}
+  />
 )
 const Login = ({ location }: RouteComponentProps) => {
-  const next = location.state && location.state.from || (new URLSearchParams(location.search)).get('next') || ''
+  const next =
+    (location.state && location.state.from) ||
+    new URLSearchParams(location.search).get('next') ||
+    ''
   const authURL = seaClient.getAuthorizeURL(next)
-  return (<>
-    <h1>Sign in to Mozuku</h1>
-    <button onClick={() => window.location.replace(authURL)}>Login</button>
-  </>)
+  return (
+    <>
+      <h1>Sign in to Mozuku</h1>
+      <button onClick={() => window.location.replace(authURL)}>Login</button>
+    </>
+  )
 }
 const Callback = ({ location }: RouteComponentProps) => {
-  const code = (new URLSearchParams(location.search)).get('code')
-  const state = (new URLSearchParams(location.search)).get('state') || ''
+  const code = new URLSearchParams(location.search).get('code')
+  const state = new URLSearchParams(location.search).get('state') || ''
 
-  const [,error,fetchState] = usePromise(
-    async () => {
-      if (!code) throw new Error('Missing code.')
-      await seaClient.obtainToken(code, state)
-      appStore.login()
-    },
-    []
-  )
+  const [, error, fetchState] = usePromise(async () => {
+    if (!code) throw new Error('Missing code.')
+    await seaClient.obtainToken(code, state)
+    appStore.login()
+  }, [])
 
-  if (fetchState === 'pending') return (<>You are being redirected...</>)
+  if (fetchState === 'pending') return <>You are being redirected...</>
   if (error) {
-    return (<>
-      <h1>Bad Request</h1>
-      <p>{error.message}</p>
-      <Link to={state ? `/login?next=${encodeURI(state)}` : '/login'}>Retry</Link>
-    </>)
+    return (
+      <>
+        <h1>Bad Request</h1>
+        <p>{error.message}</p>
+        <Link to={state ? `/login?next=${encodeURI(state)}` : '/login'}>
+          Retry
+        </Link>
+      </>
+    )
   }
 
-  return (<Redirect to={{ pathname: state || '/' }} />)
+  return <Redirect to={{ pathname: state || '/' }} />
 }
 
 const App = () => {
@@ -73,12 +81,12 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/callback" component={Callback} />
-        { !appStore.loggedIn && <Route exact path="/login" component={Login} /> }
-        { !appStore.loggedIn && <Route component={RedirectToLogin} /> }
+        {!appStore.loggedIn && <Route exact path="/login" component={Login} />}
+        {!appStore.loggedIn && <Route component={RedirectToLogin} />}
         <Route component={Layout} />
       </Switch>
     </BrowserRouter>
   ))
 }
 
-render((<App />), document.getElementById('app'))
+render(<App />, document.getElementById('app'))

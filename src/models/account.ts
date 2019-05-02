@@ -10,18 +10,20 @@ export default class Account implements Model {
   createdAt: Moment
   updatedAt: Moment
 
-  private validate (user: any) {
+  private validate(user: any) {
     return $.obj({
       id: $.num,
       name: $.str,
       screenName: $.str,
       postsCount: $.num,
       createdAt: validateDate,
-      updatedAt: validateDate,
-    }).strict().throw(user)
+      updatedAt: validateDate
+    })
+      .strict()
+      .throw(user)
   }
 
-  constructor (u: any) {
+  constructor(u: any) {
     const user = this.validate(u)
     this.id = user.id
     this.name = user.name
@@ -31,7 +33,7 @@ export default class Account implements Model {
     this.updatedAt = moment(user.updatedAt)
   }
 
-  update (u: any) {
+  update(u: any) {
     const user = this.validate(u)
     if (this.id !== user.id) throw new Error()
 

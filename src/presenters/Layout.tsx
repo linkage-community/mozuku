@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Switch, Route } from "react-router"
+import { Switch, Route } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { Account } from '../models'
@@ -11,18 +11,30 @@ import NotFound from '../components/NotFound'
 
 import logo from '../static/logo.png'
 
-export default ({ me, onClickLogout }: { me?: Account, onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void }) => {
+export default ({
+  me,
+  onClickLogout
+}: {
+  me?: Account
+  onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void
+}) => {
   return (
     <div className="mozuku-layout">
       <div className="mozuku-header-wrapper">
         <div className="mozuku-header">
           <h1 className="mozuku-header__logo">
-            <Link to={{pathname: '/'}}>
-              <img src={logo} width="64" height="64" alt="Mozuku"/>
+            <Link to={{ pathname: '/' }}>
+              <img src={logo} width="64" height="64" alt="Mozuku" />
             </Link>
           </h1>
           <div>
-            { me ? (<Link to={{pathname: '/me'}}>@{me.screenName}</Link>) : (<span><i>[誰?]</i></span>) }
+            {me ? (
+              <Link to={{ pathname: '/me' }}>@{me.screenName}</Link>
+            ) : (
+              <span>
+                <i>[誰?]</i>
+              </span>
+            )}
           </div>
           <div>
             <button onClick={onClickLogout}>👋</button>

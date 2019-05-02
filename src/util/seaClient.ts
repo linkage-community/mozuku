@@ -10,30 +10,35 @@ export class SeaClient {
   private token?: string
   private tokenType?: string
 
-  constructor (oauthRoot: string, apiRoot: string, clientId: string, clientSecret: string) {
+  constructor(
+    oauthRoot: string,
+    apiRoot: string,
+    clientId: string,
+    clientSecret: string
+  ) {
     this.oauth = oauthRoot
     this.api = apiRoot
     this.clientId = clientId
     this.clientSecret = clientSecret
   }
 
-  clear () {
+  clear() {
     this.token = undefined
     this.tokenType = undefined
   }
-  pack () {
+  pack() {
     return JSON.stringify({ tokenType: this.tokenType, token: this.token })
   }
-  unpack (s: string) {
+  unpack(s: string) {
     const { tokenType, token } = $.obj({
       token: $.str,
-      tokenType: $.str,
+      tokenType: $.str
     }).throw(JSON.parse(s))
     this.token = token
     this.tokenType = tokenType
   }
 
-  get authd () {
+  get authd() {
     return !!this.token
   }
 
@@ -45,7 +50,7 @@ export class SeaClient {
     return authURL.href
   }
 
-  async obtainToken (code: string, state: string) {
+  async obtainToken(code: string, state: string) {
     const tokenURL = new URL(this.oauth + '/token')
     const form = new URLSearchParams()
     form.set('client_id', this.clientId)
@@ -56,18 +61,22 @@ export class SeaClient {
 
     const token = await fetch(tokenURL.href, {
       method: 'POST',
-      body: form,
-    }).then(r => r.json()).then((r) => {
-      return $.obj({
-        token_type: $.str,
-        access_token: $.str,
-      }).strict().throw(r)
+      body: form
     })
+      .then(r => r.json())
+      .then(r => {
+        return $.obj({
+          token_type: $.str,
+          access_token: $.str
+        })
+          .strict()
+          .throw(r)
+      })
     this.token = token.access_token
     this.tokenType = token.token_type
   }
 
-  private createAxiosInstance () {
+  private createAxiosInstance() {
     return axios.create({
       headers: {
         Authorization: `${this.tokenType} ${this.token}`,
@@ -76,20 +85,29 @@ export class SeaClient {
     })
   }
 
-  private genApiHref (path: string) {
+  private genApiHref(path: string) {
     const url = new URL(this.api + path)
     url.pathname.replace(/\/+/g, '/')
     return url.href
   }
 
-  get (path: string) {
-    return this.createAxiosInstance().get(this.genApiHref(path)).then(r => r.data)
+  get(path: string) {
+    return this.createAxiosInstance()
+      .get(this.genApiHref(path))
+      .then(r => r.data)
   }
 
-  post (path: string, data: any) {
-    return this.createAxiosInstance().post(this.genApiHref(path), data).then(r => r.data)
+  post(path: string, data: any) {
+    return this.createAxiosInstance()
+      .post(this.genApiHref(path), data)
+      .then(r => r.data)
   }
 }
 
 import Config from '../config'
-export default new SeaClient(Config.oauth, Config.api, Config.app.id, Config.app.secret)
+export default new SeaClient(
+  Config.oauth,
+  Config.api,
+  Config.app.id,
+  Config.app.secret
+)

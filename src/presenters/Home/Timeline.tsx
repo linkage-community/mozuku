@@ -5,9 +5,10 @@ import Post from '../Post'
 
 export default ({ timeline }: { timeline: PostModel[] }) => (
   <ul className="timeline">
-    { timeline.map(post => (
+    {timeline.map(post => (
       <li className="timelineItem" key={post.id}>
         <Post post={post} />
       </li>
-    )) }
-  </ul>)
+    ))}
+  </ul>
+)

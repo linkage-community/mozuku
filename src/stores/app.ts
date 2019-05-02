@@ -35,25 +35,29 @@ class SApp {
     this.loggedIn = false
   }
 
-  @computed get me () {
+  @computed get me() {
     return this.meId ? this.accounts.get(this.meId) : undefined
   }
-  async loadMe () {
-    const me = await seaClient.get('/v1/accounts/my').then((d: any) => new Account(d))
+  async loadMe() {
+    const me = await seaClient
+      .get('/v1/accounts/my')
+      .then((d: any) => new Account(d))
     this.accounts.set(me.id, me)
     this.meId = me.id
   }
 
   @action
-  async fetchTimeline () {
-    const timeline = await seaClient.get('/v1/timelines/public').then((p: any) => {
-      if (!Array.isArray(p)) throw new Error()
-      return p.map((v: any) => new Post(v))
-    })
+  async fetchTimeline() {
+    const timeline = await seaClient
+      .get('/v1/timelines/public')
+      .then((p: any) => {
+        if (!Array.isArray(p)) throw new Error()
+        return p.map((v: any) => new Post(v))
+      })
     this.timeline = timeline
   }
   @action
-  startTimelinePolling () {
+  startTimelinePolling() {
     const interval = 1000
     const timerFn = () => {
       const p = this.fetchTimeline()
@@ -63,7 +67,7 @@ class SApp {
     return timerFn()
   }
   @action
-  stopTimelinePolling () {
+  stopTimelinePolling() {
     clearTimeout(this.timelinePollingTimeoutId)
     this.timeline = []
     this.timelinePollingTimeoutId = undefined
