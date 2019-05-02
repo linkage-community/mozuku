@@ -17,7 +17,8 @@ export default () => {
         onClickLogout={e => {
           e.preventDefault()
           App.logout()
-        }} />
+        }}
+      />
     )
   })
 }

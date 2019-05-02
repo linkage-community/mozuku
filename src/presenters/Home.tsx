@@ -10,7 +10,7 @@ export default ({
   draft,
   draftDisabled,
   setDraft,
-  submitDraft,
+  submitDraft
 }: {
   timeline: Post[]
   draft: string

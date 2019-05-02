@@ -4,12 +4,12 @@ export default ({
   draft,
   draftDisabled,
   submitDraft,
-  setDraft,
+  setDraft
 }: {
   draft: string
   draftDisabled: boolean
-  submitDraft: () => void,
-  setDraft: (t: string) => void,
+  submitDraft: () => void
+  setDraft: (t: string) => void
 }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,7 +34,11 @@ export default ({
         onKeyDown={onKeyDown}
         placeholder="What's up Otaku?"
       />
-      <button className="postForm__button" type="submit" disabled={draftDisabled}>
+      <button
+        className="postForm__button"
+        type="submit"
+        disabled={draftDisabled}
+      >
         Send to Sea
       </button>
     </form>
