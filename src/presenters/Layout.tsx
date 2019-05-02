@@ -9,21 +9,34 @@ import Home from '../containers/Home'
 import Me from '../containers/Me'
 import NotFound from '../components/NotFound'
 
+import logo from '../static/logo.png'
+
 export default ({ me, onClickLogout }: { me?: Account, onClickLogout: (e: React.MouseEvent<HTMLButtonElement>) => void }) => {
   return (
     <div className="mozuku-layout">
-      <h1>Mozuku</h1>
-      <Link to={{pathname: '/'}}>Home</Link> <Link to={{pathname: '/me'}}>About me</Link>
-      <p>
-        { me ? (<span>@{me.screenName}</span>) : (<span><i>[誰?]</i></span>) }
-        <button style={{ marginLeft: 4 }} onClick={onClickLogout}>👋</button>
-      </p>
+      <div className="mozuku-header-wrapper">
+        <div className="mozuku-header">
+          <h1 className="mozuku-header__logo">
+            <Link to={{pathname: '/'}}>
+              <img src={logo} width="64" height="64" alt="Mozuku"/>
+            </Link>
+          </h1>
+          <div>
+            { me ? (<Link to={{pathname: '/me'}}>@{me.screenName}</Link>) : (<span><i>[誰?]</i></span>) }
+          </div>
+          <div>
+            <button onClick={onClickLogout}>👋</button>
+          </div>
+        </div>
+      </div>
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/me" component={Me} />
-        <Route component={NotFound} />
-      </Switch>
+      <div className="mozuku-container">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/me" component={Me} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
     </div>
   )
 }

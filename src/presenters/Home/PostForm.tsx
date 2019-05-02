@@ -6,8 +6,8 @@ export default ({ onSubmit, onUpdateDraft, draft, draftDisabled }: {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
   onUpdateDraft: (e: React.ChangeEvent<HTMLTextAreaElement>) => void }
 ) => (
-  <form onSubmit={onSubmit}>
-    <textarea onChange={onUpdateDraft} value={draft} disabled={draftDisabled} /><br />
-    <button type="submit" disabled={draftDisabled} >海に流す</button>
+  <form className="postForm" onSubmit={onSubmit}>
+    <textarea className="postForm__textarea" onChange={onUpdateDraft} value={draft} disabled={draftDisabled} placeholder="What's up Otaku?" />
+    <button className="postForm__button" type="submit" disabled={draftDisabled} >Send to Sea</button>
   </form>
 )

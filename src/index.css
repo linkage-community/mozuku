@@ -1,3 +1,154 @@
 @tailwind prefilight;
 @tailwind components;
 @tailwind utilities;
+
+@import "../node_modules/sanitize.css/sanitize.css";
+
+:root {
+  --color-base: rgb(223, 244, 250);
+  --color-main: rgb(27, 169, 204);
+  --color-text: rgb(70, 64, 64);
+}
+
+html {
+  color: red;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-main);
+}
+
+input, button, textarea, select {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.mozuku-layout {
+  padding: 0 0 48px;
+}
+
+.mozuku-header-wrapper {  
+  width: 100%;
+  height: 64px;
+  background-color: #fff;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,.04), 0 0 16px 0 rgba(0,0,0,.04);
+}
+
+.mozuku-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.mozuku-header__logo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+}
+
+.mozuku-header__logo a {
+  display: block;
+}
+
+.mozuku-header__logo a:hover {
+  background: #fafafa;
+}
+
+.mozuku-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 48px auto 0;
+  background-color: #fff;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,.04), 0 0 16px 0 rgba(0,0,0,.04);
+}
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.postForm {
+  position: relative;
+  background-color: #fafafa;
+}
+
+.postForm__textarea {
+  display: block;
+  width: 100%;
+  height: 60px;
+  min-width: 60px;
+  padding: 12px calc(120px + 24px + 24px) 12px 24px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.postForm__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  width: 120px;
+  height: 36px;
+  background-color: var(--color-main);
+  color: #fff;
+  font-size: 0.8em;
+  transform: translateY(-50%);
+}
+
+.post {
+  padding: 12px 24px;
+  border-top: 1px solid #eee;
+}
+
+.post-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-head__name {
+  vertical-align: middle;
+}
+
+.post-head__name__name {
+  font-weight: bold;
+}
+
+.post-head__name__screenName {
+  color: #999;
+}
+
+.post-head__time {
+  color: #999;
+}
+
+.post__body {
+  margin: 4px 0 0;
+}
+
+.post__meta {
+  display: none;
+}
