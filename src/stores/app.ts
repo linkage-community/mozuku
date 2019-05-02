@@ -8,8 +8,11 @@ import { Account, Post } from '../models'
 class SApp {
   @observable loggedIn: boolean = false
   @observable meId?: number
+
   @observable accounts: Map<number, Account> = new Map()
-  @observable timeline: Post[] = []
+  @observable posts: Map<number, Post> = new Map()
+
+  @observable timelineIds: number[] = []
   timelinePollingTimeoutId?: number
 
   constructor() {
@@ -46,6 +49,13 @@ class SApp {
     this.meId = me.id
   }
 
+  @computed get timeline () {
+    return this.timelineIds.map(id => {
+      const p = this.posts.get(id)
+      if (!p) throw new Error('なんかおかしい')
+      return p
+    })
+  }
   @action
   async fetchTimeline() {
     const timeline = await seaClient
@@ -54,7 +64,13 @@ class SApp {
         if (!Array.isArray(p)) throw new Error()
         return p.map((v: any) => new Post(v))
       })
-    this.timeline = timeline
+    const newIds = timeline.map((t) => {
+      this.posts.set(t.id, t)
+      return t.id
+    })
+    const idsSet = new Set([...newIds, ...this.timelineIds])
+    console.dir(Array.from(idsSet.values()))
+    this.timelineIds = Array.from(idsSet.values())
   }
   @action
   startTimelinePolling() {
@@ -69,7 +85,7 @@ class SApp {
   @action
   stopTimelinePolling() {
     clearTimeout(this.timelinePollingTimeoutId)
-    this.timeline = []
+    this.timelineIds = []
     this.timelinePollingTimeoutId = undefined
   }
 }
