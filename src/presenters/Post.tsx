@@ -1,7 +1,7 @@
 import * as React from 'react'
 import moment from 'moment-timezone'
 
-import { Post } from '../models'
+import { Post, BODYPART_TYPE_LINK } from '../models'
 
 export default ({ post }: { post: Post }) => (
   <div className="post">
@@ -18,7 +18,14 @@ export default ({ post }: { post: Post }) => (
           .format('HH:mm:ss · D MMM YYYY')}
       </div>
     </div>
-    <div className="post__body">{post.text}</div>
+    <div className="post__body">{post.body.parts.map(p => {
+      switch (p.type) {
+        case BODYPART_TYPE_LINK:
+          return (<a href={p.payload}>{p.payload}</a>)
+        default:
+          return (<>{p.payload}</>)
+      }
+    })}</div>
     <div className="post__meta">This post from {post.application.name}</div>
   </div>
 )
