@@ -54,6 +54,7 @@ select {
   max-width: 720px;
   height: 100%;
   margin: 0 auto;
+  padding: 0 12px;
 }
 
 .mozuku-header__logo {
