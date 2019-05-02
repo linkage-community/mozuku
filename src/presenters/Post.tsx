@@ -21,7 +21,7 @@ export default ({ post }: { post: Post }) => (
     <div className="post__body">{post.body.parts.map(p => {
       switch (p.type) {
         case BODYPART_TYPE_LINK:
-          return (<a href={p.payload}>{p.payload}</a>)
+          return (<a href={p.payload} target="_blank">{p.payload}</a>)
         default:
           return (<>{p.payload}</>)
       }
