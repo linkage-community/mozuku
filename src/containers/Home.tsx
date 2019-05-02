@@ -21,16 +21,16 @@ export default () => {
     event.preventDefault()
     setDraftText(event.target.value)
   }
-  const onSubmitDraft = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitDraft = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onSubmitPost()
+    submitPost()
   }
-  const onKeyDown = async (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.ctrlKey && event.keyCode == 13) {
-      onSubmitPost()
+  const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode == 13) {
+      submitPost()
     }
   }
-  const onSubmitPost = async () => {
+  const submitPost = async () => {
     setDraftDisabled(true)
     if (draftText.trim().length > 0) {
       await seaClient.post('/v1/posts', { text: draftText })
