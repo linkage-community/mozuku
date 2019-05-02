@@ -21,10 +21,11 @@ class SApp {
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
 
-  timelineSocketRequested = false
   @observable timelineIds: number[] = []
 
   timelineStream?: WebSocket
+  timelineStreamOpened = false
+  timelineStreamRequested = false
 
   constructor() {
     const ss = localStorage.getItem(SEA_CLIENT_STATE_NAME)
@@ -68,7 +69,8 @@ class SApp {
   }
   @action
   resetTimeline() {
-    this.timelineSocketRequested = false
+    this.timelineStreamOpened = false
+    this.timelineStreamRequested = false
     this.timelineIds = []
   }
   private processPostBody(post: Post) {
@@ -115,16 +117,6 @@ class SApp {
     const idsSet = new Set([...newIds, ...this.timelineIds])
     this.timelineIds = Array.from(idsSet.values())
   }
-  async resumeTimeline() {
-    try {
-      await this.fetchTimeline()
-      await this.openTimelineSocket()
-    } catch (e) {
-      console.error(e)
-      // keep trying to reconnect...
-      window.setTimeout(this.resumeTimeline.bind(this), 1000)
-    }
-  }
   @action
   async fetchTimeline() {
     const timeline = await seaClient
@@ -135,11 +127,12 @@ class SApp {
       })
     this.addPostsToTimeline(...timeline)
   }
-  async openTimelineSocket() {
-    if (this.timelineStream) return
-    this.timelineSocketRequested = true
+  async openTimelineStream() {
+    this.timelineStreamRequested = true
 
     const ws = await seaClient.connectStream('v1/timelines/public')
+    this.timelineStream = ws
+    this.timelineStreamOpened = true
     ws.addEventListener('message', ev => {
       try {
         const m = $.obj({
@@ -155,20 +148,15 @@ class SApp {
         console.error(e)
       }
     })
-    ws.addEventListener('error', ev => {
-      console.error(ev)
-      this.closeTimelineSocket()
-      // reconnect...
-      window.setTimeout(this.resumeTimeline.bind(this), 1000)
-    })
-    this.timelineStream = ws
   }
-  closeTimelineSocket() {
+  closeTimelineStream() {
     if (!this.timelineStream) return
-    if (![WebSocket.CLOSING, WebSocket.CLOSED].includes(this.timelineStream.readyState))
-      this.timelineStream.close()
-
+    const ws = this.timelineStream
+    this.timelineStreamOpened = false
     this.timelineStream = undefined
+    if (![WebSocket.CLOSING, WebSocket.CLOSED].includes(ws.readyState)) {
+      ws.close()
+    }
   }
 }
 

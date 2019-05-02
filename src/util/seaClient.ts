@@ -108,6 +108,8 @@ export class SeaClient {
       const w = new WebSocket(
         this.api.replace('https://', 'wss://').replace('http://', 'ws://')
       )
+
+      // send handshake
       w.addEventListener('open', () => {
         w.send(
           JSON.stringify({
@@ -116,28 +118,30 @@ export class SeaClient {
             token: this.token
           })
         )
-        const error = (e: Event) => {
+      })
+
+      const error = (e: Event) => {
+        return reject(e)
+      }
+      const once = (ev: MessageEvent) => {
+        w.removeEventListener('message', once)
+        w.removeEventListener('error', error)
+        try {
+          const raw = JSON.parse(ev.data)
+          const data = $.obj({
+            type: $.str
+          }).throw(raw)
+          if (data.type === 'success') {
+            return resolve(w)
+          }
+        } catch (e) {
           return reject(e)
         }
-        const once = (ev: MessageEvent) => {
-          w.removeEventListener('message', once)
-          w.removeEventListener('error', error)
-          try {
-            const raw = JSON.parse(ev.data)
-            const data = $.obj({
-              type: $.str
-            }).throw(raw)
-            if (data.type === 'success') {
-              return resolve(w)
-            }
-          } catch (e) {
-            return reject(e)
-          }
-          reject()
-        }
-        w.addEventListener('message', once)
-        w.addEventListener('error', error)
-      })
+        reject()
+      }
+
+      w.addEventListener('message', once)
+      w.addEventListener('error', error)
     })
   }
 }

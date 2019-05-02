@@ -9,10 +9,10 @@ import Home from '../presenters/Home'
 
 export default () => {
   useEffect(() => {
-    App.openTimelineSocket()
+    App.openTimelineStream()
     App.fetchTimeline()
     return () => {
-      App.closeTimelineSocket()
+      App.closeTimelineStream()
       App.resetTimeline()
     }
   }, [])
