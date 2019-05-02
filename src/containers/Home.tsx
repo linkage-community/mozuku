@@ -24,8 +24,10 @@ export default () => {
   const onSubmitDraft = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setDraftDisabled(true)
-    await seaClient.post('/v1/posts', { text: draftText })
-    setDraftText('')
+    if (draftText.trim().length > 0) {
+      await seaClient.post('/v1/posts', { text: draftText })
+      setDraftText('')
+    }
     setDraftDisabled(false)
   }
 
