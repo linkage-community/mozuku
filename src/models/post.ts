@@ -5,6 +5,11 @@ import Model, { validateDate } from './_model'
 import Application from './application'
 import Account from './account'
 
+interface pictograph {
+  decode(s: string): string
+}
+const pictograph: pictograph = require('pictograph')
+
 export const BODYPART_TYPE_TEXT = 0
 export const BODYPART_TYPE_LINK = 1
 export const BODYPART_TYPE_BOLD = 3
@@ -38,7 +43,16 @@ export const parseURLmiddleware = (p: PostBodyPart) => {
     }
   })
 }
-const presetMiddlewares: PostBodyMiddleware[] = [unifyNewLinesMiddleware, parseURLmiddleware]
+export const convertEmojiMiddleware = (p: PostBodyPart) => {
+  if (p.type !== BODYPART_TYPE_TEXT) return [p]
+  return [
+    {
+      ...p,
+      payload: pictograph.decode(p.payload)
+    }
+  ]
+}
+const presetMiddlewares: PostBodyMiddleware[] = [unifyNewLinesMiddleware, parseURLmiddleware, convertEmojiMiddleware]
 
 export class PostBody {
   parts = [] as PostBodyPart[]

@@ -3850,6 +3850,11 @@ physical-cpu-count@^2.0.0:
   resolved "https://registry.yarnpkg.com/physical-cpu-count/-/physical-cpu-count-2.0.0.tgz#18de2f97e4bf7a9551ad7511942b5496f7aba660"
   integrity sha1-GN4vl+S/epVRrXURlCtUlverpmA=
 
+pictograph@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/pictograph/-/pictograph-2.2.0.tgz#da16fe68085f9213546e3338ad2db41ec8efb60f"
+  integrity sha512-3ng8x3nGvhf3jYH93TK1C4Gh1vUOL7D1H8EDVuZ/TE8ZxKN1ib3LAGP+Oic9ENTtP3GmoGRjtogoDQmhfzMtOw==
+
 pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
