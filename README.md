@@ -12,7 +12,7 @@ $ yarn install
 $ cp .env.example .env
 
 # Add client_id and client_secret
-$ vi .env
+$ editor .env
 
 # Let's start
 $ yarn start
