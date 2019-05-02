@@ -40,7 +40,7 @@ class SApp {
   }
   async loadMe() {
     const me = await seaClient
-      .get('/v1/accounts/my')
+      .get('/v1/account/verify_credentials')
       .then((d: any) => new Account(d))
     this.accounts.set(me.id, me)
     this.meId = me.id
