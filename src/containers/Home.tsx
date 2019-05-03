@@ -9,9 +9,21 @@ import Home from '../presenters/Home'
 
 export default () => {
   useEffect(() => {
-    App.startTimelinePolling()
+    let openTimerID: number
+    const open = async () => {
+      try {
+        await App.fetchTimeline()
+        await App.openTimelineStream()
+      } catch (e) {
+        console.error(e)
+        window.setTimeout(open, 500)
+      }
+    }
+    open()
     return () => {
-      App.stopTimelinePolling()
+      if (openTimerID) window.clearTimeout(openTimerID)
+      App.closeTimelineStream()
+      App.resetTimeline()
     }
   }, [])
 
@@ -20,8 +32,13 @@ export default () => {
   const submitDraft = async () => {
     setDraftDisabled(true)
     if (draft.trim().length > 0) {
-      await seaClient.post('/v1/posts', { text: draft })
-      setDraft('')
+      try {
+        await seaClient.post('/v1/posts', { text: draft })
+        setDraft('')
+      } catch (e) {
+        // TODO: Add error reporting
+        console.error(e)
+      }
     }
     setDraftDisabled(false)
   }

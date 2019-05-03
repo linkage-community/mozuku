@@ -7,7 +7,7 @@ import { Account } from '../models'
 
 import Home from '../containers/Home'
 import Me from '../containers/Me'
-import NotFound from '../components/NotFound'
+import NotFound from './NotFound'
 
 import logo from '../static/logo.png'
 

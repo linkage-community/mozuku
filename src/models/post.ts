@@ -5,14 +5,22 @@ import Model, { validateDate } from './_model'
 import Application from './application'
 import Account from './account'
 
+interface pictograph {
+  decode(s: string): string
+}
+const pictograph: pictograph = require('pictograph')
+
 export const BODYPART_TYPE_TEXT = 0
 export const BODYPART_TYPE_LINK = 1
 export const BODYPART_TYPE_LINK_IMAGE = 2
+export const BODYPART_TYPE_BOLD = 3
 export interface PostBodyPart {
-  type: typeof BODYPART_TYPE_TEXT |
-        typeof BODYPART_TYPE_LINK |
-        typeof BODYPART_TYPE_LINK_IMAGE,
-  payload: string,
+  type:
+    | typeof BODYPART_TYPE_TEXT
+    | typeof BODYPART_TYPE_LINK
+    | typeof BODYPART_TYPE_LINK_IMAGE
+    | typeof BODYPART_TYPE_BOLD
+  payload: string
 }
 type PostBodyMiddleware = (p: PostBodyPart) => PostBodyPart[]
 
@@ -20,23 +28,34 @@ export const unifyNewLinesMiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type === BODYPART_TYPE_TEXT) {
     p.payload = p.payload.replace(/\n{2,}/g, '\n\n')
   }
-  return [p]  
+  return [p]
 }
 export const parseURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type !== BODYPART_TYPE_TEXT) return [p]
-  const r = p.payload.split(/(https?:\/\/[^\s]+)/ig)
-  return r.map((r): PostBodyPart => {
-    if (r.startsWith('http')) {
+  const r = p.payload.split(/(https?:\/\/[^\s]+)/gi)
+  return r.map(
+    (r): PostBodyPart => {
+      if (r.startsWith('http')) {
+        return {
+          type: BODYPART_TYPE_LINK,
+          payload: r
+        }
+      }
       return {
-        type: BODYPART_TYPE_LINK,
+        type: BODYPART_TYPE_TEXT,
         payload: r
       }
     }
-    return {
-      type: BODYPART_TYPE_TEXT,
-      payload: r
+  )
+}
+export const convertEmojiMiddleware = (p: PostBodyPart) => {
+  if (p.type !== BODYPART_TYPE_TEXT) return [p]
+  return [
+    {
+      ...p,
+      payload: pictograph.decode(p.payload)
     }
-  })
+  ]
 }
 export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type !== BODYPART_TYPE_LINK) return [p]
@@ -55,6 +74,7 @@ export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
 const presetMiddlewares: PostBodyMiddleware[] = [
   unifyNewLinesMiddleware,
   parseURLmiddleware,
+  convertEmojiMiddleware,
   markImageURLmiddleware
 ]
 
@@ -62,24 +82,27 @@ export class PostBody {
   parts = [] as PostBodyPart[]
   processed = false
 
-  constructor (body: string) {
+  constructor(body: string) {
     this.reset(body)
   }
 
-  reset (body: string) {
+  reset(body: string) {
     this.processed = false
     this.parts = []
     this.parts.push({
       type: BODYPART_TYPE_TEXT,
-      payload: body,
+      payload: body
     })
   }
 
-  process (middlewares: PostBodyMiddleware[] = presetMiddlewares) {
+  process(middlewares: PostBodyMiddleware[] = presetMiddlewares) {
     this.parts = middlewares.reduce((parts, middleware) => {
-      return parts.reduce((pp, { ...part }) => {
-        return [...pp, ...middleware(part)]
-      }, [] as PostBodyPart[])
+      return parts.reduce(
+        (pp, { ...part }) => {
+          return [...pp, ...middleware(part)]
+        },
+        [] as PostBodyPart[]
+      )
     }, this.parts)
     this.processed = true
   }

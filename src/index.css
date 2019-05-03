@@ -150,6 +150,9 @@ select {
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
+.post__body__bold {
+  font-weight: bold;
+}
 
 .post__image:not(:empty) {
   margin: 8px 0 0;

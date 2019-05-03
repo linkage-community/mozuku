@@ -102,6 +102,55 @@ export class SeaClient {
       .post(this.genApiHref(path), data)
       .then(r => r.data)
   }
+
+  connectStream(stream: string): Promise<WebSocket> {
+    return new Promise((resolve, reject) => {
+      try {
+        const error = (e: Event) => {
+          return reject(e)
+        }
+        const close = (e: Event) => {
+          return reject(e)
+        }
+        const once = (ev: MessageEvent) => {
+          w.removeEventListener('message', once)
+          w.removeEventListener('error', error)
+          w.removeEventListener('close', close)
+          try {
+            const raw = JSON.parse(ev.data)
+            const data = $.obj({
+              type: $.str
+            }).throw(raw)
+            if (data.type === 'success') {
+              return resolve(w)
+            }
+          } catch (e) {
+            return reject(e)
+          }
+          reject()
+        }
+
+        const w = new WebSocket(
+          this.api.replace('https://', 'wss://').replace('http://', 'ws://')
+        )
+        // send handshake
+        w.addEventListener('open', () => {
+          w.send(
+            JSON.stringify({
+              type: 'connect',
+              stream,
+              token: this.token
+            })
+          )
+        })
+        w.addEventListener('message', once)
+        w.addEventListener('error', error)
+        w.addEventListener('close', close)
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
 }
 
 import Config from '../config'
