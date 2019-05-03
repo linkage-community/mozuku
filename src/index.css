@@ -150,9 +150,19 @@ select {
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
-
 .post__body__bold {
   font-weight: bold;
+}
+
+.post__image:not(:empty) {
+  display: flex;
+  overflow-x: hidden;
+}
+.post-image__img {
+  margin: 4px 4px 0 0;
+  width: 144px;
+  height: 144px;
+  object-fit: cover;
 }
 
 .post__meta {

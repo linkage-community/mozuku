@@ -12,23 +12,25 @@ const pictograph: pictograph = require('pictograph')
 
 export const BODYPART_TYPE_TEXT = 0
 export const BODYPART_TYPE_LINK = 1
+export const BODYPART_TYPE_LINK_IMAGE = 2
 export const BODYPART_TYPE_BOLD = 3
 export interface PostBodyPart {
   type:
     | typeof BODYPART_TYPE_TEXT
     | typeof BODYPART_TYPE_LINK
+    | typeof BODYPART_TYPE_LINK_IMAGE
     | typeof BODYPART_TYPE_BOLD
   payload: string
 }
 type PostBodyMiddleware = (p: PostBodyPart) => PostBodyPart[]
 
-export const unifyNewLinesMiddleware = (p: PostBodyPart) => {
+export const unifyNewLinesMiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type === BODYPART_TYPE_TEXT) {
     p.payload = p.payload.replace(/\n{2,}/g, '\n\n')
   }
   return [p]
 }
-export const parseURLmiddleware = (p: PostBodyPart) => {
+export const parseURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type !== BODYPART_TYPE_TEXT) return [p]
   const r = p.payload.split(/(https?:\/\/[^\s]+)/gi)
   return r.map(
@@ -55,10 +57,25 @@ export const convertEmojiMiddleware = (p: PostBodyPart) => {
     }
   ]
 }
+export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
+  if (p.type !== BODYPART_TYPE_LINK) return [p]
+  // not image
+  if (!['.png', '.gif', '.jpg', 'jpeg'].filter(ext => p.payload.endsWith(ext)).length) return [p]
+  const url = new URL(p.payload)
+  // not whitelisted domain
+  if (!['delta.contents.stream'].includes(url.hostname)) return [p]
+  return [
+    {
+      type: BODYPART_TYPE_LINK_IMAGE,
+      payload: p.payload
+    }
+  ]
+}
 const presetMiddlewares: PostBodyMiddleware[] = [
   unifyNewLinesMiddleware,
   parseURLmiddleware,
-  convertEmojiMiddleware
+  convertEmojiMiddleware,
+  markImageURLmiddleware
 ]
 
 export class PostBody {
