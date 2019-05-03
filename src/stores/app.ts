@@ -23,10 +23,10 @@ class SApp {
   @observable posts: Map<number, Post> = new Map()
 
   @observable timelineIds: number[] = []
-  timelineStream?: WebSocket
-  timelineStreamPilotTimerId?: number
-  timelineStreamDisconnected = false
-  timelineStreamLastPingSeen?: Date
+  private timelineStream?: WebSocket
+  private timelineStreamPilotTimerId?: number
+  private timelineStreamDisconnected = false
+  private timelineStreamLastPingSeen?: Date
 
   constructor() {
     const ss = localStorage.getItem(SEA_CLIENT_STATE_NAME)
