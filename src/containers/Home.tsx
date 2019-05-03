@@ -9,7 +9,11 @@ import Home from '../presenters/Home'
 
 export default () => {
   useEffect(() => {
-    App.openTimelineStream()
+    const openStream = () => App.openTimelineStream().catch(e => {
+      console.error(e)
+      App.openTimelineStream()
+    })
+    openStream()
     App.fetchTimeline()
     return () => {
       App.closeTimelineStream()
