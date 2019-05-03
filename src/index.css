@@ -155,13 +155,14 @@ select {
 }
 
 .post__image:not(:empty) {
-  margin: 8px 0 0;
+  display: flex;
+  overflow-x: hidden;
 }
 .post-image__img {
-  max-width: 100%;
-}
-.post-image__img:not(:last-child) {
-  margin-bottom: 4px;
+  margin: 4px 4px 0 0;
+  width: 144px;
+  height: 144px;
+  object-fit: cover;
 }
 
 .post__meta {
