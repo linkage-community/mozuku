@@ -9,13 +9,19 @@ import Home from '../presenters/Home'
 
 export default () => {
   useEffect(() => {
-    const openStream = () => App.openTimelineStream().catch(e => {
-      console.error(e)
-      App.openTimelineStream()
-    })
-    openStream()
-    App.fetchTimeline()
+    let openTimerID: number
+    const open = async () => {
+      try {
+        await App.fetchTimeline()
+        await App.openTimelineStream()
+      } catch (e) {
+        console.error(e)
+        window.setTimeout(open, 500)
+      }
+    }
+    open()
     return () => {
+      if (openTimerID) window.clearTimeout(openTimerID)
       App.closeTimelineStream()
       App.resetTimeline()
     }
