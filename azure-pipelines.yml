@@ -23,5 +23,5 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    yarn prettier --check
+    yarn prettier --write "./src/**/*.{html,css,ts,tsx}"
   displayName: 'Run prettier'
