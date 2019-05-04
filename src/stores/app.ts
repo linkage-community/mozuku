@@ -168,12 +168,24 @@ class SApp {
   @action
   async fetchTimeline() {
     const timeline = await seaClient
-      .get('/v1/timelines/public?count=100')
+      .get('/v1/timelines/public?count=10')
       .then((tl: any) => {
         if (!Array.isArray(tl)) throw new Error('?')
         return tl
       })
     this.unshiftTimeline(...timeline)
+  }
+  @action
+  async readMoreTimeline() {
+    if (this.timelineIds.length >= 100) return alert('これ以上は動かないよ!')
+    // after query 実装するまでは count=100 で誤魔化す
+    const timeline = await seaClient
+      .get('/v1/timelines/public?count=100')
+      .then((tl: any) => {
+        if (!Array.isArray(tl)) throw new Error('?')
+        return tl
+      })
+    this.pushTimeline(...timeline)  
   }
   private enablePilotTimelineStream () {
     if (this.timelineStreamPilotTimerId) return

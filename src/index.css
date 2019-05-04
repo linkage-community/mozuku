@@ -119,7 +119,11 @@ select {
   transform: translateY(-50%);
 }
 
-.post {
+.timelineItem__readMore {
+  width: 100%;
+}
+
+.post, .timelineItem__readMore {
   padding: 12px 24px;
   border-top: 1px solid #eee;
 }

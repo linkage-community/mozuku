@@ -1,5 +1,5 @@
 import * as React from 'react'
-const { useEffect } = React
+const { useEffect, useState } = React
 import { useObserver } from 'mobx-react-lite'
 
 import App from '../../stores/app'
@@ -26,8 +26,20 @@ export default () => {
     }
   }, [])
 
+  const [readMoreDisabled, setDisabled] = useState(false)
+  const readMore = async () => {
+    setDisabled(true)
+    try {
+      await App.readMoreTimeline()
+    } catch (e) {
+      // TODO: Add error report
+    } finally {
+      setDisabled(false)
+    }
+  }
+
   return useObserver(() => {
     document.title = App.timelineTitle
-    return (<Timeline timeline={App.timeline} />)
+    return (<Timeline timeline={App.timeline} readMore={readMore} readMoreDisabled={readMoreDisabled} />)
   })
 }
