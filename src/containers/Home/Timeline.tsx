@@ -40,6 +40,12 @@ export default () => {
 
   return useObserver(() => {
     document.title = App.timelineTitle
-    return (<Timeline timeline={App.timeline} readMore={readMore} readMoreDisabled={readMoreDisabled} />)
+    return (
+      <Timeline
+        timeline={App.timeline}
+        readMore={readMore}
+        readMoreDisabled={readMoreDisabled}
+      />
+    )
   })
 }

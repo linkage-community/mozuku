@@ -60,7 +60,11 @@ export const convertEmojiMiddleware = (p: PostBodyPart) => {
 export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type !== BODYPART_TYPE_LINK) return [p]
   // not image
-  if (!['.png', '.gif', '.jpg', 'jpeg'].filter(ext => p.payload.endsWith(ext)).length) return [p]
+  if (
+    !['.png', '.gif', '.jpg', 'jpeg'].filter(ext => p.payload.endsWith(ext))
+      .length
+  )
+    return [p]
   const url = new URL(p.payload)
   // not whitelisted domain
   if (!['delta.contents.stream'].includes(url.hostname)) return [p]

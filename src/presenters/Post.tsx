@@ -1,7 +1,12 @@
 import * as React from 'react'
 import moment from 'moment-timezone'
 
-import { Post, BODYPART_TYPE_LINK, BODYPART_TYPE_LINK_IMAGE, BODYPART_TYPE_BOLD } from '../models'
+import {
+  Post,
+  BODYPART_TYPE_LINK,
+  BODYPART_TYPE_LINK_IMAGE,
+  BODYPART_TYPE_BOLD
+} from '../models'
 
 export default ({ post }: { post: Post }) => (
   <div className="post">
@@ -40,14 +45,14 @@ export default ({ post }: { post: Post }) => (
       })}
     </div>
     <div className="post__image">
-      {post.body.parts.map((p,i) => (
-        <React.Fragment key={i}>{
-          p.type === BODYPART_TYPE_LINK_IMAGE && (
+      {post.body.parts.map((p, i) => (
+        <React.Fragment key={i}>
+          {p.type === BODYPART_TYPE_LINK_IMAGE && (
             <a href={p.payload} target="_blank">
               <img className="post-image__img" src={p.payload} />
             </a>
-          )
-        }</React.Fragment>
+          )}
+        </React.Fragment>
       ))}
     </div>
     <div className="post__meta">This post from {post.application.name}</div>

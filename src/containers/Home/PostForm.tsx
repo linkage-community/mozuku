@@ -27,6 +27,7 @@ export default () => {
       draft={draft}
       setDraft={setDraft}
       draftDisabled={draftDisabled}
-      submitDraft={submitDraft}  />
+      submitDraft={submitDraft}
+    />
   )
 }

@@ -123,7 +123,8 @@ select {
   width: 100%;
 }
 
-.post, .timelineItem__readMore {
+.post,
+.timelineItem__readMore {
   padding: 12px 24px;
   border-top: 1px solid #eee;
 }

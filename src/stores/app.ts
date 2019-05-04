@@ -12,13 +12,13 @@ import {
   BODYPART_TYPE_BOLD,
   BODYPART_TYPE_TEXT
 } from '../models'
-import { PostBodyPart } from '../models/post';
+import { PostBodyPart } from '../models/post'
 
 class SApp {
   readonly defaultTitle = 'Mozuku'
 
   @observable hidden = document.hidden
-  setHidden (hidden: boolean) {
+  setHidden(hidden: boolean) {
     this.hidden = hidden
     if (!hidden) {
       this.timelineInBackgroundCnt = 0
@@ -49,7 +49,7 @@ class SApp {
       return p
     })
   }
-  @computed get timelineTitle () {
+  @computed get timelineTitle() {
     let title = 'Mozuku'
     if (this.hidden && this.timelineInBackgroundCnt) {
       title = `(${this.timelineInBackgroundCnt}) ${this.timeline[0].text}`
@@ -64,7 +64,7 @@ class SApp {
       seaClient.unpack(ss)
       this.loggedIn = true
     }
-  
+
     window.addEventListener('visibilitychange', () => {
       this.setHidden(document.hidden)
     })
@@ -104,7 +104,9 @@ class SApp {
   }
   private async addPosts(ps: any[]) {
     // Make bold me
-    const boldMyScreenNameMiddleware = (a: Account) => (p: PostBodyPart): PostBodyPart[] => {
+    const boldMyScreenNameMiddleware = (a: Account) => (
+      p: PostBodyPart
+    ): PostBodyPart[] => {
       if (p.type !== BODYPART_TYPE_TEXT) {
         return [p]
       }
@@ -128,20 +130,20 @@ class SApp {
     // cast to post
     const pms = await Promise.all(ps.map(async (p: any) => new Post(p)))
     // custom process for domain
-    const posts = await Promise.all(pms.map(post => {
-      // model に閉じれない物をここにおきます
-      if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
-      post.body.process([
-        boldMyScreenNameMiddleware(this.me)
-      ])
-      return post
-    }))
+    const posts = await Promise.all(
+      pms.map(post => {
+        // model に閉じれない物をここにおきます
+        if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
+        post.body.process([boldMyScreenNameMiddleware(this.me)])
+        return post
+      })
+    )
     posts.forEach(p => {
       this.posts.set(p.id, p)
     })
     return posts
   }
-  private async unshiftTimeline (...p: any[]) {
+  private async unshiftTimeline(...p: any[]) {
     // filter only ids that not seen: おそらく結構 Post のバリデーションが重たいので効率化のため
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.timelineIds.includes(p.id))
@@ -157,7 +159,7 @@ class SApp {
     // 先頭に追加の時だけ count up
     if (this.hidden) this.timelineInBackgroundCnt += idsSet.size - tc
   }
-  private async pushTimeline (...p: any[]) {
+  private async pushTimeline(...p: any[]) {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.timelineIds.includes(p.id))
 
@@ -166,7 +168,10 @@ class SApp {
     this.timelineIds = Array.from(idsSet.values())
   }
   @action
-  async fetchTimeline({ sinceId, count = 30 }: { sinceId?: number, count?: number } = {}) {
+  async fetchTimeline({
+    sinceId,
+    count = 30
+  }: { sinceId?: number; count?: number } = {}) {
     const query = new URLSearchParams()
     query.set('count', count.toString(10))
     if (sinceId) query.set('sinceId', sinceId.toString(10))
@@ -191,13 +196,15 @@ class SApp {
       })
     this.pushTimeline(...timeline)
   }
-  private enablePilotTimelineStream () {
+  private enablePilotTimelineStream() {
     if (this.timelineStreamPilotTimerId) return
     const interval = 1000 * 15
     const reconnect = async () => {
       this.closeTimelineStream()
       // memo: 接続性チェックも含む
-      const kwargs = this.timeline[0] ? { sinceId: this.timeline[0].id } : undefined
+      const kwargs = this.timeline[0]
+        ? { sinceId: this.timeline[0].id }
+        : undefined
       await this.fetchTimeline(kwargs)
       await this.openTimelineStream()
     }
@@ -217,11 +224,13 @@ class SApp {
 
         // send ping from client if stream was alive
         if (this.timelineStream) {
-          this.timelineStream.send(JSON.stringify({
-            type: 'ping'
-          }))
+          this.timelineStream.send(
+            JSON.stringify({
+              type: 'ping'
+            })
+          )
         }
-      } catch(e) {
+      } catch (e) {
         console.error(e)
       } finally {
         // NO MORE 2重起動
