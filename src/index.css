@@ -138,6 +138,7 @@ select {
 }
 
 .post-head__name__screenName {
+  margin: 0 0 0 4px;
   color: #999;
 }
 
