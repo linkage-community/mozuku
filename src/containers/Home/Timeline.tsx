@@ -4,7 +4,6 @@ import { useObserver } from 'mobx-react-lite'
 
 import App from '../../stores/app'
 import Timeline from '../../presenters/Home/Timeline'
-import Helmet from 'react-helmet';
 
 export default () => {
   useEffect(() => {
@@ -20,16 +19,15 @@ export default () => {
     }
     open()
     return () => {
+      document.title = App.defaultTitle
       if (openTimerID) window.clearTimeout(openTimerID)
       App.closeTimelineStream()
       App.resetTimeline()
     }
   }, [])
 
-  return useObserver(() => (
-    <>
-      <Helmet title={App.timelineTitle} />
-      <Timeline timeline={App.timeline} />
-    </>
-  ))
+  return useObserver(() => {
+    document.title = App.timelineTitle
+    return (<Timeline timeline={App.timeline} />)
+  })
 }

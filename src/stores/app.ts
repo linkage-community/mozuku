@@ -15,23 +15,33 @@ import {
 import { PostBodyPart } from '../models/post';
 
 class SApp {
+  readonly defaultTitle = 'Mozuku'
+
+  @observable hidden = document.hidden
+  setHidden (hidden: boolean) {
+    this.hidden = hidden
+    if (!hidden) {
+      this.timelineInBackgroundCnt = 0
+    }
+  }
+
   @observable loggedIn: boolean = false
   @observable initialized: boolean = false
-  @observable meId!: number
 
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
 
-  @observable blur = false
-  @action onBlur () {
-    this.blur = true
-  }
-  @action onFocus () {
-    // TODO: split timeline logic to another store
-    this.timelineInBlurCount = 0
-    this.blur = false
+  @observable meId!: number
+  @computed get me() {
+    return this.meId ? this.accounts.get(this.meId) : undefined
   }
 
+  @observable timelineIds: number[] = []
+  @observable private timelineInBackgroundCnt: number = 0
+  @observable private timelineStreamDisconnected = false
+  private timelineStream?: WebSocket
+  private timelineStreamPilotTimerId?: number
+  private timelineStreamLastPingSeen?: Date
   @computed get timeline() {
     return this.timelineIds.map(id => {
       const p = this.posts.get(id)
@@ -41,18 +51,12 @@ class SApp {
   }
   @computed get timelineTitle () {
     let title = 'Mozuku'
-    if (this.blur && this.timelineInBlurCount) {
-      title = `(${this.timelineInBlurCount}) ${this.timeline[0].text}`
+    if (this.hidden && this.timelineInBackgroundCnt) {
+      title = `(${this.timelineInBackgroundCnt}) ${this.timeline[0].text}`
     }
     const status = this.timelineStreamDisconnected ? '🌩️' : '⚡️'
     return status + title
   }
-  @observable timelineIds: number[] = []
-  @observable private timelineInBlurCount: number = 0
-  @observable private timelineStreamDisconnected = false
-  private timelineStream?: WebSocket
-  private timelineStreamPilotTimerId?: number
-  private timelineStreamLastPingSeen?: Date
 
   constructor() {
     const ss = localStorage.getItem(SEA_CLIENT_STATE_NAME)
@@ -60,6 +64,10 @@ class SApp {
       seaClient.unpack(ss)
       this.loggedIn = true
     }
+  
+    window.addEventListener('visibilitychange', () => {
+      this.setHidden(document.hidden)
+    })
   }
 
   @action
@@ -75,9 +83,6 @@ class SApp {
     this.loggedIn = false
   }
 
-  @computed get me() {
-    return this.meId ? this.accounts.get(this.meId) : undefined
-  }
   async init() {
     const me = await seaClient
       .get('/v1/account/verify_credentials')
@@ -86,6 +91,7 @@ class SApp {
     this.meId = me.id
     this.initialized = true
   }
+
   @action
   resetTimeline() {
     this.timelineIds = []
@@ -149,7 +155,7 @@ class SApp {
     this.timelineIds = Array.from(idsSet.values())
 
     // 先頭に追加の時だけ count up
-    if (this.blur) this.timelineInBlurCount += idsSet.size - tc
+    if (this.hidden) this.timelineInBackgroundCnt += idsSet.size - tc
   }
   private async pushTimeline (...p: any[]) {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
