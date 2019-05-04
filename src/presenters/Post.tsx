@@ -25,7 +25,7 @@ export default ({ post }: { post: Post }) => (
           case BODYPART_TYPE_LINK_IMAGE:
             return (
               <a key={i} href={p.payload} target="_blank">
-                {p.payload}
+                {decodeURI(p.payload)}
               </a>
             )
           case BODYPART_TYPE_BOLD:

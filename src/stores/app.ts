@@ -168,7 +168,7 @@ class SApp {
   @action
   async fetchTimeline() {
     const timeline = await seaClient
-      .get('/v1/timelines/public')
+      .get('/v1/timelines/public?count=100')
       .then((tl: any) => {
         if (!Array.isArray(tl)) throw new Error('?')
         return tl
