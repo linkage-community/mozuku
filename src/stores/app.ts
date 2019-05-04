@@ -28,6 +28,7 @@ class SApp {
   @observable loggedIn: boolean = false
   @observable initialized: boolean = false
 
+
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
 
@@ -58,6 +59,16 @@ class SApp {
     return status + title
   }
 
+  private shortcuts: Map<number, () => void> = new Map()
+  addShortcut(charCode: number, callback: () => void) {
+    // 複数 callback 同じキーに設定しない (atarimae)
+    // TODO: 同時に押していい感じに！ってキーバインディングしたいかもしれないのであとでやる かも
+    this.shortcuts.set(charCode, callback)
+  }
+  removeShortcut(charCode: number) {
+    this.shortcuts.delete(charCode)
+  }
+
   constructor() {
     const ss = localStorage.getItem(SEA_CLIENT_STATE_NAME)
     if (ss) {
@@ -67,6 +78,11 @@ class SApp {
 
     window.addEventListener('visibilitychange', () => {
       this.setHidden(document.hidden)
+    })
+    window.document.addEventListener('keypress', (ev) => {
+      if (this.shortcuts.has(ev.charCode)) {
+        this.shortcuts.get(ev.charCode)!()
+      }
     })
   }
 

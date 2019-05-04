@@ -1,16 +1,18 @@
 import * as React from 'react'
+const { forwardRef } = React
 
-export default ({
-  draft,
-  draftDisabled,
-  submitDraft,
-  setDraft
-}: {
-  draft: string
+type T = {
   draftDisabled: boolean
   submitDraft: () => void
   setDraft: (t: string) => void
-}) => {
+  draft: string
+}
+export default forwardRef<HTMLTextAreaElement, T>(({
+  draftDisabled,
+  submitDraft,
+  setDraft,
+  draft,
+}, ref) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     submitDraft()
@@ -20,7 +22,7 @@ export default ({
       submitDraft()
     }
   }
-  const onChangeDraft = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDraft(event.target.value)
   }
 
@@ -28,11 +30,12 @@ export default ({
     <form className="postForm" onSubmit={onSubmit}>
       <textarea
         className="postForm__textarea"
-        onChange={onChangeDraft}
-        value={draft}
         disabled={draftDisabled}
         onKeyDown={onKeyDown}
+        onChange={onChange}
+        ref={ref}
         placeholder="What's up Otaku?"
+        value={draft}
       />
       <button
         className="postForm__button"
@@ -43,4 +46,4 @@ export default ({
       </button>
     </form>
   )
-}
+})

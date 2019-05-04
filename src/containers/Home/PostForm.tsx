@@ -1,11 +1,24 @@
 import * as React from 'react'
-const { useState } = React
+const { useState, useRef, useEffect } = React
 
 import seaClient from '../../util/seaClient'
+import App from '../../stores/app'
 
 import PostForm from '../../presenters/Home/PostForm'
 
 export default () => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  useEffect(() => {
+    // n key
+    const key = 110    
+    App.addShortcut(key, () => {
+      textareaRef.current!.focus()
+    })
+    return () => {
+      App.removeShortcut(key)
+    }
+  }, [])
+
   const [draft, setDraft] = useState('')
   const [draftDisabled, setDraftDisabled] = useState(false)
   const submitDraft = async () => {
@@ -24,6 +37,7 @@ export default () => {
 
   return (
     <PostForm
+      ref={textareaRef}
       draft={draft}
       setDraft={setDraft}
       draftDisabled={draftDisabled}
