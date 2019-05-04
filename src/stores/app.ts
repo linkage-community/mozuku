@@ -166,9 +166,13 @@ class SApp {
     this.timelineIds = Array.from(idsSet.values())
   }
   @action
-  async fetchTimeline() {
+  async fetchTimeline({ sinceId, count = 30 }: { sinceId?: number, count?: number } = {}) {
+    const query = new URLSearchParams()
+    query.set('count', count.toString(10))
+    if (sinceId) query.set('sinceId', sinceId.toString(10))
+
     const timeline = await seaClient
-      .get('/v1/timelines/public?count=10')
+      .get('/v1/timelines/public?' + query.toString())
       .then((tl: any) => {
         if (!Array.isArray(tl)) throw new Error('?')
         return tl
@@ -185,7 +189,7 @@ class SApp {
         if (!Array.isArray(tl)) throw new Error('?')
         return tl
       })
-    this.pushTimeline(...timeline)  
+    this.pushTimeline(...timeline)
   }
   private enablePilotTimelineStream () {
     if (this.timelineStreamPilotTimerId) return
@@ -193,7 +197,8 @@ class SApp {
     const reconnect = async () => {
       this.closeTimelineStream()
       // memo: 接続性チェックも含む
-      await this.fetchTimeline()
+      const kwargs = this.timeline[0] ? { sinceId: this.timeline[0].id } : undefined
+      await this.fetchTimeline(kwargs)
       await this.openTimelineStream()
     }
     const pilot = async () => {
