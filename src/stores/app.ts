@@ -22,10 +22,36 @@ class SApp {
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
 
+  @observable blur = false
+  @action onBlur () {
+    this.blur = true
+  }
+  @action onFocus () {
+    // TODO: split timeline logic to another store
+    this.timelineInBlurCount = 0
+    this.blur = false
+  }
+
+  @computed get timeline() {
+    return this.timelineIds.map(id => {
+      const p = this.posts.get(id)
+      if (!p) throw new Error('なんかおかしい')
+      return p
+    })
+  }
+  @computed get timelineTitle () {
+    let title = 'Mozuku'
+    if (this.blur && this.timelineInBlurCount) {
+      title = `(${this.timelineInBlurCount}) ${this.timeline[0].text}`
+    }
+    const status = this.timelineStreamDisconnected ? '🌩️' : '⚡️'
+    return status + title
+  }
   @observable timelineIds: number[] = []
+  @observable private timelineInBlurCount: number = 0
+  @observable private timelineStreamDisconnected = false
   private timelineStream?: WebSocket
   private timelineStreamPilotTimerId?: number
-  private timelineStreamDisconnected = false
   private timelineStreamLastPingSeen?: Date
 
   constructor() {
@@ -59,14 +85,6 @@ class SApp {
     this.accounts.set(me.id, me)
     this.meId = me.id
     this.initialized = true
-  }
-
-  @computed get timeline() {
-    return this.timelineIds.map(id => {
-      const p = this.posts.get(id)
-      if (!p) throw new Error('なんかおかしい')
-      return p
-    })
   }
   @action
   resetTimeline() {
@@ -112,27 +130,32 @@ class SApp {
       ])
       return post
     }))
-    return posts.map(p => {
+    posts.forEach(p => {
       this.posts.set(p.id, p)
-      return p.id
     })
+    return posts
   }
   private async unshiftTimeline (...p: any[]) {
     // filter only ids that not seen: おそらく結構 Post のバリデーションが重たいので効率化のため
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.timelineIds.includes(p.id))
 
-    const ids = await this.addPosts(fpp)
+    const ids = await this.addPosts(fpp).then(ps => ps.map(p => p.id))
     // for safety: 上記 addPosts を読んでいる間に更新がされてた場合ちゃんと
     // 同じ投稿が1回のみタイムラインに表示される世界になってない可能性がある
     const idsSet = new Set([...ids, ...this.timelineIds])
+
+    const tc = this.timelineIds.length
     this.timelineIds = Array.from(idsSet.values())
+
+    // 先頭に追加の時だけ count up
+    if (this.blur) this.timelineInBlurCount += idsSet.size - tc
   }
   private async pushTimeline (...p: any[]) {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.timelineIds.includes(p.id))
 
-    const ids = await this.addPosts(fpp)
+    const ids = await this.addPosts(fpp).then(ps => ps.map(p => p.id))
     const idsSet = new Set([...this.timelineIds, ...ids])
     this.timelineIds = Array.from(idsSet.values())
   }
@@ -164,7 +187,6 @@ class SApp {
         if (!this.timelineStreamDisconnected) {
           const sec = moment().diff(this.timelineStreamLastPingSeen, 'second')
           if (sec > 60) {
-            console.error('1分以上 ping が来ていないため切断されたと判断する')
             this.timelineStreamDisconnected = true
             await reconnect()
           }
@@ -215,6 +237,9 @@ class SApp {
         console.error(e)
       }
     })
+    stream.addEventListener('close', () => {
+      this.timelineStreamDisconnected = true
+    })
   }
   closeTimelineStream() {
     if (!this.timelineStream) return
@@ -223,6 +248,7 @@ class SApp {
       ws.close()
     }
     this.timelineStream = undefined
+    this.timelineStreamDisconnected = true
   }
 }
 

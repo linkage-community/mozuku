@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { Account } from '../models'
 
-import Home from '../containers/Home'
+import Home from './Home'
 import Me from '../containers/Me'
 import NotFound from './NotFound'
 
