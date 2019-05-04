@@ -59,8 +59,8 @@ class SApp {
     return status + title
   }
 
-  private shortcuts: Map<number, () => void> = new Map()
-  addShortcut(charCode: number, callback: () => void) {
+  private shortcuts: Map<number, (ev: KeyboardEvent) => void> = new Map()
+  addShortcut(charCode: number, callback: (ev: KeyboardEvent) => void) {
     // 複数 callback 同じキーに設定しない (atarimae)
     // TODO: 同時に押していい感じに！ってキーバインディングしたいかもしれないのであとでやる かも
     this.shortcuts.set(charCode, callback)
@@ -81,7 +81,7 @@ class SApp {
     })
     window.document.addEventListener('keypress', (ev) => {
       if (this.shortcuts.has(ev.charCode)) {
-        this.shortcuts.get(ev.charCode)!()
+        this.shortcuts.get(ev.charCode)!(ev)
       }
     })
   }

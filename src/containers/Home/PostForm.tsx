@@ -11,7 +11,10 @@ export default () => {
   useEffect(() => {
     // n key
     const key = 110    
-    App.addShortcut(key, () => {
+    App.addShortcut(key, (ev) => {
+      const el = textareaRef.current!
+      if (el.isEqualNode(document.activeElement)) return
+      ev.preventDefault()
       textareaRef.current!.focus()
     })
     return () => {
