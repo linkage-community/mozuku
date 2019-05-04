@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { observable, computed, action } from 'mobx'
 
 import $ from 'cafy'
@@ -14,11 +16,13 @@ import {
 } from '../models'
 import { PostBodyPart } from '../models/post'
 
+export type ShortcutFn = (ev: KeyboardEvent) => void
+
 class SApp {
   readonly defaultTitle = 'Mozuku'
 
   @observable hidden = document.hidden
-  setHidden(hidden: boolean) {
+  private setHidden(hidden: boolean) {
     this.hidden = hidden
     if (!hidden) {
       this.timelineInBackgroundCnt = 0
@@ -27,7 +31,6 @@ class SApp {
 
   @observable loggedIn: boolean = false
   @observable initialized: boolean = false
-
 
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
@@ -59,8 +62,8 @@ class SApp {
     return status + title
   }
 
-  private shortcuts: Map<number, (ev: KeyboardEvent) => void> = new Map()
-  addShortcut(charCode: number, callback: (ev: KeyboardEvent) => void) {
+  private shortcuts: Map<number, ShortcutFn> = new Map()
+  addShortcut(charCode: number, callback: ShortcutFn) {
     // 複数 callback 同じキーに設定しない (atarimae)
     // TODO: 同時に押していい感じに！ってキーバインディングしたいかもしれないのであとでやる かも
     this.shortcuts.set(charCode, callback)
@@ -79,13 +82,12 @@ class SApp {
     window.addEventListener('visibilitychange', () => {
       this.setHidden(document.hidden)
     })
-    window.document.addEventListener('keypress', (ev) => {
+    window.document.addEventListener('keypress', ev => {
       if (this.shortcuts.has(ev.charCode)) {
         this.shortcuts.get(ev.charCode)!(ev)
       }
     })
   }
-
   @action
   login() {
     const p = seaClient.pack()
@@ -300,4 +302,19 @@ class SApp {
   }
 }
 
-export default new SApp()
+const app = new SApp()
+
+const w = window as any
+w.mozuku = app
+
+export const useShortcut = (charCode: number, callback: ShortcutFn) => {
+  // custom react hook for shortcut
+  useEffect(() => {
+    app.addShortcut(charCode, callback)
+    return () => {
+      app.removeShortcut(charCode)
+    }
+  }, [])
+}
+
+export default app

@@ -1,26 +1,20 @@
 import * as React from 'react'
-const { useState, useRef, useEffect } = React
+const { useState, useRef } = React
 
 import seaClient from '../../util/seaClient'
-import App from '../../stores/app'
+import { useShortcut } from '../../stores/app'
 
 import PostForm from '../../presenters/Home/PostForm'
 
 export default () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  useEffect(() => {
-    // n key
-    const key = 110    
-    App.addShortcut(key, (ev) => {
-      const el = textareaRef.current!
-      if (el.isEqualNode(document.activeElement)) return
-      ev.preventDefault()
-      textareaRef.current!.focus()
-    })
-    return () => {
-      App.removeShortcut(key)
-    }
-  }, [])
+  // 110 = n
+  useShortcut(110, ev => {
+    const el = textareaRef.current!
+    if (el.isEqualNode(document.activeElement)) return
+    ev.preventDefault()
+    textareaRef.current!.focus()
+  })
 
   const [draft, setDraft] = useState('')
   const [draftDisabled, setDraftDisabled] = useState(false)
