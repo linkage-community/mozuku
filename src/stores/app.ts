@@ -79,12 +79,18 @@ class SApp {
   }
 
   async init() {
-    const me = await seaClient
-      .get('/v1/account/verify_credentials')
-      .then((d: any) => new Account(d))
-    this.accounts.set(me.id, me)
-    this.meId = me.id
-    this.initialized = true
+    try {
+      const me = await seaClient
+        .get('/v1/account/verify_credentials')
+        .then((d: any) => new Account(d))
+      this.accounts.set(me.id, me)
+      this.meId = me.id
+      this.initialized = true
+    } catch(e) {
+      alert('Check sea. You will be logged-out.')
+      console.error(e)
+      this.logout()
+    }
   }
 
   async applyToPosts(ps: any[]) {
