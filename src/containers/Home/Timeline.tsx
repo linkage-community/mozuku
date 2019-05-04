@@ -1,36 +1,18 @@
 import * as React from 'react'
-const { useEffect, useState } = React
+const { useState } = React
 import { useObserver } from 'mobx-react-lite'
 
-import App from '../../stores/app'
+import timelineStore, { useTimeline } from '../../stores/timeline'
 import Timeline from '../../presenters/Home/Timeline'
 
 export default () => {
-  useEffect(() => {
-    let openTimerID: number
-    const open = async () => {
-      try {
-        await App.fetchTimeline()
-        await App.openTimelineStream()
-      } catch (e) {
-        console.error(e)
-        window.setTimeout(open, 500)
-      }
-    }
-    open()
-    return () => {
-      document.title = App.defaultTitle
-      if (openTimerID) window.clearTimeout(openTimerID)
-      App.closeTimelineStream()
-      App.resetTimeline()
-    }
-  }, [])
+  useTimeline()
 
   const [readMoreDisabled, setDisabled] = useState(false)
   const readMore = async () => {
     setDisabled(true)
     try {
-      await App.readMoreTimeline()
+      await timelineStore.readMore()
     } catch (e) {
       // TODO: Add error report
     } finally {
@@ -39,10 +21,10 @@ export default () => {
   }
 
   return useObserver(() => {
-    document.title = App.timelineTitle
+    document.title = timelineStore.title
     return (
       <Timeline
-        timeline={App.timeline}
+        timeline={timelineStore.timeline}
         readMore={readMore}
         readMoreDisabled={readMoreDisabled}
       />

@@ -2,22 +2,22 @@ import * as React from 'react'
 const { useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
-import App from '../stores/app'
+import appStore from '../stores/app'
 import Layout from '../presenters/Layout'
 
 export default () => {
   useEffect(() => {
-    App.init()
+    appStore.init()
   }, [])
   return useObserver(() => {
-    if (!App.initialized) return <>Loading...</>
+    if (!appStore.initialized) return <>Loading...</>
     return (
       <>
         <Layout
-          me={App.me}
+          me={appStore.me}
           onClickLogout={e => {
             e.preventDefault()
-            App.logout()
+            appStore.logout()
           }}
         />
       </>
