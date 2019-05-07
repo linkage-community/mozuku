@@ -1,5 +1,5 @@
 /*
- * mozuku - One Mozuku
+ * mozuku - One of seaweed, client of rinsuki/sea
  * Copyright (C) 2019 otofune <otofune@otofune.me>
  *
  * This program is free software: you can redistribute it and/or modify

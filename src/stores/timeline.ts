@@ -42,11 +42,11 @@ class TimelineStore {
     })
   }
   @computed get title() {
-    const title = app.hidden && this.unreadCount
-      ? `(${this.unreadCount}) ${this.timeline[0].text}`
-      : app.defaultTitle
-    const status = this.streamDisconnected ? '🌩️' : '⚡️'
-    return status + title
+    return [
+      this.streamDisconnected ? '🌩️' : '⚡️',
+      ...(app.hidden && this.unreadCount ? [`(${this.unreadCount})`] : []),
+      app.defaultTitle
+    ].join(' ')
   }
 
   @action
