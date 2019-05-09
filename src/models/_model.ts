@@ -3,7 +3,7 @@ import moment from 'moment'
 
 export default interface Model {
   id: number
-  update(input: any): void
+  unpack(): any
 }
 
 export const validateDate = $.str.pipe(i => moment(i).isValid())

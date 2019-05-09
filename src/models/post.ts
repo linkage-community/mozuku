@@ -153,18 +153,14 @@ export default class Post implements Model {
     this.author = account
   }
 
-  update(p: any) {
-    const post = this.validate(p)
-    if (this.id && this.id !== post.id) throw new Error()
-
-    const app = new Application(post.application)
-    const account = new Account(post.user)
-
-    this.id = post.id
-    this.text = post.text
-    this.createdAt = moment(post.createdAt)
-    this.updatedAt = moment(post.updatedAt)
-    this.application = app
-    this.author = account
+  unpack() {
+    return {
+      id: this.id,
+      text: this.text,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      user: this.author.unpack(),
+      application: this.application.unpack(),
+    }
   }
 }

@@ -20,10 +20,10 @@ export default class Application implements Model {
     this.name = app.name
   }
 
-  update(a: any) {
-    const app = this.validate(a)
-    if (this.id && this.id !== a.id) throw new Error()
-    this.id = app.id
-    this.name = app.name
+  unpack() {
+    return {
+      id: this.id,
+      name: this.name
+    }
   }
 }

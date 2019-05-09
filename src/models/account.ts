@@ -33,15 +33,14 @@ export default class Account implements Model {
     this.updatedAt = moment(user.updatedAt)
   }
 
-  update(u: any) {
-    const user = this.validate(u)
-    if (this.id !== user.id) throw new Error()
-
-    this.id = user.id
-    this.name = user.name
-    this.screenName = user.screenName
-    this.postsCount = user.postsCount
-    this.createdAt = moment(user.createdAt)
-    this.updatedAt = moment(user.updatedAt)
+  unpack() {
+    return {
+      id: this.id,
+      name: this.name,
+      screenName: this.screenName,
+      postsCount: this.postsCount,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    }
   }
 }
