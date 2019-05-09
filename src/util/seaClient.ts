@@ -31,8 +31,8 @@ export class SeaClient {
   }
   unpack(s: string) {
     const { tokenType, token } = $.obj({
-      token: $.str,
-      tokenType: $.str
+      token: $.optional.str,
+      tokenType: $.optional.str
     }).throw(JSON.parse(s))
     this.token = token
     this.tokenType = tokenType
