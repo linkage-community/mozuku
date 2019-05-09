@@ -3,10 +3,9 @@ import { useEffect } from 'react'
 import { observable, computed, action } from 'mobx'
 
 import seaClient from '../util/seaClient'
-
 const KEYS = Object.freeze({
   SEA_CLIENT_PACK: 'mozuku::seaClientState',
-  SAPP_CACHE: 'mozuku::stores::App'
+  SAPP_CACHE_BROKEN: 'mozuku::stores::App'
 })
 
 import {
@@ -34,9 +33,7 @@ class SApp {
   }
 
   @observable loggedIn: boolean = false
-  @computed get initialized() {
-    return !!this.me
-  }
+  @observable initialized: boolean = false
 
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
@@ -55,33 +52,13 @@ class SApp {
     this.shortcuts.delete(charCode)
   }
 
-  load () {
+  constructor() {
     const ss = localStorage.getItem(KEYS.SEA_CLIENT_PACK)
     if (ss) {
       seaClient.unpack(ss)
       this.loggedIn = true
     }
-    const sac = localStorage.getItem(KEYS.SAPP_CACHE)
-    if (sac) {
-      const { accounts, posts, me } = JSON.parse(sac)
-      if (accounts) this.pushAccounts(accounts)
-      if (posts) this.pushPosts(posts)
-      if (me && this.posts.has(me)) this.meId = me
-    }
-  }
-  save () {
-    const p = seaClient.pack()
-    localStorage.setItem(KEYS.SEA_CLIENT_PACK, p)
-    const s = {
-      accounts: Array.from(this.accounts.entries()),
-      posts: Array.from(this.posts.entries()),
-      me: this.meId
-    }
-    localStorage.setItem(KEYS.SAPP_CACHE, JSON.stringify(s))
-  }
-
-  constructor() {
-    this.load()
+    localStorage.removeItem(KEYS.SAPP_CACHE_BROKEN)
 
     window.addEventListener('visibilitychange', () => {
       this.setHidden(document.hidden)
@@ -91,21 +68,17 @@ class SApp {
         this.shortcuts.get(ev.charCode)!(ev)
       }
     })
-    const fn = () => {
-      this.save()
-      setTimeout(fn, 1000)
-    }
-    setTimeout(fn, 5000)
   }
   @action
   login() {
-    this.save()
+    const p = seaClient.pack()
+    localStorage.setItem(KEYS.SEA_CLIENT_PACK, p)
     this.loggedIn = true
   }
   @action
   logout() {
     seaClient.clear()
-    this.save()
+    localStorage.removeItem(KEYS.SEA_CLIENT_PACK)
     this.loggedIn = false
   }
 
@@ -116,6 +89,7 @@ class SApp {
         .then((d: any) => new Account(d))
       this.accounts.set(me.id, me)
       this.meId = me.id
+      this.initialized = true
     } catch(e) {
       alert('Check sea. You will be logged-out.')
       console.error(e)
@@ -123,13 +97,7 @@ class SApp {
     }
   }
 
-  async pushAccounts(as: any[]) {
-    const asm = await Promise.all(as.map(async (a: any) => new Account(a)))
-    asm.forEach(a => {
-      this.accounts.set(a.id, a)
-    })
-  }
-  async pushPosts(ps: any[]) {
+  async applyToPosts(ps: any[]) {
     // Make bold me
     const boldMyScreenNameMiddleware = (a: Account) => (
       p: PostBodyPart
@@ -184,7 +152,3 @@ export const useShortcut = (charCode: number, callback: ShortcutFn) => {
     }
   }, [])
 }
-
-const w = <any>window
-w.app = app
-w.seaClient = seaClient
