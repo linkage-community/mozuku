@@ -103,6 +103,12 @@ export class SeaClient {
       .then(r => r.data)
   }
 
+  patch(path: string, data: any) {
+    return this.createAxiosInstance()
+      .patch(this.genApiHref(path), data)
+      .then(r => r.data)
+  }
+
   connectStream(stream: string): Promise<WebSocket> {
     return new Promise((resolve, reject) => {
       try {
