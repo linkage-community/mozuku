@@ -175,5 +175,7 @@ select {
 }
 
 .post__meta {
-  display: none;
+  margin: 4px 0 0;
+  color: #999;
+  font-size: 0.8em;
 }
