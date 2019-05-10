@@ -12,7 +12,14 @@ export default ({ post }: { post: Post }) => (
   <div className="post">
     <div className="post__head post-head">
       <div className="post-head__name">
-        <span className="post-head__name__name">{post.author.name}</span>
+        <span
+          className={`post-head__name__name ${
+            // FIXME: DIRTY!
+            post.author.name.trim().length === 0 ? 'empty' : ''
+          }`}
+        >
+          {post.author.name}
+        </span>
         <span className="post-head__name__screenName">
           @{post.author.screenName}
         </span>

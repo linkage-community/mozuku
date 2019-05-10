@@ -139,11 +139,14 @@ select {
 }
 
 .post-head__name__name {
+  margin: 0 4px 0 0;
   font-weight: bold;
+}
+.post-head__name__name.empty {
+  margin: 0;
 }
 
 .post-head__name__screenName {
-  margin: 0 0 0 4px;
   color: #999;
 }
 
