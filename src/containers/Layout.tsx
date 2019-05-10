@@ -10,7 +10,6 @@ export default () => {
     appStore.init()
   }, [])
   return useObserver(() => {
-    if (!appStore.initialized) return <>Loading...</>
     return (
       <>
         <Layout

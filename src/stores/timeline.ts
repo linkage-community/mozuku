@@ -18,12 +18,17 @@ class TimelineStore {
   private streamPilot?: number
   private streamLastPingFromServer?: Date
 
+  @computed
+  get ready() {
+    return app.initialized
+  }
+
   constructor() {
-    app.subscribeHiddenChange((hidden) => {
+    app.subscribeHiddenChange(hidden => {
       if (!hidden) {
         // reset counter
-        this.unreadCount    = 0
-        this.isUnreadCountEnabled  = false
+        this.unreadCount = 0
+        this.isUnreadCountEnabled = false
         return
       }
       this.isUnreadCountEnabled = true
@@ -102,15 +107,27 @@ class TimelineStore {
     this.unshift(...timeline)
   }
   async readMore() {
-    if (this.ids.length >= 100) return alert('これ以上は動かないよ!')
-    // after query 実装するまでは count=100 で誤魔化す
-    const timeline = await seaClient
-      .get('/v1/timelines/public?count=100')
-      .then((tl: any) => {
-        if (!Array.isArray(tl)) throw new Error('?')
-        return tl
-      })
-    this.push(...timeline)
+    if (this.readMoreDisabled) return alert('これ以上は動かないよ!')
+    try {
+      this._readingMore = true
+      // after query 実装するまでは count=100 で誤魔化す
+      const timeline = await seaClient
+        .get('/v1/timelines/public?count=100')
+        .then((tl: any) => {
+          if (!Array.isArray(tl)) throw new Error('?')
+          return tl
+        })
+      this.push(...timeline)
+    } catch (e) {
+      throw e
+    } finally {
+      this._readingMore = false
+    }
+  }
+  @observable _readingMore = false
+  @computed
+  get readMoreDisabled() {
+    return this._readingMore || this.ids.length === 0 || this.ids.length >= 100 // temp: after query 実装するまで
   }
 
   private enableStreamPilot() {
@@ -204,22 +221,30 @@ class TimelineStore {
 const timeline = new TimelineStore()
 export default timeline
 
-export const useTimeline = () => useEffect(() => {
-  let openTimerID: number
-  const open = async () => {
-    try {
-      await timeline.fetch()
-      await timeline.openStream()
-    } catch (e) {
-      console.error(e)
-      window.setTimeout(open, 500)
+export const useTimeline = () =>
+  useEffect(() => {
+    let openTimerID: number
+    const open = async () => {
+      class NotReady {}
+      try {
+        // FIXME: 汚い.....
+        if (!timeline.ready) throw new NotReady()
+        await timeline.fetch()
+        await timeline.openStream()
+      } catch (e) {
+        if (e instanceof NotReady) {
+          window.setTimeout(open, 100)
+          return
+        }
+        console.error(e)
+        window.setTimeout(open, 500)
+      }
     }
-  }
-  open()
-  return () => {
-    document.title = app.defaultTitle
-    if (openTimerID) window.clearTimeout(openTimerID)
-    timeline.closeStream()
-    timeline.reset()
-  }
-}, [])
+    open()
+    return () => {
+      document.title = app.defaultTitle
+      if (openTimerID) window.clearTimeout(openTimerID)
+      timeline.closeStream()
+      timeline.reset()
+    }
+  }, [])

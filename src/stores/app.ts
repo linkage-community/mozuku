@@ -26,8 +26,8 @@ class SApp {
     this.hidden = hidden
     this.hiddenListener.forEach(fn => fn(hidden))
   }
-  private hiddenListener: ((h: boolean)=>void)[] = []
-  subscribeHiddenChange(callback: (h: boolean)=>void) {
+  private hiddenListener: ((h: boolean) => void)[] = []
+  subscribeHiddenChange(callback: (h: boolean) => void) {
     // TODO: あとで unsubscribe いるかも
     this.hiddenListener.push(callback)
   }
@@ -90,7 +90,7 @@ class SApp {
       this.accounts.set(me.id, me)
       this.meId = me.id
       this.initialized = true
-    } catch(e) {
+    } catch (e) {
       alert('Check sea. You will be logged-out.')
       console.error(e)
       this.logout()

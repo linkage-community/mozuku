@@ -40,7 +40,7 @@ export default class Account implements Model {
       screenName: this.screenName,
       postsCount: this.postsCount,
       createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      updatedAt: this.updatedAt
     }
   }
 }
