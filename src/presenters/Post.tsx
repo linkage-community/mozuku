@@ -51,17 +51,17 @@ export default ({ post }: { post: Post }) => (
         }
       })}
     </div>
-    <div className="post__image">
-      {post.body.parts.map((p, i) => (
-        <React.Fragment key={i}>
-          {p.type === BODYPART_TYPE_LINK_IMAGE && (
-            <a href={p.payload} target="_blank">
-              <img className="post-image__img" src={p.payload} />
-            </a>
-          )}
-        </React.Fragment>
-      ))}
-    </div>
+    {post.images.length ? (
+      <div className="post__image">
+        {post.images.map((im, k) => (
+          <a key={k} href={im.direct} target="_blank">
+            <img className="post-image__img" src={im.thumbnail} />
+          </a>
+        ))}
+      </div>
+    ) : (
+      <></>
+    )}
     <div className="post__meta">This post from {post.application.name}</div>
   </div>
 )

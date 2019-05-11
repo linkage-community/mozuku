@@ -67,12 +67,7 @@ export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
     return [p]
   const url = new URL(p.payload)
   // not whitelisted domain
-  if (
-    !['delta.contents.stream', 'jet.contents.stream', 'i.gyazo.com', 'i.imgur.com'].includes(
-      url.hostname
-    )
-  )
-    return [p]
+  if (!PostImage.isImageURL(url)) return [p]
   return [
     {
       type: BODYPART_TYPE_LINK_IMAGE,
@@ -117,6 +112,59 @@ export class PostBody {
   }
 }
 
+export type PostImageVariant = {
+  type: 'thumbnail' | 'direct'
+  destination: URL
+}
+export class PostImage {
+  static whiteListedDomain = [
+    'delta.contents.stream',
+    'jet.contents.stream',
+    'i.gyazo.com',
+    'i.imgur.com'
+  ]
+  variants = new Map<PostImageVariant['type'], PostImageVariant>()
+
+  private noThumbnail = false
+  backgroundColor = '#ffffff'
+
+  static isImageURL(url: URL) {
+    return this.whiteListedDomain.includes(url.hostname)
+  }
+
+  addVariant(type: PostImageVariant['type'], destination: URL) {
+    this.variants.set(type, {
+      type,
+      destination
+    })
+  }
+
+  constructor(url: string) {
+    const u = new URL(url)
+    this.addVariant('direct', u)
+    switch (u.hostname) {
+      case 'delta.contents.stream':
+        const t = new URL(u.href)
+        t.searchParams.set('thumbnail', '')
+        this.addVariant('thumbnail', t)
+        break
+      default:
+        this.noThumbnail = true
+        break
+    }
+  }
+
+  get thumbnail() {
+    if (this.noThumbnail) return this.direct
+    const t = this.variants.get('thumbnail')
+    return t && t.destination.href
+  }
+  get direct() {
+    const r = this.variants.get('direct')
+    return r && r.destination.href
+  }
+}
+
 export default class Post implements Model {
   id: number
   text: string
@@ -124,6 +172,7 @@ export default class Post implements Model {
   updatedAt: Moment
 
   body: PostBody
+  images: PostImage[] = []
   application: Application
   author: Account
 
@@ -149,9 +198,18 @@ export default class Post implements Model {
     const body = new PostBody(post.text)
     body.process()
 
+    const images = body.parts.reduce(
+      (c, p) => {
+        if (p.type !== BODYPART_TYPE_LINK_IMAGE) return c
+        return [...c, new PostImage(p.payload)]
+      },
+      [] as PostImage[]
+    )
+
     this.id = post.id
     this.text = post.text
     this.body = body
+    this.images = images
     this.createdAt = moment(post.createdAt)
     this.updatedAt = moment(post.updatedAt)
     this.application = app

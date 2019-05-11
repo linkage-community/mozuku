@@ -162,13 +162,13 @@ select {
 .post__body__bold {
   font-weight: bold;
 }
-
-.post__image:not(:empty) {
+.post__image {
   display: flex;
-  overflow-x: hidden;
+  overflow-x: auto;
+  margin-top: 4px;
 }
 .post-image__img {
-  margin: 4px 4px 0 0;
+  margin-right: 4px;
   width: 144px;
   height: 144px;
   object-fit: cover;
