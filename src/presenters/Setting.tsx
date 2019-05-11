@@ -1,7 +1,15 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-export default ({ updateDisabled, updateName, currentName }: { updateDisabled: boolean, updateName: (n: string) => Promise<void>, currentName?: string }) => {
+export default ({
+  updateDisabled,
+  updateName,
+  currentName
+}: {
+  updateDisabled: boolean
+  updateName: (n: string) => Promise<void>
+  currentName?: string
+}) => {
   const callback = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     updateName(refName.current!.value)
@@ -30,7 +38,12 @@ export default ({ updateDisabled, updateName, currentName }: { updateDisabled: b
           Show notification when reply received
         </label>
         */}
-        <input className="settingItem__submitButton" type="submit" value="Update" disabled={updateDisabled} />
+        <input
+          className="settingItem__submitButton"
+          type="submit"
+          value="Update"
+          disabled={updateDisabled}
+        />
       </form>
     </div>
   )

@@ -3,7 +3,7 @@ import { useObserver } from 'mobx-react-lite'
 
 import { appStore, configStore } from '../stores'
 import seaClient from '../util/seaClient'
-import Setting from '../presenters/Setting';
+import Setting from '../presenters/Setting'
 const { useState, useCallback } = React
 
 export default () => {
@@ -11,9 +11,7 @@ export default () => {
   const updateName = useCallback(async (name: string) => {
     try {
       lock(true)
-      appStore.setAccounts([
-        await seaClient.patch('/v1/account', { name })
-      ])
+      appStore.setAccounts([await seaClient.patch('/v1/account', { name })])
     } catch (e) {
       // TODO: Add error reporting
       console.error(e)
@@ -27,7 +25,8 @@ export default () => {
       <Setting
         updateDisabled={updateDisabled}
         updateName={updateName}
-        currentName={appStore.me ? appStore.me!.name : undefined} />
+        currentName={appStore.me ? appStore.me!.name : undefined}
+      />
     )
   })
 }
