@@ -30,12 +30,12 @@ export const unifyNewLinesMiddleware = (p: PostBodyPart): PostBodyPart[] => {
   }
   return [p]
 }
-export const parseURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
+export const parseURLMiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type !== BODYPART_TYPE_TEXT) return [p]
   const r = p.payload.split(/(https?:\/\/[^\s]+)/gi)
   return r.map(
     (r): PostBodyPart => {
-      if (r.startsWith('http')) {
+      if (r.startsWith('http://') || r.startsWith('https://')) {
         return {
           type: BODYPART_TYPE_LINK,
           payload: r
@@ -57,7 +57,7 @@ export const convertEmojiMiddleware = (p: PostBodyPart) => {
     }
   ]
 }
-export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
+export const markImageURLMiddleware = (p: PostBodyPart): PostBodyPart[] => {
   if (p.type !== BODYPART_TYPE_LINK) return [p]
   // not image
   if (
@@ -75,11 +75,17 @@ export const markImageURLmiddleware = (p: PostBodyPart): PostBodyPart[] => {
     }
   ]
 }
+export const pruneEmptyTextMiddleware = (p: PostBodyPart): PostBodyPart[] => {
+  if (p.type !== BODYPART_TYPE_TEXT) return [p]
+  if (p.payload.length === 0) return []
+  return [p]
+}
 const presetMiddlewares: PostBodyMiddleware[] = [
   unifyNewLinesMiddleware,
-  parseURLmiddleware,
+  parseURLMiddleware,
   convertEmojiMiddleware,
-  markImageURLmiddleware
+  markImageURLMiddleware,
+  pruneEmptyTextMiddleware,
 ]
 
 export class PostBody {
