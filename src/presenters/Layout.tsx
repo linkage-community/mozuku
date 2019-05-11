@@ -8,6 +8,7 @@ import { Account } from '../models'
 import Home from './Home'
 import Me from '../containers/Me'
 import NotFound from './NotFound'
+import Setting from '../containers/Setting';
 
 import logo from '../static/logo.png'
 
@@ -46,6 +47,7 @@ export default ({
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/me" component={Me} />
+          <Route exact path="/settings" component={Setting} />
           <Route component={NotFound} />
         </Switch>
       </div>

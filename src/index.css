@@ -177,3 +177,54 @@ select {
 .post__meta {
   display: none;
 }
+
+.setting {
+  min-width: 60px;
+  padding: 12px 24px 12px 24px;
+}
+.settingItem__title {
+  font-size: 180%;
+  padding: 12px 0;
+}
+.settingItem__subtitle {
+  font-size: 140%;
+  padding: 8px 0;
+}
+.setting label {
+  display: block;
+  padding-left: 16px;
+}
+.settingItem__label__field {
+  display: inline-block;
+  text-align: right;
+  margin-right: 8px;
+}
+.setting label input[type=text] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  height: 30px;
+  width: 210px;
+  padding: 4px;
+  border: 1px solid #e6ecf0;
+  border-radius: 3px;
+}
+.setting label input[type=checkbox] {
+  width: 1em;
+  height: 100%;
+  -webkit-appearance: checkbox;
+  -moz-appearance: checkbox;
+  appearance: checkbox;
+  margin-right: 4px;
+}
+.settingItem__submitButton {
+  display: block;
+  width: 120px;
+  height: 36px;
+  background-color: var(--color-main);
+  color: #fff;
+  font-size: 0.8em;
+
+  margin-left: auto;
+  margin-right: 0;
+}
