@@ -2,7 +2,7 @@ import * as React from 'react'
 const { useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
-import appStore from '../stores/app'
+import { appStore } from '../stores'
 import Layout from '../presenters/Layout'
 
 export default () => {

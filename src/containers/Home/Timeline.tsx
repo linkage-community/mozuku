@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import timelineStore, { useTimeline } from '../../stores/timeline'
+import { timelineStore, useTimeline } from '../../stores'
 import Timeline from '../../presenters/Home/Timeline'
 
 export default () => {

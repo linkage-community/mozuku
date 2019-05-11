@@ -25,7 +25,7 @@ import usePromise from 'react-use-promise'
 import seaClient from './util/seaClient'
 
 import { useObserver } from 'mobx-react-lite'
-import appStore from './stores/app'
+import { appStore } from './stores'
 
 import Layout from './containers/Layout'
 
