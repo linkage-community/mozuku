@@ -10,10 +10,10 @@ interface pictograph {
 }
 const pictograph: pictograph = require('pictograph')
 
-export const BODYPART_TYPE_TEXT       = 'BODYPART_TYPE_TEXT'
-export const BODYPART_TYPE_LINK       = 'BODYPART_TYPE_LINK'
+export const BODYPART_TYPE_TEXT = 'BODYPART_TYPE_TEXT'
+export const BODYPART_TYPE_LINK = 'BODYPART_TYPE_LINK'
 export const BODYPART_TYPE_LINK_IMAGE = 'BODYPART_TYPE_LINK_IMAGE'
-export const BODYPART_TYPE_BOLD       = 'BODYPART_TYPE_BOLD'
+export const BODYPART_TYPE_BOLD = 'BODYPART_TYPE_BOLD'
 export interface PostBodyPart {
   type:
     | typeof BODYPART_TYPE_TEXT
@@ -85,7 +85,7 @@ const presetMiddlewares: PostBodyMiddleware[] = [
   parseURLMiddleware,
   convertEmojiMiddleware,
   markImageURLMiddleware,
-  pruneEmptyTextMiddleware,
+  pruneEmptyTextMiddleware
 ]
 
 export class PostBody {
