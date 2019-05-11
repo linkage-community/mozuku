@@ -12,6 +12,7 @@ export default () => {
     try {
       lock(true)
       appStore.setAccounts([await seaClient.patch('/v1/account', { name })])
+      alert('更新成功！')
     } catch (e) {
       // TODO: Add error reporting
       console.error(e)
@@ -26,6 +27,7 @@ export default () => {
         updateDisabled={updateDisabled}
         updateName={updateName}
         currentName={appStore.me ? appStore.me!.name : undefined}
+        logout={appStore.logout.bind(appStore)}
       />
     )
   })

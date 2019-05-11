@@ -4,15 +4,21 @@ const { useCallback, useRef } = React
 export default ({
   updateDisabled,
   updateName,
-  currentName
+  currentName,
+  logout,
 }: {
   updateDisabled: boolean
   updateName: (n: string) => Promise<void>
-  currentName?: string
+  currentName?: string,
+  logout: () => void,
 }) => {
   const callback = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     updateName(refName.current!.value)
+  }, [])
+  const onLogout = useCallback((event: React.MouseEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    logout()
   }, [])
   const refName = useRef<HTMLInputElement>(null)
   const refVia = useRef<HTMLInputElement>(null)
@@ -45,6 +51,14 @@ export default ({
           disabled={updateDisabled}
         />
       </form>
+      <div className="settingItem__subtitle">Dangerous Zone</div>
+      <label>ほんとはメニュー用意してそこに入れたい。</label>
+      <input
+          className="settingItem__submitButton"
+          type="submit"
+          value="Logout"
+          onClick={onLogout}
+        />
     </div>
   )
 }
