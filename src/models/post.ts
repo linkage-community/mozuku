@@ -125,8 +125,7 @@ export class PostImage {
   ]
   variants = new Map<PostImageVariant['type'], PostImageVariant>()
 
-  private noThumbnail = false
-  backgroundColor = '#ffffff'
+  readonly backgroundColor = '#ffffff' // placeholder
 
   static isImageURL(url: URL) {
     return this.whiteListedDomain.includes(url.hostname)
@@ -144,18 +143,22 @@ export class PostImage {
     this.addVariant('direct', u)
     switch (u.hostname) {
       case 'delta.contents.stream':
-        const t = new URL(u.href)
-        t.searchParams.set('thumbnail', '')
-        this.addVariant('thumbnail', t)
+        const td = new URL(u.href)
+        td.searchParams.set('thumbnail', '')
+        this.addVariant('thumbnail', td)
         break
       default:
-        this.noThumbnail = true
+        const tw = new URL('https://images.weserv.nl')
+        tw.searchParams.set('url', encodeURI(u.href))
+        const s = 144 * 3
+        tw.searchParams.set('w', s.toString())
+        tw.searchParams.set('h', s.toString())
+        this.addVariant('thumbnail', tw)
         break
     }
   }
 
   get thumbnail() {
-    if (this.noThumbnail) return this.direct
     const t = this.variants.get('thumbnail')
     return t && t.destination.href
   }
