@@ -18,7 +18,15 @@ export default ({ post }: { post: Post }) => (
             post.author.name.trim().length === 0 ? 'empty' : ''
           }`}
         >
-          {post.author.name}
+          {[].filter
+            .call(
+              post.author.name.trim(),
+              (c: string) => c.charCodeAt(0) !== 8203
+            )
+            .join('')
+            .replace(/[\u200B-\u200D\uFEFF]/g, '').length === 0
+            ? 'empty'
+            : post.author.name}
         </span>
         <span className="post-head__name__screenName">
           @{post.author.screenName}
