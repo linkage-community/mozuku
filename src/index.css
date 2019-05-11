@@ -180,7 +180,7 @@ select {
 
 .setting {
   min-width: 60px;
-  padding: 12px 24px 12px 24px;
+  padding: 12px 24px;
 }
 .settingItem__title {
   font-size: 180%;
@@ -225,6 +225,7 @@ select {
   color: #fff;
   font-size: 0.8em;
 
+  margin-top: 12px;
   margin-left: auto;
   margin-right: 0;
 }
