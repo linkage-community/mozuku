@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import appStore from '../stores/app'
+import { appStore } from '../stores'
 
 import Me from '../presenters/Me'
 

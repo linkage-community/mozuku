@@ -2,7 +2,7 @@ import * as React from 'react'
 const { useState, useRef } = React
 
 import seaClient from '../../util/seaClient'
-import { useShortcut } from '../../stores/app'
+import { useShortcut } from '../../stores'
 
 import PostForm from '../../presenters/Home/PostForm'
 
