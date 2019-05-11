@@ -37,7 +37,8 @@ export default ({
               </span>
             )}
           </div>
-          <div>
+          <div className="mozuku-header__setting">
+            <Link to={{ pathname: '/settings' }}>⚙</Link>
             <button onClick={onClickLogout}>👋</button>
           </div>
         </div>

@@ -74,6 +74,12 @@ select {
   background: #fafafa;
 }
 
+.mozuku-header__setting a, button {
+  text-decoration: none;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
 .mozuku-container {
   width: 100%;
   max-width: 720px;
