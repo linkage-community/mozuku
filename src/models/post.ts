@@ -10,10 +10,10 @@ interface pictograph {
 }
 const pictograph: pictograph = require('pictograph')
 
-export const BODYPART_TYPE_TEXT = 0
-export const BODYPART_TYPE_LINK = 1
-export const BODYPART_TYPE_LINK_IMAGE = 2
-export const BODYPART_TYPE_BOLD = 3
+export const BODYPART_TYPE_TEXT       = 'BODYPART_TYPE_TEXT'
+export const BODYPART_TYPE_LINK       = 'BODYPART_TYPE_LINK'
+export const BODYPART_TYPE_LINK_IMAGE = 'BODYPART_TYPE_LINK_IMAGE'
+export const BODYPART_TYPE_BOLD       = 'BODYPART_TYPE_BOLD'
 export interface PostBodyPart {
   type:
     | typeof BODYPART_TYPE_TEXT

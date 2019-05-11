@@ -40,6 +40,6 @@
   "scripts": {
     "start": "parcel src/index.html",
     "format": "prettier --write \"./src/**/*.{html,css,ts,tsx}\"",
-    "test": "ts-jest"
+    "test": "jest"
   }
 }
