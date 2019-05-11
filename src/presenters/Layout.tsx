@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom'
 import { Account } from '../models'
 
 import Home from './Home'
-import Me from '../containers/Me'
 import NotFound from './NotFound'
-import Setting from '../containers/Setting';
+import Setting from '../containers/Setting'
 
 import logo from '../static/logo.png'
 
@@ -30,7 +29,7 @@ export default ({
           </h1>
           <div>
             {me ? (
-              <Link to={{ pathname: '/me' }}>@{me.screenName}</Link>
+              <>@{me.screenName}</>
             ) : (
               <span>
                 <i>[誰?]</i>
@@ -47,7 +46,6 @@ export default ({
       <div className="mozuku-container">
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/me" component={Me} />
           <Route exact path="/settings" component={Setting} />
           <Route component={NotFound} />
         </Switch>
