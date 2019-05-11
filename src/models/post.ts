@@ -139,6 +139,15 @@ export class PostImage {
   }
 
   constructor(url: string) {
+    const useWeservThumbnail = (href: string) => {
+      const tw = new URL('https://images.weserv.nl')
+      tw.searchParams.set('url', encodeURI(href))
+      const s = 144 * 3
+      tw.searchParams.set('w', s.toString())
+      tw.searchParams.set('h', s.toString())
+      this.addVariant('thumbnail', tw)
+    }
+
     const u = new URL(url)
     this.addVariant('direct', u)
     switch (u.hostname) {
@@ -148,12 +157,7 @@ export class PostImage {
         this.addVariant('thumbnail', td)
         break
       default:
-        const tw = new URL('https://images.weserv.nl')
-        tw.searchParams.set('url', encodeURI(u.href))
-        const s = 144 * 3
-        tw.searchParams.set('w', s.toString())
-        tw.searchParams.set('h', s.toString())
-        this.addVariant('thumbnail', tw)
+        useWeservThumbnail(u.href)
         break
     }
   }
