@@ -97,7 +97,14 @@ class SApp {
     }
   }
 
-  async applyToPosts(ps: any[]) {
+  async setAccounts(as: any[]) {
+    const accounts = as.map(a => new Account(a))
+    accounts.forEach(a => {
+      this.accounts.set(a.id, a)
+    })
+    return accounts
+  }
+  async setPosts(ps: any[]) {
     // Make bold me
     const boldMyScreenNameMiddleware = (a: Account) => (
       p: PostBodyPart

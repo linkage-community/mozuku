@@ -70,7 +70,7 @@ class TimelineStore {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.ids.includes(p.id))
 
-    const ids = await app.applyToPosts(fpp).then(ps => ps.map(p => p.id))
+    const ids = await app.setPosts(fpp).then(ps => ps.map(p => p.id))
     // for safety: 上記 addPosts を読んでいる間に更新がされてた場合ちゃんと
     // 同じ投稿が1回のみタイムラインに表示される世界になってない可能性がある
     const idsSet = new Set([...ids, ...this.ids])
@@ -85,7 +85,7 @@ class TimelineStore {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.ids.includes(p.id))
 
-    const ids = await app.applyToPosts(fpp).then(ps => ps.map(p => p.id))
+    const ids = await app.setPosts(fpp).then(ps => ps.map(p => p.id))
     const idsSet = new Set([...this.ids, ...ids])
     this.ids = Array.from(idsSet.values())
   }
