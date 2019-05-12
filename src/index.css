@@ -226,7 +226,7 @@ button {
 }
 .setting label input[type='checkbox'] {
   width: 1em;
-  height: 100%;
+  height: 1em;
   -webkit-appearance: checkbox;
   -moz-appearance: checkbox;
   appearance: checkbox;
