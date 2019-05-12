@@ -12,30 +12,28 @@ import seaClient from '../util/seaClient'
 class TimelineStore {
   @observable ids: number[] = []
   @observable private unreadCount: number = 0
-  private isUnreadCountEnabled = false
-  @observable private streamDisconnected = false
+  private _hidden = false
+  private get connectedAndBackground () {
+    return this._hidden && this.streamConnected
+  }
+  @observable private streamConnected = false
   private stream?: WebSocket
   private streamPilot?: number
   private streamLastPingFromServer?: Date
-
-  @computed
-  get ready() {
-    return app.initialized
-  }
 
   constructor() {
     app.subscribeHiddenChange(hidden => {
       if (!hidden) {
         // reset counter
         this.unreadCount = 0
-        this.isUnreadCountEnabled = false
+        this._hidden = false
         return
       }
-      this.isUnreadCountEnabled = true
+      this._hidden = true
     })
   }
   private countUnread(cnt: number) {
-    if (!this.isUnreadCountEnabled) return
+    if (!this.connectedAndBackground) return
     this.unreadCount += cnt
   }
 
@@ -48,21 +46,21 @@ class TimelineStore {
   }
   @computed get title() {
     return [
-      this.streamDisconnected ? '🌩️' : '⚡️',
-      ...(app.hidden && this.unreadCount ? [`(${this.unreadCount})`] : []),
+      this.streamConnected ? '⚡️' : '🌩️',
+      ...(this.connectedAndBackground && this.unreadCount ? [`(${this.unreadCount})`] : []),
       app.defaultTitle
     ].join(' ')
   }
 
   @action
   reset() {
-    this.ids = []
-    this.streamLastPingFromServer = undefined
     if (this.streamPilot) {
       clearTimeout(this.streamPilot)
       this.streamPilot = undefined
     }
-    this.streamDisconnected = false
+    this.ids = []
+    this.streamLastPingFromServer = undefined
+    this.streamConnected = false
   }
   @action
   private async unshift(...p: any[]) {
@@ -144,14 +142,14 @@ class TimelineStore {
     }
     const pilot = async () => {
       try {
-        if (this.streamDisconnected) {
+        if (!this.streamConnected) {
           await reconnect()
         }
 
-        if (!this.streamDisconnected) {
+        if (this.streamConnected) {
           const sec = moment().diff(this.streamLastPingFromServer, 'second')
           if (sec > 60) {
-            this.streamDisconnected = true
+            this.streamConnected = false
             await reconnect()
           }
         }
@@ -176,13 +174,11 @@ class TimelineStore {
   }
   async openStream() {
     const stream = await seaClient.connectStream('v1/timelines/public')
-
+    this.streamConnected = true
+    this.stream = stream
     // for reconnecting
-    this.streamDisconnected = false
     this.enableStreamPilot()
     this.streamLastPingFromServer = new Date()
-    // internal state
-    this.stream = stream
 
     stream.addEventListener('message', ev => {
       try {
@@ -204,7 +200,7 @@ class TimelineStore {
       }
     })
     stream.addEventListener('close', () => {
-      this.streamDisconnected = true
+      this.streamConnected = false
     })
   }
   closeStream() {
@@ -214,7 +210,7 @@ class TimelineStore {
       ws.close()
     }
     this.stream = undefined
-    this.streamDisconnected = true
+    this.streamConnected = false
   }
 }
 
@@ -228,7 +224,7 @@ export const useTimeline = () =>
       class NotReady {}
       try {
         // FIXME: 汚い.....
-        if (!timeline.ready) throw new NotReady()
+        if (!app.initialized) throw new NotReady()
         await timeline.fetch()
         await timeline.openStream()
       } catch (e) {
@@ -244,7 +240,7 @@ export const useTimeline = () =>
     return () => {
       document.title = app.defaultTitle
       if (openTimerID) window.clearTimeout(openTimerID)
-      timeline.closeStream()
       timeline.reset()
+      timeline.closeStream()
     }
   }, [])
