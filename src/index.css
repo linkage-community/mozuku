@@ -206,7 +206,8 @@ button {
 }
 .setting label {
   display: block;
-  padding-left: 16px;
+  margin-left: 16px;
+  margin-top: 4px;
 }
 .settingItem__label__field {
   display: inline-block;

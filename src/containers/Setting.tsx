@@ -9,9 +9,12 @@ const { useState, useCallback } = React
 export default () => {
   const [updateDisabled, lock] = useState(false)
   const updateName = useCallback(async (name: string) => {
+    const currentName = appStore.me ? appStore.me!.name : undefined
+    if (currentName === name) return
     try {
       lock(true)
       appStore.setAccounts([await seaClient.patch('/v1/account', { name })])
+      // FIXME: もっといい手段で伝える
       alert('更新成功！')
     } catch (e) {
       // TODO: Add error reporting
@@ -20,10 +23,9 @@ export default () => {
       lock(false)
     }
   }, [])
-  // TODO: FIx interface (argument) - 意味不明 (なぜ showMeta だけ指定で切るの？とか)
-  const updateConfig = useCallback((showMeta: boolean) => {
+  const onUpdateShowMetaCheckbox = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     // FIXME: ここきたない
-    appStore.preferences.set(PREFERENCE_SHOW_META, showMeta)
+    appStore.preferences.set(PREFERENCE_SHOW_META, e.target.checked)
     appStore.savePreferences()
   }, [])
 
@@ -35,7 +37,7 @@ export default () => {
       <Setting
         updateDisabled={updateDisabled}
         updateName={updateName}
-        updateConfig={updateConfig}
+        onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
         currentName={appStore.me ? appStore.me!.name : undefined}
         logout={appStore.logout.bind(appStore)}
         currentConfig={currentConfig}

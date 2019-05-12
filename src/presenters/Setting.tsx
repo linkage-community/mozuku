@@ -6,21 +6,20 @@ type Config = { showMeta: boolean }
 export default ({
   updateDisabled,
   updateName,
-  updateConfig,
+  onUpdateShowMetaCheckbox,
   currentName,
   currentConfig,
   logout
 }: {
   updateDisabled: boolean
   updateName: (n: string) => Promise<void>
-  updateConfig: (showMeta: boolean) => void
+  onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
   currentConfig: Config
   logout: () => void
 }) => {
   const callback = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    updateConfig(refVia.current!.checked)
     updateName(refName.current!.value)
   }, [])
   const onLogout = useCallback((event: React.MouseEvent<HTMLInputElement>) => {
@@ -28,7 +27,6 @@ export default ({
     logout()
   }, [])
   const refName = useRef<HTMLInputElement>(null)
-  const refVia = useRef<HTMLInputElement>(null)
 
   return (
     <div className="setting">
@@ -39,16 +37,6 @@ export default ({
           <span className="settingItem__label__field">Name</span>
           <input type="text" ref={refName} defaultValue={currentName} />
         </label>
-        <div className="settingItem__subtitle">Mozuku Settings</div>
-        <label>
-          <input
-            type="checkbox"
-            name="via"
-            ref={refVia}
-            defaultChecked={currentConfig.showMeta}
-          />
-          Show metadata in post (like via)
-        </label>
         <input
           className="settingItem__submitButton"
           type="submit"
@@ -56,6 +44,17 @@ export default ({
           disabled={updateDisabled}
         />
       </form>
+      <div className="settingItem__subtitle">Mozuku Settings</div>
+      <label>チェック入れたら即時反映される</label>
+      <label>
+        <input
+          type="checkbox"
+          name="via"
+          onChange={onUpdateShowMetaCheckbox}
+          checked={currentConfig.showMeta}
+        />
+        Show metadata in post (like via)
+      </label>
       <div className="settingItem__subtitle">Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>
       <input
