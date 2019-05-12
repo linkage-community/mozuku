@@ -221,8 +221,8 @@ button {
   height: 30px;
   width: 210px;
   padding: 4px;
-  border: 1px solid #e6ecf0;
   border-radius: 3px;
+  border: 1px solid #999;
 }
 .setting label input[type='checkbox'] {
   width: 1em;
