@@ -19,7 +19,6 @@ export default class Account implements Model {
       createdAt: validateDate,
       updatedAt: validateDate
     })
-      .strict()
       .throw(user)
   }
 

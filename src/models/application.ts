@@ -10,7 +10,6 @@ export default class Application implements Model {
       id: $.num,
       name: $.str
     })
-      .strict()
       .throw(app)
   }
 

@@ -198,7 +198,6 @@ export default class Post implements Model {
       user: $.any,
       application: $.any
     })
-      .strict()
       .throw(post)
   }
 
