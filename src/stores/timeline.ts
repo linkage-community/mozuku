@@ -132,7 +132,7 @@ class TimelineStore {
 
   private enableStreamPilot() {
     if (this.streamPilot) return
-    const interval = 1000 * 15
+    const interval = 1000
     const reconnect = async () => {
       this.closeStream()
       // memo: 接続性チェックも含む
@@ -148,14 +148,16 @@ class TimelineStore {
           await reconnect()
         }
 
+        let reconnectRequired = false
         if (this.streamConnected) {
           const sec = moment().diff(this.streamLastPingFromServer, 'second')
           if (sec > 60) {
-            this.streamConnected = false
-            await reconnect()
+            reconnectRequired = true
           }
         }
-
+        if (!window.navigator.onLine) {
+          reconnectRequired = true
+        }
         // send ping from client if stream was alive
         if (this.stream) {
           this.stream.send(
@@ -163,6 +165,11 @@ class TimelineStore {
               type: 'ping'
             })
           )
+        }
+
+        if (reconnectRequired) {
+          this.streamConnected = false
+          await reconnect()
         }
       } catch (e) {
         console.error(e)
