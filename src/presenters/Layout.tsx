@@ -11,11 +11,7 @@ import Setting from '../containers/Setting'
 
 import logo from '../static/logo.png'
 
-export default ({
-  me,
-}: {
-  me?: Account
-}) => {
+export default ({ me }: { me?: Account }) => {
   return (
     <div className="mozuku-layout">
       <div className="mozuku-header-wrapper">

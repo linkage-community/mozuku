@@ -6,16 +6,18 @@ import Post from '../Post'
 export default ({
   timeline,
   readMore,
-  readMoreDisabled
+  readMoreDisabled,
+  enablePostMeta = false
 }: {
   timeline: PostModel[]
   readMore: () => void
   readMoreDisabled: boolean
+  enablePostMeta?: boolean
 }) => (
   <ul className="timeline">
     {timeline.map(post => (
       <li className="timelineItem" key={post.id}>
-        <Post post={post} />
+        <Post post={post} enableMeta={enablePostMeta} />
       </li>
     ))}
     <li className="timelineItem">

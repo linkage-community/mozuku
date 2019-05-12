@@ -9,5 +9,5 @@ export default () => {
   useEffect(() => {
     appStore.init()
   }, [])
-  return useObserver(() => (<Layout me={appStore.me} />))
+  return useObserver(() => <Layout me={appStore.me} />)
 }

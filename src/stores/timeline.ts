@@ -13,7 +13,7 @@ class TimelineStore {
   @observable ids: number[] = []
   @observable private unreadCount: number = 0
   private _hidden = false
-  private get connectedAndBackground () {
+  private get connectedAndBackground() {
     return this._hidden && this.streamConnected
   }
   @observable private streamConnected = false
@@ -47,7 +47,9 @@ class TimelineStore {
   @computed get title() {
     return [
       this.streamConnected ? '⚡️' : '🌩️',
-      ...(this.connectedAndBackground && this.unreadCount ? [`(${this.unreadCount})`] : []),
+      ...(this.connectedAndBackground && this.unreadCount
+        ? [`(${this.unreadCount})`]
+        : []),
       app.defaultTitle
     ].join(' ')
   }

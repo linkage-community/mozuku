@@ -1,3 +1,7 @@
-export { default as appStore, useShortcut } from './app'
-export { default as configStore } from './config'
+export {
+  default as appStore,
+  useShortcut,
+  PREFERENCE_SHOW_META,
+  PREFERENCE_KEYS
+} from './app'
 export { default as timelineStore, useTimeline } from './timeline'

@@ -5,8 +5,12 @@ import { observable, computed, action } from 'mobx'
 import seaClient from '../util/seaClient'
 const KEYS = Object.freeze({
   SEA_CLIENT_PACK: 'mozuku::seaClientState',
-  SAPP_CACHE_BROKEN: 'mozuku::stores::App'
+  SAPP_CACHE_BROKEN: 'mozuku::stores::App',
+  SAPP_PREFERENCE: 'Mozuku::AppPreference'
 })
+
+export const PREFERENCE_SHOW_META = 'PREFERENCE_SHOW_META'
+export type PREFERENCE_KEYS = typeof PREFERENCE_SHOW_META
 
 import {
   Account,
@@ -38,6 +42,8 @@ class SApp {
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
 
+  @observable preferences: Map<PREFERENCE_KEYS, boolean> = new Map()
+
   @observable meId!: number
   @computed get me() {
     return this.meId ? this.accounts.get(this.meId) : undefined
@@ -60,6 +66,8 @@ class SApp {
     }
     localStorage.removeItem(KEYS.SAPP_CACHE_BROKEN)
 
+    this.loadPreferences()
+
     window.addEventListener('visibilitychange', () => {
       this.setHidden(document.hidden)
     })
@@ -80,6 +88,17 @@ class SApp {
     seaClient.clear()
     localStorage.removeItem(KEYS.SEA_CLIENT_PACK)
     this.loggedIn = false
+  }
+
+  savePreferences() {
+    localStorage.setItem(KEYS.SAPP_PREFERENCE, JSON.stringify(Array.from(this.preferences)))
+  }
+  loadPreferences() {
+    const p = localStorage.getItem(KEYS.SAPP_PREFERENCE)
+    if (p) {
+      const pp = JSON.parse(p)
+      this.preferences = new Map(pp)
+    }
   }
 
   async init() {

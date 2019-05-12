@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import { timelineStore, useTimeline } from '../../stores'
+import {
+  appStore,
+  PREFERENCE_SHOW_META,
+  timelineStore,
+  useTimeline
+} from '../../stores'
 import Timeline from '../../presenters/Home/Timeline'
 
 export default () => {
@@ -14,6 +19,7 @@ export default () => {
         timeline={timelineStore.timeline}
         readMore={timelineStore.readMore.bind(timelineStore)}
         readMoreDisabled={timelineStore.readMoreDisabled}
+        enablePostMeta={appStore.preferences.get(PREFERENCE_SHOW_META)}
       />
     )
   })
