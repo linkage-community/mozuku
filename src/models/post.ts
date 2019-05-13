@@ -178,6 +178,84 @@ export class PostImage {
   }
 }
 
+export class AlbumFileVariant {
+  extension: string
+  id: number
+  mime: string
+  score: number
+  size: number
+  type: string
+  url: string
+
+  private validate(filevariant: any) {
+    return $.obj({
+      extension: $.string,
+      id: $.num,
+      mime: $.str,
+      score: $.num,
+      size: $.num,
+      type: $.str,
+      url: $.str
+    }).throw(filevariant)
+  }
+
+  constructor(f: any) {
+    const filevariant = this.validate(f)
+
+    this.extension = filevariant.extension
+    this.id = filevariant.id
+    this.mime = filevariant.mime
+    this.score = filevariant.score
+    this.size = filevariant.size
+    this.type = filevariant.type
+    this.url = filevariant.url
+  }
+
+  unpack() {
+    return {
+      extension: this.extension,
+      id: this.id,
+      mime: this.mime,
+      score: this.score,
+      size: this.size,
+      type: this.type,
+      url: this.url
+    }
+  }
+}
+
+export class AlbumFile {
+  id: number
+  name: string
+  variants: AlbumFileVariant[]
+
+  private validate(file: any) {
+    return $.obj({
+      id: $.num,
+      name: $.str,
+      variants: $.any
+    }).throw(file)
+  }
+
+  constructor(f: any) {
+    const file = this.validate(f)
+
+    this.id = file.id
+    this.name = file.name
+    this.variants = file.variants
+      .map((filevariant: any) => new AlbumFileVariant(filevariant))
+      .sort((filevariant: any) => filevariant.score)
+  }
+
+  unpack() {
+    return {
+      id: this.id,
+      name: this.name,
+      variants: this.variants
+    }
+  }
+}
+
 export default class Post implements Model {
   id: number
   text: string
@@ -186,6 +264,7 @@ export default class Post implements Model {
 
   body: PostBody
   images: PostImage[] = []
+  files: AlbumFile[]
   application: Application
   author: Account
 
@@ -196,7 +275,8 @@ export default class Post implements Model {
       createdAt: validateDate,
       updatedAt: validateDate,
       user: $.any,
-      application: $.any
+      application: $.any,
+      files: $.any
     }).throw(post)
   }
 
@@ -216,11 +296,13 @@ export default class Post implements Model {
       },
       [] as PostImage[]
     )
+    const files = post.files.map((file: any) => new AlbumFile(file))
 
     this.id = post.id
     this.text = post.text
     this.body = body
     this.images = images
+    this.files = files
     this.createdAt = moment(post.createdAt)
     this.updatedAt = moment(post.updatedAt)
     this.application = app
@@ -234,7 +316,8 @@ export default class Post implements Model {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       user: this.author.unpack(),
-      application: this.application.unpack()
+      application: this.application.unpack(),
+      files: this.files.map(file => file.unpack())
     }
   }
 }
