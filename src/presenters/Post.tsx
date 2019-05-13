@@ -66,9 +66,11 @@ export default ({ post, enableMeta }: { post: Post; enableMeta: boolean }) => (
       post.files.map(im => (
         <div className="post__image" key={im.id}>
           <picture>
-            {im.variants.map(vr => (
-              <source key={vr.id} srcSet={vr.url} type={vr.mime} />
-            ))}
+            {im.variants
+              .filter(vr => vr.type == 'thumbnail')
+              .map(vr => (
+                <source key={vr.id} srcSet={vr.url} type={vr.mime} />
+              ))}
             <img
               title={im.name}
               className="post-image__img"
