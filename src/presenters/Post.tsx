@@ -74,7 +74,15 @@ export default ({ post, enableMeta }: { post: Post; enableMeta: boolean }) => (
             <img
               title={im.name}
               className="post-image__img"
-              onClick={e => window.open(e.currentTarget.currentSrc, '_blank')}
+              onClick={e => {
+                const src = im.variants.filter(
+                  vr => vr.url == e.currentTarget.currentSrc
+                )[0]
+                const imopen = im.variants
+                  .filter(vr => vr.mime == src.mime)
+                  .sort(vr => vr.score)[0]
+                window.open(imopen.url, '_blank')
+              }}
             />
           </picture>
         </div>
