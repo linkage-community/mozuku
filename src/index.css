@@ -76,7 +76,7 @@ select {
 }
 
 .mozuku-header__setting a,
-button {
+.mozuku-header__setting button {
   text-decoration: none;
   margin-left: 8px;
   cursor: pointer;
