@@ -91,7 +91,10 @@ class SApp {
   }
 
   savePreferences() {
-    localStorage.setItem(KEYS.SAPP_PREFERENCE, JSON.stringify(Array.from(this.preferences)))
+    localStorage.setItem(
+      KEYS.SAPP_PREFERENCE,
+      JSON.stringify(Array.from(this.preferences))
+    )
   }
   loadPreferences() {
     const p = localStorage.getItem(KEYS.SAPP_PREFERENCE)
