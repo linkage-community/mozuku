@@ -23,11 +23,14 @@ export default () => {
       lock(false)
     }
   }, [])
-  const onUpdateShowMetaCheckbox = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    // FIXME: ここきたない
-    appStore.preferences.set(PREFERENCE_SHOW_META, e.target.checked)
-    appStore.savePreferences()
-  }, [])
+  const onUpdateShowMetaCheckbox = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      // FIXME: ここきたない
+      appStore.preferences.set(PREFERENCE_SHOW_META, e.target.checked)
+      appStore.savePreferences()
+    },
+    []
+  )
 
   return useObserver(() => {
     const currentConfig = {

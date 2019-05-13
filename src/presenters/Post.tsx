@@ -62,6 +62,24 @@ export default ({ post, enableMeta }: { post: Post; enableMeta: boolean }) => (
     ) : (
       <></>
     )}
+    {post.files.length ? (
+      post.files.map(im => (
+        <div className="post__image" key={im.id}>
+          <picture>
+            {im.variants.map(vr => (
+              <source key={vr.id} srcSet={vr.url} type={vr.mime} />
+            ))}
+            <img
+              title={im.name}
+              className="post-image__img"
+              onClick={e => window.open(e.currentTarget.currentSrc, '_blank')}
+            />
+          </picture>
+        </div>
+      ))
+    ) : (
+      <></>
+    )}
     <div className={'post__meta ' + (enableMeta ? 'enabled' : '')}>
       via {post.application.name}
     </div>
