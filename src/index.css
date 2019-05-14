@@ -137,6 +137,12 @@ select {
   border-top: 1px solid #eee;
 }
 
+@media (max-width: 720px) {
+  .post {
+    padding: 12px 18px;
+  }
+}
+
 .post-head {
   display: flex;
   justify-content: space-between;
