@@ -12,7 +12,8 @@ import seaClient from '../util/seaClient'
 class TimelineStore {
   @observable ids: number[] = []
   @observable private unreadCount: number = 0
-  private _hidden = false
+  @observable private _hidden = false
+  @computed
   private get connectedAndBackground() {
     return this._hidden && this.streamConnected
   }
