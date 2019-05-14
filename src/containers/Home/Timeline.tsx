@@ -16,7 +16,7 @@ export default () => {
     document.title = timelineStore.title
     return (
       <Timeline
-        timeline={timelineStore.timeline}
+        posts={timelineStore.posts}
         readMore={timelineStore.readMore.bind(timelineStore)}
         readMoreDisabled={timelineStore.readMoreDisabled}
         enablePostMeta={appStore.preferences.get(PREFERENCE_SHOW_META)}

@@ -41,6 +41,16 @@ class SApp {
 
   @observable accounts: Map<number, Account> = new Map()
   @observable posts: Map<number, Post> = new Map()
+  wrapPostWithLatestAccount(p: Post) {
+    return new Proxy(p, {
+      get: (post, fieldName: keyof Post) => {
+        // Use app's accounts (maybe new)
+        if (fieldName === 'author')
+          return this.accounts.get(post.author.id) || post[fieldName]
+        return post[fieldName]
+      }
+    })
+  }
 
   @observable preferences: Map<PREFERENCE_KEYS, boolean> = new Map()
 
@@ -162,9 +172,8 @@ class SApp {
         return post
       })
     )
-    posts.forEach(p => {
-      this.posts.set(p.id, p)
-    })
+    posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
+    posts.forEach(p => this.posts.set(p.id, this.wrapPostWithLatestAccount(p)))
     return posts
   }
 }

@@ -4,18 +4,18 @@ import { Post as PostModel } from '../../models'
 import Post from '../Post'
 
 export default ({
-  timeline,
+  posts,
   readMore,
   readMoreDisabled,
   enablePostMeta = false
 }: {
-  timeline: PostModel[]
+  posts: PostModel[]
   readMore: () => void
   readMoreDisabled: boolean
   enablePostMeta?: boolean
 }) => (
   <ul className="timeline">
-    {timeline.map(post => (
+    {posts.map(post => (
       <li className="timelineItem" key={post.id}>
         <Post post={post} enableMeta={enablePostMeta} />
       </li>

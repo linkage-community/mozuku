@@ -10,9 +10,9 @@ import app from './app'
 import seaClient from '../util/seaClient'
 
 class TimelineStore {
-  @observable ids: number[] = []
+  @observable postIds: number[] = []
   @observable private unreadCount: number = 0
-  @observable private _hidden = false
+  @observable private _hidden = app.hidden
   @computed
   private get connectedAndBackground() {
     return this._hidden && this.streamConnected
@@ -38,8 +38,8 @@ class TimelineStore {
     this.unreadCount += cnt
   }
 
-  @computed get timeline() {
-    return this.ids.map(id => {
+  @computed get posts() {
+    return this.postIds.map(id => {
       const p = app.posts.get(id)
       if (!p) throw new Error('なんかおかしい')
       return p
@@ -61,7 +61,7 @@ class TimelineStore {
       clearTimeout(this.streamPilot)
       this.streamPilot = undefined
     }
-    this.ids = []
+    this.postIds = []
     this.streamLastPingFromServer = undefined
     this.streamConnected = false
   }
@@ -69,26 +69,26 @@ class TimelineStore {
   private async unshift(...p: any[]) {
     // filter only ids that not seen: おそらく結構 Post のバリデーションが重たいので効率化のため
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
-    const fpp = pp.filter(p => !this.ids.includes(p.id))
+    const fpp = pp.filter(p => !this.postIds.includes(p.id))
 
     const ids = await app.setPosts(fpp).then(ps => ps.map(p => p.id))
     // for safety: 上記 addPosts を読んでいる間に更新がされてた場合ちゃんと
     // 同じ投稿が1回のみタイムラインに表示される世界になってない可能性がある
-    const idsSet = new Set([...ids, ...this.ids])
+    const idsSet = new Set([...ids, ...this.postIds])
 
-    const tc = this.ids.length
-    this.ids = Array.from(idsSet.values())
+    const tc = this.postIds.length
+    this.postIds = Array.from(idsSet.values())
 
     this.countUnread(idsSet.size - tc)
   }
   @action
   private async push(...p: any[]) {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
-    const fpp = pp.filter(p => !this.ids.includes(p.id))
+    const fpp = pp.filter(p => !this.postIds.includes(p.id))
 
     const ids = await app.setPosts(fpp).then(ps => ps.map(p => p.id))
-    const idsSet = new Set([...this.ids, ...ids])
-    this.ids = Array.from(idsSet.values())
+    const idsSet = new Set([...this.postIds, ...ids])
+    this.postIds = Array.from(idsSet.values())
   }
 
   async fetch({
@@ -128,7 +128,11 @@ class TimelineStore {
   @observable _readingMore = false
   @computed
   get readMoreDisabled() {
-    return this._readingMore || this.ids.length === 0 || this.ids.length >= 100 // temp: after query 実装するまで
+    return (
+      this._readingMore ||
+      this.postIds.length === 0 ||
+      this.postIds.length >= 100
+    ) // temp: after query 実装するまで
   }
 
   private enableStreamPilot() {
@@ -137,9 +141,7 @@ class TimelineStore {
     const reconnect = async () => {
       this.closeStream()
       // memo: 接続性チェックも含む
-      const kwargs = this.timeline[0]
-        ? { sinceId: this.timeline[0].id }
-        : undefined
+      const kwargs = this.posts[0] ? { sinceId: this.posts[0].id } : undefined
       await this.fetch(kwargs)
       await this.openStream()
     }
