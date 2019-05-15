@@ -27,7 +27,7 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
   size: number
   url: URL
 
-  private validate (v: any) {
+  private validate(v: any) {
     return $.obj({
       id: $.num,
       // 現時点での対応
@@ -71,7 +71,7 @@ export default class AlbumFile implements Model<AlbumFileBody> {
   fileName: string
   variants: AlbumFileVariant[]
 
-  private validate (f: any) {
+  private validate(f: any) {
     return $.obj({
       id: $.num,
       name: $.str,
@@ -79,7 +79,7 @@ export default class AlbumFile implements Model<AlbumFileBody> {
     }).throw(f)
   }
 
-  constructor (f: AlbumFileBody) {
+  constructor(f: AlbumFileBody) {
     const file = this.validate(f)
     this.id = file.id
     this.fileName = file.name

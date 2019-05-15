@@ -8,7 +8,7 @@ import moment from 'moment'
 import app, { PREFERENCE_NOTICE_WHEN_MENTIONED } from './app'
 
 import seaClient from '../util/seaClient'
-import { Post, BODYPART_TYPE_TEXT, BODYPART_TYPE_BOLD } from '../models';
+import { Post, BODYPART_TYPE_TEXT, BODYPART_TYPE_BOLD } from '../models'
 
 class TimelineStore {
   @observable postIds: number[] = []
@@ -22,7 +22,7 @@ class TimelineStore {
   private stream?: WebSocket
   private streamPilot?: number
   private streamLastPingFromServer?: Date
-  private get notificationEnabled () {
+  private get notificationEnabled() {
     return app.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
   }
 
@@ -179,7 +179,10 @@ class TimelineStore {
       const n = new Notification(
         `${p.author.name} (@${p.author.screenName}) mentioned you`,
         {
-          body: p.body.parts.filter(p => p.type === BODYPART_TYPE_TEXT).map(p => p.payload).join(''),
+          body: p.body.parts
+            .filter(p => p.type === BODYPART_TYPE_TEXT)
+            .map(p => p.payload)
+            .join(''),
           requireInteraction: true
           // あとで icon 指定する
         }

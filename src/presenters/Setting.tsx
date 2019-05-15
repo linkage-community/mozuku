@@ -1,7 +1,7 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-type Config = { showMetaEnabled: boolean, notificationEnabled: boolean }
+type Config = { showMetaEnabled: boolean; notificationEnabled: boolean }
 
 export default ({
   updateDisabled,
@@ -15,7 +15,9 @@ export default ({
   updateDisabled: boolean
   updateName: (n: string) => Promise<void>
   onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onUpdateEnableNotificationCheckBox: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpdateEnableNotificationCheckBox: (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void
   currentName?: string
   currentConfig: Config
   logout: () => void

@@ -19,7 +19,9 @@ export default () => {
         posts={timelineStore.posts}
         readMore={timelineStore.readMore.bind(timelineStore)}
         readMoreDisabled={timelineStore.readMoreDisabled}
-        postMetaEnabled={appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED)}
+        postMetaEnabled={appStore.preferences.get(
+          PREFERENCE_DISPLAY_META_ENABLED
+        )}
       />
     )
   })

@@ -4,8 +4,8 @@ import { useObserver } from 'mobx-react-lite'
 import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../stores'
 import seaClient from '../util/seaClient'
 import Setting from '../presenters/Setting'
-import timeline from '../stores/timeline';
-import { PREFERENCE_NOTICE_WHEN_MENTIONED } from '../stores/app';
+import timeline from '../stores/timeline'
+import { PREFERENCE_NOTICE_WHEN_MENTIONED } from '../stores/app'
 const { useState, useCallback } = React
 
 export default () => {
@@ -28,7 +28,10 @@ export default () => {
   const onUpdateShowMetaCheckbox = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       // FIXME: ここきたない
-      appStore.preferences.set(PREFERENCE_DISPLAY_META_ENABLED, e.target.checked)
+      appStore.preferences.set(
+        PREFERENCE_DISPLAY_META_ENABLED,
+        e.target.checked
+      )
       appStore.savePreferences()
     },
     []
@@ -40,13 +43,16 @@ export default () => {
       } else {
         timeline.disableNotification()
       }
-    }
-  , [])
+    },
+    []
+  )
 
   return useObserver(() => {
     const currentConfig = {
-      showMetaEnabled: appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED) || false,
-      notificationEnabled: appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
+      showMetaEnabled:
+        appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED) || false,
+      notificationEnabled:
+        appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
     }
     return (
       <Setting
