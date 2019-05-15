@@ -66,7 +66,7 @@ export default ({
           onChange={onUpdateEnableNotificationCheckBox}
           checked={currentConfig.notificationEnabled}
         />
-        Notificate when you mentioned
+        Notificate when you mentioned in background
       </label>
       <div className="settingItem__subtitle">Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>
