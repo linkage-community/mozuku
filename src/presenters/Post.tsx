@@ -11,9 +11,9 @@ import {
 
 type PostProps = {
   post: Post
-  enableMeta: boolean
+  metaEnabled: boolean
 }
-export default ({ post, post: { author }, enableMeta }: PostProps) =>
+export default ({ post, post: { author }, metaEnabled }: PostProps) =>
   useMemo(
     () => (
       <div className="post">
@@ -97,7 +97,7 @@ export default ({ post, post: { author }, enableMeta }: PostProps) =>
         ) : (
           <></>
         )}
-        <div className={'post__meta ' + (enableMeta ? 'enabled' : '')}>
+        <div className={'post__meta ' + (metaEnabled ? 'enabled' : '')}>
           via {post.application.name}
         </div>
       </div>

@@ -7,17 +7,17 @@ export default ({
   posts,
   readMore,
   readMoreDisabled,
-  enablePostMeta = false
+  postMetaEnabled = false
 }: {
   posts: PostModel[]
   readMore: () => void
   readMoreDisabled: boolean
-  enablePostMeta?: boolean
+  postMetaEnabled?: boolean
 }) => (
   <ul className="timeline">
     {posts.map(post => (
       <li className="timelineItem" key={post.id}>
-        <Post post={post} enableMeta={enablePostMeta} />
+        <Post post={post} metaEnabled={postMetaEnabled} />
       </li>
     ))}
     <li className="timelineItem">

@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import { appStore, PREFERENCE_SHOW_META } from '../stores'
+import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../stores'
 import seaClient from '../util/seaClient'
 import Setting from '../presenters/Setting'
+import timeline from '../stores/timeline';
+import { PREFERENCE_NOTICE_WHEN_MENTIONED } from '../stores/app';
 const { useState, useCallback } = React
 
 export default () => {
@@ -26,21 +28,32 @@ export default () => {
   const onUpdateShowMetaCheckbox = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       // FIXME: ここきたない
-      appStore.preferences.set(PREFERENCE_SHOW_META, e.target.checked)
+      appStore.preferences.set(PREFERENCE_DISPLAY_META_ENABLED, e.target.checked)
       appStore.savePreferences()
     },
     []
   )
+  const onUpdateEnableNotificationCheckBox = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) {
+        timeline.enableNotification()
+      } else {
+        timeline.disableNotification()
+      }
+    }
+  , [])
 
   return useObserver(() => {
     const currentConfig = {
-      showMeta: appStore.preferences.get(PREFERENCE_SHOW_META) || false
+      showMetaEnabled: appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED) || false,
+      notificationEnabled: appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
     }
     return (
       <Setting
         updateDisabled={updateDisabled}
         updateName={updateName}
         onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
+        onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
         currentName={appStore.me ? appStore.me!.name : undefined}
         logout={appStore.logout.bind(appStore)}
         currentConfig={currentConfig}

@@ -1,7 +1,6 @@
 export {
   default as appStore,
   useShortcut,
-  PREFERENCE_SHOW_META,
-  PREFERENCE_KEYS
+  PREFERENCE_DISPLAY_META_ENABLED,
 } from './app'
 export { default as timelineStore, useTimeline } from './timeline'

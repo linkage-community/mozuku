@@ -1,12 +1,13 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-type Config = { showMeta: boolean }
+type Config = { showMetaEnabled: boolean, notificationEnabled: boolean }
 
 export default ({
   updateDisabled,
   updateName,
   onUpdateShowMetaCheckbox,
+  onUpdateEnableNotificationCheckBox,
   currentName,
   currentConfig,
   logout
@@ -14,6 +15,7 @@ export default ({
   updateDisabled: boolean
   updateName: (n: string) => Promise<void>
   onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpdateEnableNotificationCheckBox: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
   currentConfig: Config
   logout: () => void
@@ -51,9 +53,18 @@ export default ({
           type="checkbox"
           name="via"
           onChange={onUpdateShowMetaCheckbox}
-          checked={currentConfig.showMeta}
+          checked={currentConfig.showMetaEnabled}
         />
         Show metadata in post (like via)
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="notification"
+          onChange={onUpdateEnableNotificationCheckBox}
+          checked={currentConfig.notificationEnabled}
+        />
+        Notificate when you mentioned
       </label>
       <div className="settingItem__subtitle">Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>

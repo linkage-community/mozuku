@@ -3,7 +3,7 @@ import { useObserver } from 'mobx-react-lite'
 
 import {
   appStore,
-  PREFERENCE_SHOW_META,
+  PREFERENCE_DISPLAY_META_ENABLED,
   timelineStore,
   useTimeline
 } from '../../stores'
@@ -19,7 +19,7 @@ export default () => {
         posts={timelineStore.posts}
         readMore={timelineStore.readMore.bind(timelineStore)}
         readMoreDisabled={timelineStore.readMoreDisabled}
-        enablePostMeta={appStore.preferences.get(PREFERENCE_SHOW_META)}
+        postMetaEnabled={appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED)}
       />
     )
   })

@@ -5,9 +5,10 @@ import { observable, computed, action } from 'mobx'
 import $ from 'cafy'
 import moment from 'moment'
 
-import app from './app'
+import app, { PREFERENCE_NOTICE_WHEN_MENTIONED } from './app'
 
 import seaClient from '../util/seaClient'
+import { Post, BODYPART_TYPE_TEXT, BODYPART_TYPE_BOLD } from '../models';
 
 class TimelineStore {
   @observable postIds: number[] = []
@@ -21,6 +22,9 @@ class TimelineStore {
   private stream?: WebSocket
   private streamPilot?: number
   private streamLastPingFromServer?: Date
+  private get notificationEnabled () {
+    return app.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
+  }
 
   constructor() {
     app.subscribeHiddenChange(hidden => {
@@ -71,7 +75,8 @@ class TimelineStore {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
     const fpp = pp.filter(p => !this.postIds.includes(p.id))
 
-    const ids = await app.setPosts(fpp).then(ps => ps.map(p => p.id))
+    const posts = await app.setPosts(fpp)
+    const ids = posts.map(p => p.id)
     // for safety: 上記 addPosts を読んでいる間に更新がされてた場合ちゃんと
     // 同じ投稿が1回のみタイムラインに表示される世界になってない可能性がある
     const idsSet = new Set([...ids, ...this.postIds])
@@ -80,6 +85,7 @@ class TimelineStore {
     this.postIds = Array.from(idsSet.values())
 
     this.countUnread(idsSet.size - tc)
+    this.showNotification(posts)
   }
   @action
   private async push(...p: any[]) {
@@ -135,6 +141,53 @@ class TimelineStore {
     ) // temp: after query 実装するまで
   }
 
+  enableNotification(): Promise<void> {
+    const set = () => {
+      app.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
+      app.savePreferences()
+    }
+
+    if (Notification.permission === 'denied') return Promise.reject()
+    if (Notification.permission === 'granted') {
+      set()
+      return Promise.resolve()
+    }
+    if (Notification.permission !== 'default') {
+      console.error(Notification.permission)
+      throw new Error('どういうことかわかりません...')
+    }
+    return new Promise((resolve, reject) => {
+      Notification.requestPermission(status => {
+        if (status === 'denied' || status === 'default') return reject()
+        set()
+        return resolve()
+      })
+    })
+  }
+  disableNotification() {
+    app.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, false)
+    app.savePreferences()
+  }
+  showNotification(pp: Post[]) {
+    if (!this.notificationEnabled || !this.connectedAndBackground) return
+    pp.forEach(p => {
+      const l = p.body.parts.filter(b => {
+        // ここどうにかする (現時点では BOLD になっているのは mention のみということを利用してしまっている)
+        return b.type === BODYPART_TYPE_BOLD
+      }).length
+      if (!l) return
+      const n = new Notification(
+        `${p.author.name} (@${p.author.screenName}) mentioned you`,
+        {
+          body: p.body.parts.filter(p => p.type === BODYPART_TYPE_TEXT).map(p => p.payload).join(''),
+          requireInteraction: true
+          // あとで icon 指定する
+        }
+      )
+      n.addEventListener('click', () => window.focus())
+      setTimeout(n.close.bind(n), 5000)
+    })
+  }
   private enableStreamPilot() {
     if (this.streamPilot) return
     const interval = 1000

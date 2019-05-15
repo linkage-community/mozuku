@@ -38,7 +38,7 @@
     "typescript": "^3.4.5"
   },
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "rm -rf dist .cache && parcel src/index.html",
     "format": "prettier --write \"./src/**/*.{html,css,ts,tsx}\"",
     "test": "jest"
   }
