@@ -15,10 +15,10 @@ export type PREFERENCE_KEYS = typeof PREFERENCE_SHOW_META
 import {
   Account,
   Post,
+  PostBodyPart,
   BODYPART_TYPE_BOLD,
   BODYPART_TYPE_TEXT
 } from '../models'
-import { PostBodyPart } from '../models/post'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 

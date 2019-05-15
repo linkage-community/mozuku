@@ -1,5 +1,5 @@
 import $ from 'cafy'
-import Model from './_model'
+import Model from './_Model'
 
 export default class Application implements Model {
   id: number

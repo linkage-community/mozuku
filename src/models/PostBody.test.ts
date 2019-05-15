@@ -3,7 +3,7 @@ import {
   BODYPART_TYPE_TEXT,
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_LINK
-} from './post'
+} from './Post'
 
 describe('PostBody', () => {
   const t1 = 'http:2134'

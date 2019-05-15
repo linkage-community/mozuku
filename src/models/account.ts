@@ -1,6 +1,6 @@
 import $ from 'cafy'
 import moment, { Moment } from 'moment'
-import Model, { validateDate } from './_model'
+import Model, { validateDate } from './_Model'
 
 export default class Account implements Model {
   id: number

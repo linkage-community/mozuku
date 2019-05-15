@@ -1,9 +1,9 @@
 import $ from 'cafy'
 import moment from 'moment'
 
-export default interface Model {
+export default interface Model<T = any> {
   id: number
-  unpack(): any
+  unpack(): T
 }
 
 export const validateDate = $.str.pipe(i => moment(i).isValid())
