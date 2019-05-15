@@ -16,13 +16,7 @@ type PREFERENCE_KEYS =
   | typeof PREFERENCE_DISPLAY_META_ENABLED
   | typeof PREFERENCE_NOTICE_WHEN_MENTIONED
 
-import {
-  Account,
-  Post,
-  PostBodyPart,
-  BODYPART_TYPE_BOLD,
-  BODYPART_TYPE_TEXT
-} from '../models'
+import { Account, Post, NewBoldMyScreenNameMiddleware } from '../models'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
@@ -141,30 +135,6 @@ class SApp {
     return accounts
   }
   async setPosts(ps: any[]) {
-    // Make bold me
-    const boldMyScreenNameMiddleware = (a: Account) => (
-      p: PostBodyPart
-    ): PostBodyPart[] => {
-      if (p.type !== BODYPART_TYPE_TEXT) {
-        return [p]
-      }
-      const { screenName } = a
-      const target = '@' + screenName
-      const r = p.payload.split(new RegExp(`(${target})`, 'gi'))
-      return r.map(t => {
-        if (t === target) {
-          return {
-            type: BODYPART_TYPE_BOLD,
-            payload: t
-          }
-        }
-        return {
-          type: BODYPART_TYPE_TEXT,
-          payload: t
-        }
-      })
-    }
-
     // cast to post
     const pms = await Promise.all(ps.map(async (p: any) => new Post(p)))
     // custom process for domain
@@ -172,7 +142,7 @@ class SApp {
       pms.map(post => {
         // model に閉じれない物をここにおきます
         if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
-        post.body.process([boldMyScreenNameMiddleware(this.me)])
+        post.body.process([NewBoldMyScreenNameMiddleware(this.me)])
         return post
       })
     )

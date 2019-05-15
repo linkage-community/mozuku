@@ -89,6 +89,29 @@ const presetMiddlewares: PostBodyMiddleware[] = [
   pruneEmptyTextMiddleware
 ]
 
+export const NewBoldMyScreenNameMiddleware = (a: Account) => (
+  p: PostBodyPart
+): PostBodyPart[] => {
+  if (p.type !== BODYPART_TYPE_TEXT) {
+    return [p]
+  }
+  const { screenName } = a
+  const target = '@' + screenName
+  const r = p.payload.split(new RegExp(`(${target})\\s|$`, 'gi'))
+  return r.map(t => {
+    if (t === target) {
+      return {
+        type: BODYPART_TYPE_BOLD,
+        payload: t
+      }
+    }
+    return {
+      type: BODYPART_TYPE_TEXT,
+      payload: t
+    }
+  })
+}
+
 export class PostBody {
   parts = [] as PostBodyPart[]
   processed = false

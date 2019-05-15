@@ -2,7 +2,16 @@ import $ from 'cafy'
 import moment, { Moment } from 'moment'
 import Model, { validateDate } from './_Model'
 
-export default class Account implements Model {
+type AccountBody = {
+  id: number
+  name: string
+  screenName: string
+  postsCount: number
+  createdAt: string
+  updatedAt: string
+}
+
+export default class Account implements Model<AccountBody> {
   id: number
   name: string
   screenName: string
@@ -21,7 +30,7 @@ export default class Account implements Model {
     }).throw(user)
   }
 
-  constructor(u: any) {
+  constructor(u: AccountBody) {
     const user = this.validate(u)
     this.id = user.id
     this.name = user.name
@@ -37,8 +46,8 @@ export default class Account implements Model {
       name: this.name,
       screenName: this.screenName,
       postsCount: this.postsCount,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt
+      createdAt: this.createdAt.toDate().toISOString(),
+      updatedAt: this.updatedAt.toDate().toISOString()
     }
   }
 }
