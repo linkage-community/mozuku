@@ -97,7 +97,7 @@ export const NewBoldMyScreenNameMiddleware = (a: Account) => (
   }
   const { screenName } = a
   const target = '@' + screenName
-  const r = p.payload.split(new RegExp(`(${target})\\s|$`, 'gi'))
+  const r = p.payload.split(new RegExp(`(${target})(\\s|$)`, 'gi'))
   return r.map(t => {
     if (t === target) {
       return {

@@ -64,6 +64,7 @@ describe('PostBody', () => {
       b.process([m, pruneEmptyTextMiddleware])
       expect(b.parts).toHaveLength(2)
       expect(b.parts[0].type).toBe(BODYPART_TYPE_BOLD)
+      expect(b.parts[1].type).toBe(BODYPART_TYPE_TEXT)
     })
   })
 })

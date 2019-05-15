@@ -16,7 +16,12 @@ type PREFERENCE_KEYS =
   | typeof PREFERENCE_DISPLAY_META_ENABLED
   | typeof PREFERENCE_NOTICE_WHEN_MENTIONED
 
-import { Account, Post, NewBoldMyScreenNameMiddleware } from '../models'
+import {
+  Account,
+  Post,
+  NewBoldMyScreenNameMiddleware,
+  pruneEmptyTextMiddleware
+} from '../models'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
@@ -142,7 +147,11 @@ class SApp {
       pms.map(post => {
         // model に閉じれない物をここにおきます
         if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
-        post.body.process([NewBoldMyScreenNameMiddleware(this.me)])
+        post.body.process([
+          NewBoldMyScreenNameMiddleware(this.me),
+          pruneEmptyTextMiddleware
+        ])
+        console.dir(post.body)
         return post
       })
     )
