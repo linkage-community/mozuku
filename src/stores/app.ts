@@ -151,7 +151,6 @@ class SApp {
           NewBoldMyScreenNameMiddleware(this.me),
           pruneEmptyTextMiddleware
         ])
-        console.dir(post.body)
         return post
       })
     )
