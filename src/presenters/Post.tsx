@@ -83,7 +83,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) =>
                   className="post-image__img"
                   onClick={e => {
                     const src = im.variants.filter(
-                      vr => vr.url == e.currentTarget.currentSrc
+                      vr => vr.url.href == e.currentTarget.currentSrc
                     )[0]
                     const imopen = im.variants
                       .filter(vr => vr.mime == src.mime)
