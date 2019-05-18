@@ -117,9 +117,11 @@ class TimelineStore {
     if (this.readMoreDisabled) return alert('これ以上は動かないよ!')
     try {
       this._readingMore = true
-      // after query 実装するまでは count=100 で誤魔化す
+      const query = new URLSearchParams()
+      if (this.postIds.length)
+        query.set('maxId', this.postIds[this.postIds.length - 1].toString(10))
       const timeline = await seaClient
-        .get('/v1/timelines/public?count=100')
+        .get('/v1/timelines/public' + `?${query.toString()}`)
         .then((tl: any) => {
           if (!Array.isArray(tl)) throw new Error('?')
           return tl
@@ -134,11 +136,7 @@ class TimelineStore {
   @observable _readingMore = false
   @computed
   get readMoreDisabled() {
-    return (
-      this._readingMore ||
-      this.postIds.length === 0 ||
-      this.postIds.length >= 100
-    ) // temp: after query 実装するまで
+    return this._readingMore
   }
 
   enableNotification(): Promise<void> {
