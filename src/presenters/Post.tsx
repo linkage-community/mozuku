@@ -76,19 +76,21 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) =>
                 {im.variants
                   .filter(vr => vr.type == 'thumbnail')
                   .map(vr => (
-                    <source key={vr.id} srcSet={vr.url} type={vr.mime} />
+                    <source key={vr.id} srcSet={vr.url.href} type={vr.mime} />
                   ))}
                 <img
-                  title={im.name}
+                  title={im.fileName}
                   className="post-image__img"
                   onClick={e => {
                     const src = im.variants.filter(
-                      vr => vr.url == e.currentTarget.currentSrc
+                      vr => vr.url.href == e.currentTarget.currentSrc
                     )[0]
                     const imopen = im.variants
                       .filter(vr => vr.mime == src.mime)
-                      .sort(vr => vr.score)[0]
-                    window.open(imopen.url, '_blank')
+                      .sort((a, b) =>
+                        a.score == b.score ? 0 : a.score < b.score ? 1 : -1
+                      )[0]
+                    window.open(imopen.url.href, '_blank')
                   }}
                 />
               </picture>
