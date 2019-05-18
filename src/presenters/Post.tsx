@@ -87,7 +87,9 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) =>
                     )[0]
                     const imopen = im.variants
                       .filter(vr => vr.mime == src.mime)
-                      .sort(vr => vr.score)[0]
+                      .sort((a, b) =>
+                        a.score == b.score ? 0 : a.score < b.score ? 1 : -1
+                      )[0]
                     window.open(imopen.url, '_blank')
                   }}
                 />
