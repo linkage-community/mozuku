@@ -79,7 +79,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) =>
                     <source key={vr.id} srcSet={vr.url.href} type={vr.mime} />
                   ))}
                 <img
-                  title={im.name}
+                  title={im.fileName}
                   className="post-image__img"
                   onClick={e => {
                     const src = im.variants.filter(
