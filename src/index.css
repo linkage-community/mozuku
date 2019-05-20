@@ -190,7 +190,6 @@ select {
 
 .post__ogcard {
   margin: 4px 0 0;
-  padding: 8px 0;
   color: #666;
 }
 
@@ -260,7 +259,12 @@ select {
   background-color: var(--color-alert);
 }
 
-.post__ogcard > a {
+.ogcard {
+  box-sizing: border-box;
+  border-left: 1px solid;
+  padding: 4px 8px;
+}
+.ogcard > a {
   text-decoration: inherit;
   color: inherit;
 }
