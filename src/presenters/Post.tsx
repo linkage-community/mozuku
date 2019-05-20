@@ -8,13 +8,22 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
+import { useRelativeTimeRepresent } from '../util/hooks'
 
 type PostProps = {
   post: Post
   metaEnabled: boolean
 }
-export default ({ post, post: { author }, metaEnabled }: PostProps) =>
-  useMemo(
+export default ({ post, post: { author }, metaEnabled }: PostProps) => {
+  const relativeTimeRepresent = useRelativeTimeRepresent(post.createdAt)
+  const absoluteTimeRepresent = useMemo(
+    () =>
+      moment(post.createdAt)
+        .tz('Asia/Tokyo')
+        .format('HH:mm:ss · D MMM YYYY'),
+    []
+  )
+  return useMemo(
     () => (
       <div className="post">
         <div className="post__head post-head">
@@ -31,10 +40,8 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) =>
               @{author.screenName}
             </span>
           </div>
-          <div className="post-head__time">
-            {moment(post.createdAt)
-              .tz('Asia/Tokyo')
-              .format('HH:mm:ss · D MMM YYYY')}
+          <div className="post-head__time" title={absoluteTimeRepresent}>
+            {relativeTimeRepresent}
           </div>
         </div>
         <div className="post__body">
@@ -104,5 +111,6 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) =>
         </div>
       </div>
     ),
-    [author.name]
+    [author.name, relativeTimeRepresent]
   )
+}
