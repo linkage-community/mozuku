@@ -7,7 +7,7 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
-import DateTime from './DateTime';
+import DateTime from './DateTime'
 
 type PostProps = {
   post: Post

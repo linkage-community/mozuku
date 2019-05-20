@@ -1,9 +1,9 @@
 import * as React from 'react'
 const { useMemo } = React
-import { useRelativeTimeRepresent } from '../util/hooks';
+import { useRelativeTimeRepresent } from '../util/hooks'
 import moment, { Moment } from 'moment-timezone'
 
-export default ({ dt, className }: { dt: Moment, className: string }) => {
+export default ({ dt, className }: { dt: Moment; className: string }) => {
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)
   const absoluteTimeRepresent = useMemo(
     () =>

@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react'
 import moment, { Moment } from 'moment'
 
-const Month = 'month'
-const Day = 'day'
-const Hour = 'hour'
-const Minute = 'minute'
-const Second = 'second'
+const Month = 'mo'
+const Week = 'w'
+const Day = 'd'
+const Hour = 'h'
+const Minute = 'm'
+const Second = 's'
 type TimeDiff = {
-  type: typeof Month | typeof Day | typeof Hour | typeof Minute | typeof Second
+  type:
+    | typeof Month
+    | typeof Week
+    | typeof Day
+    | typeof Hour
+    | typeof Minute
+    | typeof Second
   duration: number
 }
 const diffFromNow = (dt: Moment): TimeDiff | undefined => {
@@ -15,6 +22,9 @@ const diffFromNow = (dt: Moment): TimeDiff | undefined => {
 
   const months = now.diff(dt, 'month')
   if (months > 0) return { type: Month, duration: months }
+
+  const weeks = now.diff(dt, 'week')
+  if (weeks > 0) return { type: Week, duration: weeks }
 
   const days = now.diff(dt, 'day')
   if (days > 0) return { type: Day, duration: days }
@@ -30,12 +40,9 @@ const diffFromNow = (dt: Moment): TimeDiff | undefined => {
 }
 
 export const useRelativeTimeRepresent = (dt: Moment) => {
-  const [relativeTimeRepresent, setRTR] = useState('a few later')
+  const [relativeTimeRepresent, setRTR] = useState('just now')
   const setDiff = (d: TimeDiff) => {
-    const t =
-      d.duration > 1
-        ? `${d.duration} ${d.type}s ago`
-        : `${d.duration} ${d.type} ago`
+    const t = `${d.duration}${d.type} ago`
     if (t !== relativeTimeRepresent) setRTR(t)
   }
   useEffect(() => {
