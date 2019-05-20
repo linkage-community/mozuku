@@ -5,7 +5,10 @@ import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../stores'
 import seaClient from '../util/seaClient'
 import Setting from '../presenters/Setting'
 import timeline from '../stores/timeline'
-import { PREFERENCE_NOTICE_WHEN_MENTIONED } from '../stores/app'
+import {
+  PREFERENCE_NOTICE_WHEN_MENTIONED,
+  PREFERENCE_DISPLAY_OGCARD
+} from '../stores/app'
 const { useState, useCallback } = React
 
 export default () => {
@@ -46,13 +49,23 @@ export default () => {
     },
     []
   )
+  const onUpdateEnableOGCard = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      // FIXME: ここきたない
+      appStore.preferences.set(PREFERENCE_DISPLAY_OGCARD, e.target.checked)
+      appStore.savePreferences()
+    },
+    []
+  )
 
   return useObserver(() => {
     const currentConfig = {
       showMetaEnabled:
         appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED) || false,
       notificationEnabled:
-        appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
+        appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false,
+      ogcardEnabled:
+        appStore.preferences.get(PREFERENCE_DISPLAY_OGCARD) || false
     }
     return (
       <Setting
@@ -60,6 +73,7 @@ export default () => {
         updateName={updateName}
         onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
         onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
+        onUpdateEnableOGCard={onUpdateEnableOGCard}
         currentName={appStore.me ? appStore.me!.name : undefined}
         logout={appStore.logout.bind(appStore)}
         currentConfig={currentConfig}

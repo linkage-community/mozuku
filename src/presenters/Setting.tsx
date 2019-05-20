@@ -1,13 +1,18 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-type Config = { showMetaEnabled: boolean; notificationEnabled: boolean }
+type Config = {
+  showMetaEnabled: boolean
+  notificationEnabled: boolean
+  ogcardEnabled: boolean
+}
 
 export default ({
   updateDisabled,
   updateName,
   onUpdateShowMetaCheckbox,
   onUpdateEnableNotificationCheckBox,
+  onUpdateEnableOGCard,
   currentName,
   currentConfig,
   logout
@@ -18,6 +23,7 @@ export default ({
   onUpdateEnableNotificationCheckBox: (
     e: React.ChangeEvent<HTMLInputElement>
   ) => void
+  onUpdateEnableOGCard: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
   currentConfig: Config
   logout: () => void
@@ -67,6 +73,15 @@ export default ({
           checked={currentConfig.notificationEnabled}
         />
         Notificate when you mentioned in background
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="ogcard"
+          onChange={onUpdateEnableOGCard}
+          checked={currentConfig.ogcardEnabled}
+        />
+        Show website metadata in post (link OGP)
       </label>
       <div className="settingItem__subtitle">Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>

@@ -8,6 +8,7 @@ import {
   BODYPART_TYPE_BOLD
 } from '../models'
 import DateTime from './DateTime'
+import OGCard from './OGCard'
 
 type PostProps = {
   post: Post
@@ -95,6 +96,16 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
         ) : (
           <></>
         )}
+        {post.body.parts.map((p, i) => {
+          switch (p.type) {
+            case BODYPART_TYPE_LINK:
+              return (
+                <OGCard key={i} url={p.payload} className={'post__ogcard'} />
+              )
+            default:
+              return <React.Fragment key={i} />
+          }
+        })}
         <div className={'post__meta ' + (metaEnabled ? 'enabled' : '')}>
           via {post.application.name}
         </div>

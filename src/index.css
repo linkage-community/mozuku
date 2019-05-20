@@ -188,6 +188,12 @@ select {
   object-fit: cover;
 }
 
+.post__ogcard {
+  margin: 4px 0 0;
+  padding: 8px 0;
+  color: #666;
+}
+
 .post__meta {
   display: none;
 }
@@ -252,4 +258,23 @@ select {
 }
 .settingItem__submitButton.alert {
   background-color: var(--color-alert);
+}
+
+.post__ogcard > a {
+  text-decoration: inherit;
+  color: inherit;
+}
+.ogcard__title {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.ogcard__description {
+  padding-top: 4px;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
 }
