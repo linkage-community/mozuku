@@ -1,6 +1,5 @@
 import * as React from 'react'
 const { useMemo } = React
-import moment from 'moment-timezone'
 
 import {
   Post,
@@ -8,21 +7,13 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../models'
-import { useRelativeTimeRepresent } from '../util/hooks'
+import DateTime from './DateTime';
 
 type PostProps = {
   post: Post
   metaEnabled: boolean
 }
 export default ({ post, post: { author }, metaEnabled }: PostProps) => {
-  const relativeTimeRepresent = useRelativeTimeRepresent(post.createdAt)
-  const absoluteTimeRepresent = useMemo(
-    () =>
-      moment(post.createdAt)
-        .tz('Asia/Tokyo')
-        .format('HH:mm:ss · D MMM YYYY'),
-    []
-  )
   return useMemo(
     () => (
       <div className="post">
@@ -40,9 +31,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
               @{author.screenName}
             </span>
           </div>
-          <div className="post-head__time" title={absoluteTimeRepresent}>
-            {relativeTimeRepresent}
-          </div>
+          <DateTime className="post-head__time" dt={post.createdAt} />
         </div>
         <div className="post__body">
           {post.body.parts.map((p, i) => {
@@ -111,6 +100,6 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
         </div>
       </div>
     ),
-    [author.name, relativeTimeRepresent]
+    [author.name]
   )
 }
