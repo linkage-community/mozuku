@@ -40,6 +40,16 @@ const diffFromNow = (dt: Moment): TimeDiff | undefined => {
   if (seconds > 0) return { type: Second, duration: seconds }
 }
 
+// 虚無
+const timerSubscribers = new Set<() => void>()
+const timer = () => {
+  Array.from(timerSubscribers.values()).forEach(async f => {
+    f()
+  })
+  window.setTimeout(timer, 1000)
+}
+timer()
+
 export const useRelativeTimeRepresent = (dt: Moment) => {
   const [relativeTimeRepresent, setRTR] = useState(`just now`)
   const setDiff = (d: TimeDiff) => {
@@ -49,32 +59,24 @@ export const useRelativeTimeRepresent = (dt: Moment) => {
   useEffect(() => {
     let t: number
     const runner = () => {
-      const next = main()
-      if (next) t = window.setTimeout(runner, next)
+      const diff = main()
+      if (!diff) timerSubscribers.delete(runner)
     }
     const main = () => {
       const diff = diffFromNow(dt)
-      if (diff === undefined) return 500
+      if (diff === undefined) return true
       switch (diff.type) {
         case Month:
           // stop timer
           setRTR(dt.format('D MMM YYYY'))
-          return
-        case Second:
-          setDiff(diff)
-          return 100 * 5
-        case Minute:
-          setDiff(diff)
-          return 1000 * 30
-        case Hour:
-          setDiff(diff)
-          return 1000 * 60 * 30
+          return false
         default:
           setDiff(diff)
-          return 1000 * 60 * 60 * 12
+          return true
       }
     }
     runner()
+    timerSubscribers.add(runner)
     return () => {
       window.clearTimeout(t)
     }
