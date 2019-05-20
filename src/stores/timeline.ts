@@ -180,13 +180,11 @@ class TimelineStore {
           body: p.body.parts
             .filter(p => p.type === BODYPART_TYPE_TEXT)
             .map(p => p.payload)
-            .join(''),
-          requireInteraction: true
+            .join('')
           // あとで icon 指定する
         }
       )
       n.addEventListener('click', () => window.focus())
-      setTimeout(n.close.bind(n), 5000)
     })
   }
   private enableStreamPilot() {
