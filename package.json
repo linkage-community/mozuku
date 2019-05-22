@@ -35,11 +35,14 @@
     "@types/react-router": "^4.4.5",
     "@types/react-router-dom": "^4.3.2",
     "jest": "^24.8.0",
+    "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "clean": "rimraf \"dist/*.{png,html,js,map,css}\"",
     "format": "prettier --write \"./src/**/*.{html,css,ts,tsx}\"",
     "test": "jest"
   }
