@@ -1,7 +1,9 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-type Config = {
+import Config from '../config'
+
+type TConfig = {
   showMetaEnabled: boolean
   notificationEnabled: boolean
   ogcardEnabled: boolean
@@ -25,7 +27,7 @@ export default ({
   ) => void
   onUpdateEnableOGCard: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
-  currentConfig: Config
+  currentConfig: TConfig
   logout: () => void
 }) => {
   const callback = useCallback((event: React.FormEvent<HTMLFormElement>) => {
@@ -91,6 +93,11 @@ export default ({
         value="Logout"
         onClick={onLogout}
       />
+      <div className="settingItem__subtitle">Built with ❤️</div>
+      <ul>
+        <li>Commit #{Config.source.commit || <i>undefined</i>}</li>
+        <li><a href={Config.source.repository}>Go to repository</a></li>
+      </ul>
     </div>
   )
 }
