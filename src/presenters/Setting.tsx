@@ -65,7 +65,7 @@ export default ({
           onChange={onUpdateShowMetaCheckbox}
           checked={currentConfig.showMetaEnabled}
         />
-        Show metadata in post (like via)
+        Show metadata about posts (eg. used application)
       </label>
       <label>
         <input
@@ -74,7 +74,7 @@ export default ({
           onChange={onUpdateEnableNotificationCheckBox}
           checked={currentConfig.notificationEnabled}
         />
-        Notificate when you mentioned in background
+        Notify if you are mentioned and the window (or tab) is hidden
       </label>
       <label>
         <input
@@ -83,7 +83,7 @@ export default ({
           onChange={onUpdateEnableOGCard}
           checked={currentConfig.ogcardEnabled}
         />
-        Show website metadata in post (link OGP)
+        Show metadata about website links (by OGP)
       </label>
       <div className="settingItem__subtitle">Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>
