@@ -42,7 +42,7 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html",
-    "clean": "rimraf \"dist/*.{png,html,js,map,css}\"",
+    "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
     "format": "prettier --write \"./src/**/*.{html,css,ts,tsx}\"",
     "test": "jest"
   }
