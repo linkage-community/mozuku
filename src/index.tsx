@@ -28,6 +28,7 @@ import { useObserver } from 'mobx-react-lite'
 import { appStore } from './stores'
 
 import Layout from './containers/Layout'
+import Landing from './presenters/Landing'
 
 const RedirectToLogin = ({ location }: RouteComponentProps) => (
   <Redirect
@@ -43,12 +44,7 @@ const Login = ({ location }: RouteComponentProps) => {
     new URLSearchParams(location.search).get('next') ||
     ''
   const authURL = seaClient.getAuthorizeURL(next)
-  return (
-    <>
-      <h1>Sign in to Mozuku</h1>
-      <button onClick={() => window.location.replace(authURL)}>Login</button>
-    </>
-  )
+  return (<Landing authURL={new URL(authURL)} />)
 }
 const Callback = ({ location }: RouteComponentProps) => {
   const code = new URLSearchParams(location.search).get('code')
