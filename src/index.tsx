@@ -44,7 +44,7 @@ const Login = ({ location }: RouteComponentProps) => {
     new URLSearchParams(location.search).get('next') ||
     ''
   const authURL = seaClient.getAuthorizeURL(next)
-  return (<Landing authURL={new URL(authURL)} />)
+  return <Landing authURL={new URL(authURL)} />
 }
 const Callback = ({ location }: RouteComponentProps) => {
   const code = new URLSearchParams(location.search).get('code')

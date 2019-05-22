@@ -13,11 +13,13 @@ export default ({ authURL }: { authURL: URL }) => (
     <Container>
       <div className="mozuku-landing">
         <h1>Greetings</h1>
-
         {/* FIXME: このメッセージは仮置き */}
-        現時点では Mozuku を利用する前に<b>あらかじめSeaにログインする必要があります</b>。<br />
-        -> <a href={authURL.origin + '/login'} target="_blank">ログインする</a>
-
+        現時点では Mozuku を利用する前に
+        <b>あらかじめSeaにログインする必要があります</b>。<br />
+        ->{' '}
+        <a href={authURL.origin + '/login'} target="_blank">
+          ログインする
+        </a>
         <h2>
           <a href={authURL.href}>Use Mozuku</a>
         </h2>
