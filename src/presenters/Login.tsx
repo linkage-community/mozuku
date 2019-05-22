@@ -17,7 +17,7 @@ export default ({ authURL }: { authURL: URL }) => (
         現時点では Mozuku を利用する前に
         <b>あらかじめSeaにログインする必要があります</b>。<br />
         ->{' '}
-        <a href={authURL.origin + '/login'} target="_blank">
+        <a href={authURL.origin} target="_blank">
           ログインする
         </a>
         <h2>

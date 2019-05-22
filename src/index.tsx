@@ -27,8 +27,8 @@ import seaClient from './util/seaClient'
 import { useObserver } from 'mobx-react-lite'
 import { appStore } from './stores'
 
-import Layout from './containers/Layout'
-import Landing from './presenters/Landing'
+import Index from './containers/Index'
+import Login from './presenters/Login'
 
 const RedirectToLogin = ({ location }: RouteComponentProps) => (
   <Redirect
@@ -38,13 +38,13 @@ const RedirectToLogin = ({ location }: RouteComponentProps) => (
     }}
   />
 )
-const Login = ({ location }: RouteComponentProps) => {
+const LoginWrapper = ({ location }: RouteComponentProps) => {
   const next =
     (location.state && location.state.from) ||
     new URLSearchParams(location.search).get('next') ||
     ''
   const authURL = seaClient.getAuthorizeURL(next)
-  return <Landing authURL={new URL(authURL)} />
+  return <Login authURL={new URL(authURL)} />
 }
 const Callback = ({ location }: RouteComponentProps) => {
   const code = new URLSearchParams(location.search).get('code')
@@ -77,9 +77,11 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/callback" component={Callback} />
-        {!appStore.loggedIn && <Route exact path="/login" component={Login} />}
+        {!appStore.loggedIn && (
+          <Route exact path="/login" component={LoginWrapper} />
+        )}
         {!appStore.loggedIn && <Route component={RedirectToLogin} />}
-        <Route component={Layout} />
+        <Route component={Index} />
       </Switch>
     </BrowserRouter>
   ))

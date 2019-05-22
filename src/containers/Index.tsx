@@ -3,11 +3,11 @@ const { useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
 import { appStore } from '../stores'
-import Layout from '../presenters/Layout'
+import Index from '../presenters/Index'
 
 export default () => {
   useEffect(() => {
     appStore.init()
   }, [])
-  return useObserver(() => <Layout me={appStore.me} />)
+  return useObserver(() => <Index me={appStore.me} />)
 }
