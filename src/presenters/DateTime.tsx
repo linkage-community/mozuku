@@ -6,8 +6,7 @@ import { format } from 'date-fns-tz'
 export default ({ dt, className }: { dt: Date; className: string }) => {
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)
   const absoluteTimeRepresent = useMemo(
-    () =>
-      format(dt, 'HH:mm:ss · d MMM yyyy', { timeZone: 'Asia/Tokyo' }),
+    () => format(dt, 'HH:mm:ss · d MMM yyyy', { timeZone: 'Asia/Tokyo' }),
     []
   )
   return (

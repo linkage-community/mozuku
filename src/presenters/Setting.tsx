@@ -96,7 +96,9 @@ export default ({
       <div className="settingItem__subtitle">Built with ❤️</div>
       <ul>
         <li>Commit #{Config.source.commit || <i>undefined</i>}</li>
-        <li><a href={Config.source.repository}>Go to repository</a></li>
+        <li>
+          <a href={Config.source.repository}>Go to repository</a>
+        </li>
       </ul>
     </div>
   )
