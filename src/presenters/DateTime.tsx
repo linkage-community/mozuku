@@ -1,15 +1,12 @@
 import * as React from 'react'
 const { useMemo } = React
 import { useRelativeTimeRepresent } from '../util/hooks'
-import moment, { Moment } from 'moment-timezone'
+import { format } from 'date-fns-tz'
 
-export default ({ dt, className }: { dt: Moment; className: string }) => {
+export default ({ dt, className }: { dt: Date; className: string }) => {
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)
   const absoluteTimeRepresent = useMemo(
-    () =>
-      moment(dt)
-        .tz('Asia/Tokyo') // current tz にしたくない
-        .format('HH:mm:ss · D MMM YYYY'),
+    () => format(dt, 'HH:mm:ss · d MMM yyyy', { timeZone: 'Asia/Tokyo' }),
     []
   )
   return (

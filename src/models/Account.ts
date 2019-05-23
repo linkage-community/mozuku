@@ -1,5 +1,4 @@
 import $ from 'cafy'
-import moment, { Moment } from 'moment'
 import Model, { validateDate } from './_Model'
 
 type AccountBody = {
@@ -16,8 +15,8 @@ export default class Account implements Model<AccountBody> {
   name: string
   screenName: string
   postsCount: number
-  createdAt: Moment
-  updatedAt: Moment
+  createdAt: Date
+  updatedAt: Date
 
   private validate(user: any) {
     return $.obj({
@@ -36,8 +35,8 @@ export default class Account implements Model<AccountBody> {
     this.name = user.name
     this.screenName = user.screenName
     this.postsCount = user.postsCount
-    this.createdAt = moment(user.createdAt)
-    this.updatedAt = moment(user.updatedAt)
+    this.createdAt = new Date(user.createdAt)
+    this.updatedAt = new Date(user.updatedAt)
   }
 
   unpack() {
@@ -46,8 +45,8 @@ export default class Account implements Model<AccountBody> {
       name: this.name,
       screenName: this.screenName,
       postsCount: this.postsCount,
-      createdAt: this.createdAt.toDate().toISOString(),
-      updatedAt: this.updatedAt.toDate().toISOString()
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString()
     }
   }
 }

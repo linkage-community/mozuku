@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react'
-import moment, { Moment } from 'moment'
+import {
+  differenceInMonths,
+  differenceInWeeks,
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  format
+} from 'date-fns'
 import riassumere, { interfaces as IRiassumere } from 'riassumere'
 
 const Month = 'mo'
@@ -18,25 +26,25 @@ type TimeDiff = {
     | typeof Second
   duration: number
 }
-const diffFromNow = (dt: Moment): TimeDiff | undefined => {
-  const now = moment()
+const diffFromNow = (dt: Date): TimeDiff | undefined => {
+  const now = new Date()
 
-  const months = now.diff(dt, 'month')
+  const months = differenceInMonths(now, dt)
   if (months > 0) return { type: Month, duration: months }
 
-  const weeks = now.diff(dt, 'week')
+  const weeks = differenceInWeeks(now, dt)
   if (weeks > 0) return { type: Week, duration: weeks }
 
-  const days = now.diff(dt, 'day')
+  const days = differenceInDays(now, dt)
   if (days > 0) return { type: Day, duration: days }
 
-  const hours = now.diff(dt, 'hour')
+  const hours = differenceInHours(now, dt)
   if (hours > 0) return { type: Hour, duration: hours }
 
-  const minutes = now.diff(dt, 'minute')
+  const minutes = differenceInMinutes(now, dt)
   if (minutes > 0) return { type: Minute, duration: minutes }
 
-  const seconds = now.diff(dt, 'second')
+  const seconds = differenceInSeconds(now, dt)
   if (seconds > 0) return { type: Second, duration: seconds }
 }
 
@@ -50,7 +58,7 @@ const timer = () => {
 }
 timer()
 
-export const useRelativeTimeRepresent = (dt: Moment) => {
+export const useRelativeTimeRepresent = (dt: Date) => {
   const [relativeTimeRepresent, setRTR] = useState(`just now`)
   const setDiff = (d: TimeDiff) => {
     const t = `${d.duration}${d.type} ago`
@@ -68,7 +76,7 @@ export const useRelativeTimeRepresent = (dt: Moment) => {
       switch (diff.type) {
         case Month:
           // stop timer
-          setRTR(dt.format('D MMM YYYY'))
+          setRTR(format(dt, 'd MMM yyyy'))
           return false
         default:
           setDiff(diff)
