@@ -1,5 +1,4 @@
 import $ from 'cafy'
-import moment, { Moment } from 'moment'
 import Model, { validateDate } from './_Model'
 
 import Application from './Application'
@@ -205,8 +204,8 @@ export class PostImage {
 export default class Post implements Model {
   id: number
   text: string
-  createdAt: Moment
-  updatedAt: Moment
+  createdAt: Date
+  updatedAt: Date
 
   body: PostBody
   images: PostImage[] = []
@@ -249,8 +248,8 @@ export default class Post implements Model {
     this.body = body
     this.images = images
     this.files = files
-    this.createdAt = moment(post.createdAt)
-    this.updatedAt = moment(post.updatedAt)
+    this.createdAt = new Date(post.createdAt)
+    this.updatedAt = new Date(post.updatedAt)
     this.application = app
     this.author = account
   }

@@ -1,9 +1,9 @@
 import $ from 'cafy'
-import moment from 'moment'
+import { isValid } from 'date-fns'
 
 export default interface Model<T = any> {
   id: number
   unpack(): T
 }
 
-export const validateDate = $.str.pipe(i => moment(i).isValid())
+export const validateDate = $.str.pipe(i => isValid(new Date(i)))
