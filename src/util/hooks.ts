@@ -76,7 +76,7 @@ export const useRelativeTimeRepresent = (dt: Date) => {
       switch (diff.type) {
         case Month:
           // stop timer
-          setRTR(format(dt, 'D MMM YYYY'))
+          setRTR(format(dt, 'd MMM yyyy'))
           return false
         default:
           setDiff(diff)
