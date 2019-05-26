@@ -142,23 +142,30 @@ class SApp {
     return accounts
   }
   async setPosts(ps: any[]) {
-    // cast to post
-    const pms = await Promise.all(ps.map(async (p: any) => new Post(p)))
-    // custom process for domain
-    const posts = await Promise.all(
-      pms.map(post => {
-        // model に閉じれない物をここにおきます
-        if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
-        post.body.process([
-          NewBoldMyScreenNameMiddleware(this.me),
-          pruneEmptyTextMiddleware
-        ])
-        return post
-      })
-    )
-    posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
-    posts.forEach(p => this.posts.set(p.id, this.wrapPostWithLatestAccount(p)))
-    return posts
+    try {
+      // cast to post
+      const pms = await Promise.all(ps.map(async (p: any) => new Post(p)))
+      // custom process for domain
+      const posts = await Promise.all(
+        pms.map(post => {
+          // model に閉じれない物をここにおきます
+          if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
+          post.body.process([
+            NewBoldMyScreenNameMiddleware(this.me),
+            pruneEmptyTextMiddleware
+          ])
+          return post
+        })
+      )
+      posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
+      posts.forEach(p =>
+        this.posts.set(p.id, this.wrapPostWithLatestAccount(p))
+      )
+      return posts
+    } catch (e) {
+      console.dir(e)
+      throw e
+    }
   }
 }
 

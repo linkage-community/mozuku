@@ -1,5 +1,6 @@
 import $ from 'cafy'
 import Model, { validateDate } from './_Model'
+import AlbumFile from './AlbumFile'
 
 type AccountBody = {
   id: number
@@ -8,6 +9,7 @@ type AccountBody = {
   postsCount: number
   createdAt: string
   updatedAt: string
+  avatarFile?: any
 }
 
 export default class Account implements Model<AccountBody> {
@@ -17,6 +19,7 @@ export default class Account implements Model<AccountBody> {
   postsCount: number
   createdAt: Date
   updatedAt: Date
+  avatarFile?: AlbumFile
 
   private validate(user: any) {
     return $.obj({
@@ -25,7 +28,8 @@ export default class Account implements Model<AccountBody> {
       screenName: $.str,
       postsCount: $.num,
       createdAt: validateDate,
-      updatedAt: validateDate
+      updatedAt: validateDate,
+      avatarFile: $.nullable.any
     }).throw(user)
   }
 
@@ -37,6 +41,7 @@ export default class Account implements Model<AccountBody> {
     this.postsCount = user.postsCount
     this.createdAt = new Date(user.createdAt)
     this.updatedAt = new Date(user.updatedAt)
+    if (user.avatarFile) this.avatarFile = new AlbumFile(user.avatarFile)
   }
 
   unpack() {
@@ -46,7 +51,7 @@ export default class Account implements Model<AccountBody> {
       screenName: this.screenName,
       postsCount: this.postsCount,
       createdAt: this.createdAt.toISOString(),
-      updatedAt: this.updatedAt.toISOString()
-    }
+      updatedAt: this.updatedAt.toISOString(),
+      avatarFile: this.avatarFile && this.avatarFile.unpack()
   }
 }
