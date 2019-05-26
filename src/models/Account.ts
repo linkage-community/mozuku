@@ -9,7 +9,7 @@ type AccountBody = {
   postsCount: number
   createdAt: string
   updatedAt: string
-  avatarFile?: any
+  avatarFile: any
 }
 
 export default class Account implements Model<AccountBody> {
@@ -19,7 +19,7 @@ export default class Account implements Model<AccountBody> {
   postsCount: number
   createdAt: Date
   updatedAt: Date
-  avatarFile?: AlbumFile
+  avatarFile: null | AlbumFile = null
 
   private validate(user: any) {
     return $.obj({
