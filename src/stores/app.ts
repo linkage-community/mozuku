@@ -141,7 +141,7 @@ class SApp {
     })
     return accounts
   }
-async setPosts(ps: any[]) {
+  async setPosts(ps: any[]) {
     // cast to post
     const pms = await Promise.all(ps.map(async (p: any) => new Post(p)))
     // custom process for domain
@@ -157,9 +157,7 @@ async setPosts(ps: any[]) {
       })
     )
     posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
-    posts.forEach(p =>
-      this.posts.set(p.id, this.wrapPostWithLatestAccount(p))
-    )
+    posts.forEach(p => this.posts.set(p.id, this.wrapPostWithLatestAccount(p)))
     return posts
   }
 }

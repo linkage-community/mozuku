@@ -53,5 +53,6 @@ export default class Account implements Model<AccountBody> {
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),
       avatarFile: this.avatarFile && this.avatarFile.unpack()
+    }
   }
 }
