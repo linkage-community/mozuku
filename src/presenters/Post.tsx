@@ -87,6 +87,6 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
         </div>
       </div>
     ),
-    [author.name]
+    [author.name, author.avatarFile && author.avatarFile.id]
   )
 }
