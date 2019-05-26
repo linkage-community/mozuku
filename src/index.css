@@ -135,9 +135,17 @@ select {
   width: 100%;
 }
 
-.post,
-.timelineItem__readMore {
+.post {
+  display: grid;
+  grid-template-columns: auto 1fr;
   padding: 12px 24px;
+  border-top: 1px solid #eee;
+}
+.post > * {
+  grid-column: 2;
+}
+.timelineItem__readMore {
+  padding: 12px;
   border-top: 1px solid #eee;
 }
 
@@ -145,6 +153,24 @@ select {
   .post {
     padding: 12px 18px;
   }
+  .postForm__textarea {
+    padding-left: 18px;
+  }
+}
+
+.post__icon {
+  /* magic */
+  height: 0;
+  grid-column: 1;
+  margin-right: 8px;
+}
+.post-icon__img {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  /* FIXME: break transparent image */
+  background-color: black;
+  border-radius: 4px;
 }
 
 .post-head {

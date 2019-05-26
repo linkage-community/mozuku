@@ -19,6 +19,21 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
   return useMemo(
     () => (
       <div className="post">
+        {author.avatarFile ? (
+          <picture className="post__icon post-icon">
+            {author.avatarFile.thumbnails.map(t => (
+              <source key={t.id} srcSet={t.url.href} type={t.mime} />
+            ))}
+            <img
+              title={author.avatarFile.fileName}
+              className="post-icon__img"
+            />
+          </picture>
+        ) : (
+          <div className="post__icon">
+            <div className="post-icon__img" title="undefined" />
+          </div>
+        )}
         <div className="post__head post-head">
           <div className="post-head__name">
             <span
