@@ -138,6 +138,7 @@ select {
 .post {
   display: grid;
   grid-template-columns: auto 1fr;
+  grid-column-gap: 12px;
   padding: 12px 18px;
   border-top: 1px solid #eee;
 }
@@ -153,7 +154,6 @@ select {
   /* magic */
   height: 0;
   grid-column: 1;
-  margin-right: 12px;
 }
 .post-icon__img {
   height: 36px;
@@ -291,15 +291,11 @@ select {
 }
 .ogcard__title {
   overflow: hidden;
-  white-space: nowrap;
-  width: 100%;
   font-weight: bold;
   text-overflow: ellipsis;
-  width: 100%;
 }
 .ogcard__description {
   padding-top: 4px;
   overflow: hidden;
-  width: 100%;
   text-overflow: ellipsis;
 }
