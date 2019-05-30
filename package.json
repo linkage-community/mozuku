@@ -15,7 +15,7 @@
     "mobx-react-lite": "^1.3.0",
     "parcel": "^1.12.3",
     "pictograph": "^2.2.0",
-    "prettier": "^1.17.0",
+    "prettier": "^1.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
