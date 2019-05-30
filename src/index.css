@@ -281,6 +281,7 @@ select {
 }
 
 .ogcard {
+  overflow: hidden;
   box-sizing: border-box;
   border-left: 1px solid;
   padding: 4px 8px;
@@ -292,10 +293,12 @@ select {
 .ogcard__title {
   overflow: hidden;
   font-weight: bold;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 .ogcard__description {
-  padding-top: 4px;
   overflow: hidden;
+  padding-top: 4px;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
