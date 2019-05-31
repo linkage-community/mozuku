@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as styles from './postForm.css'
 const { forwardRef } = React
 
 type T = {
@@ -23,9 +24,9 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
 
     return (
-      <form className="postForm" onSubmit={onSubmit}>
+      <form className={styles.postForm} onSubmit={onSubmit}>
         <textarea
-          className="postForm__textarea"
+          className={styles.textarea}
           disabled={draftDisabled}
           onKeyDown={onKeyDown}
           onChange={onChange}
@@ -34,7 +35,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
           value={draft}
         />
         <button
-          className="postForm__button"
+          className={styles.button}
           type="submit"
           disabled={draftDisabled}
         >

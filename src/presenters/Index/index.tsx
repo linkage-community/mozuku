@@ -14,6 +14,8 @@ import Header from '../components/Layout/Header'
 import HeaderLogo from '../components/Layout/HeaderLogo'
 import Container from '../components/Layout/Container'
 
+import * as styles from './Index/index.css'
+
 export default ({ me }: { me?: Account }) => {
   return (
     <BrowserRouter>
@@ -29,7 +31,7 @@ export default ({ me }: { me?: Account }) => {
               </span>
             )}
           </div>
-          <div className="mozuku-header__setting">
+          <div className={styles.header_setting}>
             <Link to={{ pathname: '/settings' }}>⚙</Link>
           </div>
         </Header>

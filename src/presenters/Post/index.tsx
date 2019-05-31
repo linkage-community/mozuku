@@ -10,6 +10,8 @@ import {
 import DateTime from './DateTime'
 import OGCard from './OGCard'
 
+import * as styles from './Post/post.css'
+
 type PostProps = {
   post: Post
   metaEnabled: boolean
@@ -17,24 +19,23 @@ type PostProps = {
 export default ({ post, post: { author }, metaEnabled }: PostProps) => {
   return useMemo(
     () => (
-      <div className="post">
-        <div className="post__head post-head">
-          <div className="post-head__name">
+      <div className={styles.post}>
+        <div className={styles.head}>
+          <div className={styles.name}>
             <span
-              className={`post-head__name__name ${
+              className={[
+                styles.displayName,
                 // FIXME: DIRTY!
-                author.name.trim().length === 0 ? 'empty' : ''
-              }`}
+                author.name.trim().length === 0 ? styles.empty : ''
+              ].join(' ')}
             >
               {author.name}
             </span>
-            <span className="post-head__name__screenName">
-              @{author.screenName}
-            </span>
+            <span className={styles.screenName}>@{author.screenName}</span>
           </div>
-          <DateTime className="post-head__time" dt={post.createdAt} />
+          <DateTime className={styles.time} dt={post.createdAt} />
         </div>
-        <div className="post__body">
+        <div className={styles.body}>
           {post.body.parts.map((p, i) => {
             switch (p.type) {
               case BODYPART_TYPE_LINK:
@@ -46,7 +47,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
                 )
               case BODYPART_TYPE_BOLD:
                 return (
-                  <span key={i} className="post__body__bold">
+                  <span key={i} className={styles.bold}>
                     {p.payload}
                   </span>
                 )
@@ -56,10 +57,10 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
           })}
         </div>
         {post.images.length ? (
-          <div className="post__image">
+          <div className={styles.image}>
             {post.images.map((im, k) => (
               <a key={k} href={im.direct} target="_blank">
-                <img className="post-image__img" src={im.thumbnail} />
+                <img src={im.thumbnail} />
               </a>
             ))}
           </div>
@@ -68,7 +69,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
         )}
         {post.files.length ? (
           post.files.map(im => (
-            <div className="post__image" key={im.id}>
+            <div className={styles.image} key={im.id}>
               <picture>
                 {im.variants
                   .filter(vr => vr.type == 'thumbnail')
@@ -77,7 +78,6 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
                   ))}
                 <img
                   title={im.fileName}
-                  className="post-image__img"
                   onClick={e => {
                     const src = im.variants.filter(
                       vr => vr.url.href == e.currentTarget.currentSrc
@@ -100,13 +100,13 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:
               return (
-                <OGCard key={i} url={p.payload} className={'post__ogcard'} />
+                <OGCard key={i} url={p.payload} className={styles.ogcard} />
               )
             default:
               return <React.Fragment key={i} />
           }
         })}
-        <div className={'post__meta ' + (metaEnabled ? 'enabled' : '')}>
+        <div className={`${styles.meta} ${metaEnabled ? styles.enabled : ''}`}>
           via {post.application.name}
         </div>
       </div>
