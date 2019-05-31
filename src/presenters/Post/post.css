@@ -57,19 +57,6 @@
   font-weight: bold;
 }
 
-.image {
-  display: flex;
-  overflow-x: auto;
-  margin-top: 4px;
-}
-
-.image img {
-  margin-right: 4px;
-  width: 144px;
-  height: 144px;
-  object-fit: cover;
-}
-
 .ogcard {
   margin: 4px 0 0;
   color: #666;

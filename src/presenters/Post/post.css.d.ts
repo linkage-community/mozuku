@@ -10,7 +10,6 @@ declare const styles: {
   readonly "time": string;
   readonly "body": string;
   readonly "bold": string;
-  readonly "image": string;
   readonly "ogcard": string;
   readonly "meta": string;
   readonly "enabled": string;
