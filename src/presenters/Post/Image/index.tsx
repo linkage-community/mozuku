@@ -25,7 +25,6 @@ export default ({
               <img
                 title={im.fileName}
                 onClick={e => {
-                  console.dir(e.currentTarget)
                   // ここやだ
                   const src = im.thumbnails.filter(
                     vr => vr.url.href == e.currentTarget.currentSrc
