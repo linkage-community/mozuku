@@ -3,16 +3,18 @@ import * as React from 'react'
 import { Switch, Route } from 'react-router'
 import { Link, BrowserRouter } from 'react-router-dom'
 
-import { Account } from '../models'
+import { Account } from '../../models'
 
-import Home from './Home'
-import NotFound from './NotFound'
-import Setting from '../containers/Setting'
+import Home from '../Home'
+import NotFound from '../NotFound'
+import Setting from '../../containers/Setting'
 
-import Layout from '../components/Layout'
-import Header from '../components/Layout/Header'
-import HeaderLogo from '../components/Layout/HeaderLogo'
-import Container from '../components/Layout/Container'
+import Layout from '../../components/Layout'
+import Header from '../../components/Layout/Header'
+import HeaderLogo from '../../components/Layout/HeaderLogo'
+import Container from '../../components/Layout/Container'
+
+import * as styles from '../Index/index.css'
 
 export default ({ me }: { me?: Account }) => {
   return (
@@ -29,7 +31,7 @@ export default ({ me }: { me?: Account }) => {
               </span>
             )}
           </div>
-          <div className="mozuku-header__setting">
+          <div className={styles.header_setting}>
             <Link to={{ pathname: '/settings' }}>⚙</Link>
           </div>
         </Header>

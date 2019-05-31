@@ -1,9 +1,11 @@
 import * as React from 'react'
 
-import Layout from '../components/Layout'
-import Header from '../components/Layout/Header'
-import HeaderLogo from '../components/Layout/HeaderLogo'
-import Container from '../components/Layout/Container'
+import Layout from '../../components/Layout'
+import Header from '../../components/Layout/Header'
+import HeaderLogo from '../../components/Layout/HeaderLogo'
+import Container from '../../components/Layout/Container'
+
+import * as styles from '../Login/login.css'
 
 export default ({ authURL }: { authURL: URL }) => (
   <Layout>
@@ -11,7 +13,7 @@ export default ({ authURL }: { authURL: URL }) => (
       <HeaderLogo disabled={true} />
     </Header>
     <Container>
-      <div className="mozuku-landing">
+      <div className={styles.landing}>
         <h1>Greetings</h1>
         {/* FIXME: このメッセージは仮置き */}
         現時点では Mozuku を利用する前に

@@ -1,7 +1,9 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-import Config from '../config'
+import Config from '../../config'
+
+import * as styles from './setting.css'
 
 type TConfig = {
   showMetaEnabled: boolean
@@ -41,22 +43,22 @@ export default ({
   const refName = useRef<HTMLInputElement>(null)
 
   return (
-    <div className="setting">
-      <div className="settingItem__title">Settings</div>
+    <div className={styles.setting}>
+      <div className={styles.title}>Settings</div>
       <form onSubmit={callback}>
-        <div className="settingItem__subtitle">Account Settings</div>
+        <div className={styles.subtitle}>Account Settings</div>
         <label>
-          <span className="settingItem__label__field">Name</span>
+          <span className={styles.text}>Name</span>
           <input type="text" ref={refName} defaultValue={currentName} />
         </label>
         <input
-          className="settingItem__submitButton"
+          className={styles.submitButton}
           type="submit"
           value="Update"
           disabled={updateDisabled}
         />
       </form>
-      <div className="settingItem__subtitle">Mozuku Settings</div>
+      <div className={styles.subtitle}>Mozuku Settings</div>
       <label>チェック入れたら即時反映される</label>
       <label>
         <input
@@ -85,15 +87,15 @@ export default ({
         />
         Show metadata about website links (by OGP)
       </label>
-      <div className="settingItem__subtitle">Danger zone</div>
+      <div className={styles.subtitle}>Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>
       <input
-        className="settingItem__submitButton alert"
+        className={`${styles.submitButton} ${styles.alert}`}
         type="submit"
         value="Logout"
         onClick={onLogout}
       />
-      <div className="settingItem__subtitle">Built with ❤️</div>
+      <div className={styles.subtitle}>Built with ❤️</div>
       <ul>
         <li>Commit #{Config.source.commit || <i>undefined</i>}</li>
         <li>

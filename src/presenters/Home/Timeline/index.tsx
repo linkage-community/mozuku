@@ -1,7 +1,9 @@
 import * as React from 'react'
 
-import { Post as PostModel } from '../../models'
-import Post from '../Post'
+import { Post as PostModel } from '../../../models'
+import Post from '../../Post'
+
+import * as styles from './timeline.css'
 
 export default ({
   posts,
@@ -14,15 +16,15 @@ export default ({
   readMoreDisabled: boolean
   postMetaEnabled?: boolean
 }) => (
-  <ul className="timeline">
+  <ul className={styles.timeline}>
     {posts.map(post => (
-      <li className="timelineItem" key={post.id}>
+      <li key={post.id}>
         <Post post={post} metaEnabled={postMetaEnabled} />
       </li>
     ))}
-    <li className="timelineItem">
+    <li>
       <button
-        className="timelineItem__readMore"
+        className={styles.readmore_button}
         disabled={readMoreDisabled}
         onClick={e => {
           e.preventDefault()

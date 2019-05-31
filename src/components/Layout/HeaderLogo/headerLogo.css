@@ -1,0 +1,15 @@
+.logo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.logo a {
+  display: block;
+}
+
+.logo a:hover {
+  background: #fafafa;
+}
