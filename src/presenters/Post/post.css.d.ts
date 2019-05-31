@@ -1,5 +1,7 @@
 declare const styles: {
   readonly "post": string;
+  readonly "icon": string;
+  readonly "icon__img": string;
   readonly "head": string;
   readonly "name": string;
   readonly "displayName": string;

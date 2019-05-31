@@ -1,4 +1,5 @@
 .ogcard {
+  overflow: hidden;
   box-sizing: border-box;
   border-left: 1px solid;
   padding: 4px 8px;
@@ -11,15 +12,14 @@
 
 .title {
   overflow: hidden;
-  white-space: nowrap;
-  width: 100%;
   font-weight: bold;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .description {
-  padding-top: 4px;
   overflow: hidden;
-  width: 100%;
+  padding-top: 4px;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }

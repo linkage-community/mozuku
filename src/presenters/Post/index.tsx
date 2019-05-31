@@ -9,6 +9,7 @@ import {
 } from '../../models'
 import DateTime from '../DateTime'
 import OGCard from '../OGCard'
+import Image from './Image'
 
 import * as styles from './post.css'
 
@@ -20,6 +21,18 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
   return useMemo(
     () => (
       <div className={styles.post}>
+        {author.avatarFile ? (
+          <picture className={styles.icon}>
+            {author.avatarFile.thumbnails.map(t => (
+              <source key={t.id} srcSet={t.url.href} type={t.mime} />
+            ))}
+            <img className={styles.icon__img} title={author.avatarFile.fileName} />
+          </picture>
+        ) : (
+          <div className={styles.icon}>
+            <div className={styles.icon__img} title="undefined" />
+          </div>
+        )}
         <div className={styles.head}>
           <div className={styles.name}>
             <span
@@ -56,46 +69,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
             }
           })}
         </div>
-        {post.images.length ? (
-          <div className={styles.image}>
-            {post.images.map((im, k) => (
-              <a key={k} href={im.direct} target="_blank">
-                <img src={im.thumbnail} />
-              </a>
-            ))}
-          </div>
-        ) : (
-          <></>
-        )}
-        {post.files.length ? (
-          post.files.map(im => (
-            <div className={styles.image} key={im.id}>
-              <picture>
-                {im.variants
-                  .filter(vr => vr.type == 'thumbnail')
-                  .map(vr => (
-                    <source key={vr.id} srcSet={vr.url.href} type={vr.mime} />
-                  ))}
-                <img
-                  title={im.fileName}
-                  onClick={e => {
-                    const src = im.variants.filter(
-                      vr => vr.url.href == e.currentTarget.currentSrc
-                    )[0]
-                    const imopen = im.variants
-                      .filter(vr => vr.mime == src.mime)
-                      .sort((a, b) =>
-                        a.score == b.score ? 0 : a.score < b.score ? 1 : -1
-                      )[0]
-                    window.open(imopen.url.href, '_blank')
-                  }}
-                />
-              </picture>
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
+        <Image albumFiles={post.files} images={post.images} />
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:
@@ -111,6 +85,6 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
         </div>
       </div>
     ),
-    [author.name]
+    [author.name, author.avatarFile && author.avatarFile.id]
   )
 }

@@ -67,9 +67,9 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
 export default class AlbumFile implements Model<AlbumFileBody> {
   id: number
   // FIXME: video 実装されるまで Body に type がないので
-  type = 'image'
+  type = 'image' as const
   fileName: string
-  variants: AlbumFileVariant[]
+  variants = new Map<AlbumFileVariant['type'], AlbumFileVariant[]>()
 
   private validate(f: any) {
     return $.obj({
@@ -83,14 +83,51 @@ export default class AlbumFile implements Model<AlbumFileBody> {
     const file = this.validate(f)
     this.id = file.id
     this.fileName = file.name
-    this.variants = file.variants.map(v => new AlbumFileVariant(v))
+    file.variants.map(v => {
+      const variant = new AlbumFileVariant(v)
+      const newVariants = [
+        ...(this.variants.get(variant.type) || []),
+        variant
+      ].sort((a, b) => b.score - a.score)
+      this.variants.set(variant.type, newVariants)
+    })
+  }
+
+  get thumbnails() {
+    return this.variants.get('thumbnail')!
+  }
+  get directs() {
+    return this.variants.get('image')!
+  }
+
+  // FIXME: undefined にならないけどおかしいかも
+  get thumbnail() {
+    return this.thumbnails[0]
+  }
+  // FIXME: undefined にならないけどおかしいかも
+  get direct() {
+    return this.directs[0]
+  }
+
+  thumbnailByMIME(mime: string) {
+    const c = this.variants.get('thumbnail')!
+    // TODO: ぱふぉーまんすもんだい
+    return c.find(v => v.mime === mime)
+  }
+
+  directByMIME(mime: string) {
+    const c = this.variants.get('image')!
+    // TODO: ぱふぉーまんすもんだい
+    return c.find(v => v.mime === mime)
   }
 
   unpack() {
     return {
       id: this.id,
       name: this.fileName,
-      variants: this.variants.map(v => v.unpack())
+      variants: Array.from(this.variants.values())
+        .reduce((c, v) => [...c, ...v], [])
+        .map(v => v.unpack())
     }
   }
 }

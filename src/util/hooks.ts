@@ -61,7 +61,7 @@ timer()
 export const useRelativeTimeRepresent = (dt: Date) => {
   const [relativeTimeRepresent, setRTR] = useState(`just now`)
   const setDiff = (d: TimeDiff) => {
-    const t = `${d.duration}${d.type} ago`
+    const t = `${d.duration}${d.type}`
     if (t !== relativeTimeRepresent) setRTR(t)
   }
   useEffect(() => {

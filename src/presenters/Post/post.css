@@ -1,12 +1,27 @@
 .post {
-  padding: 12px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 12px;
+  padding: 12px 18px;
   border-top: 1px solid #eee;
 }
 
-@media (max-width: 720px) {
-  .post {
-    padding: 12px 18px;
-  }
+.post > * {
+  grid-column: 2;
+}
+
+.icon {
+  /* magic */
+  height: 0;
+  grid-column: 1;
+}
+
+.icon__img {
+  height: 36px;
+  width: 36px;
+  object-fit: cover;
+  background-color: black;
+  border-radius: 4px;
 }
 
 .head {

@@ -44,7 +44,8 @@ describe('PostBody', () => {
       screenName: sn,
       createdAt: new Date().toUTCString(),
       updatedAt: new Date().toUTCString(),
-      postsCount: 0
+      postsCount: 0,
+      avatarFile: null
     })
 
     const t4 = `@${sn}a 123`
