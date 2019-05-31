@@ -26,7 +26,10 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
             {author.avatarFile.thumbnails.map(t => (
               <source key={t.id} srcSet={t.url.href} type={t.mime} />
             ))}
-            <img className={styles.icon__img} title={author.avatarFile.fileName} />
+            <img
+              className={styles.icon__img}
+              title={author.avatarFile.fileName}
+            />
           </picture>
         ) : (
           <div className={styles.icon}>
