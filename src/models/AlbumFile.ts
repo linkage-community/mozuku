@@ -102,11 +102,11 @@ export default class AlbumFile implements Model<AlbumFileBody> {
 
   // FIXME: undefined にならないけどおかしいかも
   get thumbnail() {
-    return this.thumbnails[0]
+    return this.thumbnails[this.thumbnails.length - 1]
   }
   // FIXME: undefined にならないけどおかしいかも
   get direct() {
-    return this.directs[0]
+    return this.directs[this.directs.length - 1]
   }
 
   thumbnailByMIME(mime: string) {
