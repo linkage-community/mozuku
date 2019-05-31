@@ -6,11 +6,11 @@ import {
   BODYPART_TYPE_LINK,
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
-} from '../models'
-import DateTime from './DateTime'
-import OGCard from './OGCard'
+} from '../../models'
+import DateTime from '../DateTime'
+import OGCard from '../OGCard'
 
-import * as styles from './Post/post.css'
+import * as styles from './post.css'
 
 type PostProps = {
   post: Post
