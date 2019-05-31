@@ -117,7 +117,6 @@ export default class AlbumFile implements Model<AlbumFileBody> {
 
   directByMIME(mime: string) {
     const c = this.variants.get('image')!
-    console.dir(c)
     // TODO: ぱふぉーまんすもんだい
     return c.find(v => v.mime === mime)
   }
