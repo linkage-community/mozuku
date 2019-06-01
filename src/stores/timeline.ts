@@ -180,8 +180,10 @@ class TimelineStore {
           body: p.body.parts
             .filter(p => p.type === BODYPART_TYPE_TEXT)
             .map(p => p.payload)
-            .join('')
-          // あとで icon 指定する
+            .join(''),
+          icon: p.author.avatarFile
+            ? p.author.avatarFile.thumbnail.url.href
+            : undefined
         }
       )
       n.addEventListener('click', () => window.focus())
