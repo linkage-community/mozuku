@@ -13,7 +13,7 @@ type TConfig = {
 
 export default ({
   updateDisabled,
-  updateName,
+  update,
   onUpdateShowMetaCheckbox,
   onUpdateEnableNotificationCheckBox,
   onUpdateEnableOGCard,
@@ -22,7 +22,7 @@ export default ({
   logout
 }: {
   updateDisabled: boolean
-  updateName: (n: string) => Promise<void>
+  update: ({ name, avatar }: { name?: string; avatar?: File }) => Promise<void>
   onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUpdateEnableNotificationCheckBox: (
     e: React.ChangeEvent<HTMLInputElement>
@@ -32,15 +32,24 @@ export default ({
   currentConfig: TConfig
   logout: () => void
 }) => {
-  const callback = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    updateName(refName.current!.value)
-  }, [])
+  const refName = useRef<HTMLInputElement>(null)
+  const refFile = useRef<HTMLInputElement>(null)
+  const callback = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      await update({
+        name: refName.current!.value,
+        avatar: refFile.current!.files![0]
+      })
+      // prevent to upload twice
+      refFile.current!.value = ''
+    },
+    []
+  )
   const onLogout = useCallback((event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault()
     logout()
   }, [])
-  const refName = useRef<HTMLInputElement>(null)
 
   return (
     <div className={styles.setting}>
@@ -50,6 +59,10 @@ export default ({
         <label>
           <span className={styles.text}>Name</span>
           <input type="text" ref={refName} defaultValue={currentName} />
+        </label>
+        <label>
+          <span className={styles.text}>Avatar</span>
+          <input type="file" ref={refFile} accept="image/*" />
         </label>
         <input
           className={styles.submitButton}
