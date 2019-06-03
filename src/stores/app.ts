@@ -24,6 +24,7 @@ import {
   NewBoldMyScreenNameMiddleware,
   pruneEmptyTextMiddleware
 } from '../models'
+import AlbumFile from '../models/AlbumFile'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
@@ -159,6 +160,12 @@ class SApp {
     posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
     posts.forEach(p => this.posts.set(p.id, this.wrapPostWithLatestAccount(p)))
     return posts
+  }
+
+  // FIXME: これいる?
+  async uploadAlbumFile(name: string, blob: Blob): Promise<AlbumFile> {
+    const r = await seaClient.uploadAlbumFile(name, blob)
+    return new AlbumFile(r)
   }
 }
 

@@ -39,6 +39,7 @@
   display: inline-block;
   text-align: right;
   margin-right: 8px;
+  min-width: 50px;
 }
 
 .submitButton {

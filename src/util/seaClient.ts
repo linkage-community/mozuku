@@ -109,6 +109,18 @@ export class SeaClient {
       .then(r => r.data)
   }
 
+  async uploadAlbumFile(name: string, blob: Blob): Promise<any> {
+    const form = new FormData()
+    form.append('file', blob)
+    form.append('name', name)
+    form.append('ifNameConflicted', 'add-date-string')
+
+    const path = '/v1/album/files'
+    return this.createAxiosInstance()
+      .post(this.genApiHref(path), form)
+      .then(r => r.data)
+  }
+
   connectStream(stream: string): Promise<WebSocket> {
     return new Promise((resolve, reject) => {
       try {
