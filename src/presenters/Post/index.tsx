@@ -37,18 +37,16 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
           </div>
         )}
         <div className={styles.head}>
-          <div className={styles.name}>
-            <span
-              className={[
-                styles.displayName,
-                // FIXME: DIRTY!
-                author.name.trim().length === 0 ? styles.empty : ''
-              ].join(' ')}
-            >
-              {author.name}
-            </span>
-            <span className={styles.screenName}>@{author.screenName}</span>
-          </div>
+          <span
+            className={[
+              styles.displayName,
+              // FIXME: DIRTY!
+              author.name.trim().length === 0 ? styles.empty : ''
+            ].join(' ')}
+          >
+            {author.name}
+          </span>
+          <span className={styles.screenName}>@{author.screenName}</span>
           <DateTime className={styles.time} dt={post.createdAt} />
         </div>
         <div className={styles.body}>

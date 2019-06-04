@@ -26,11 +26,7 @@
 
 .head {
   display: flex;
-  justify-content: space-between;
-}
-
-.name {
-  vertical-align: middle;
+  flex-wrap: wrap;
 }
 
 .displayName {
@@ -40,6 +36,11 @@
 
 .displayName .empty {
   margin: 0;
+}
+
+.time {
+  padding-left: 4px;
+  margin-left: auto;
 }
 
 .screenName,
