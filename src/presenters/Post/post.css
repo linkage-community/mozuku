@@ -25,13 +25,17 @@
 }
 
 .head {
+  overflow-x: hidden;
   display: flex;
   flex-wrap: wrap;
 }
 
 .displayName {
+  overflow: hidden;
   margin: 0 4px 0 0;
   font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .displayName .empty {
