@@ -25,21 +25,31 @@
 }
 
 .head {
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.name {
-  vertical-align: middle;
+.block {
+  display: flex;
+  flex-grow: 1;
 }
 
 .displayName {
+  overflow: hidden;
   margin: 0 4px 0 0;
   font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .displayName .empty {
   margin: 0;
+}
+
+.time {
+  padding-left: 8px;
+  margin-left: auto;
 }
 
 .screenName,

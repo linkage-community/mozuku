@@ -3,11 +3,11 @@ declare const styles: {
   readonly icon: string
   readonly icon__img: string
   readonly head: string
-  readonly name: string
+  readonly block: string
   readonly displayName: string
   readonly empty: string
-  readonly screenName: string
   readonly time: string
+  readonly screenName: string
   readonly body: string
   readonly bold: string
   readonly ogcard: string
