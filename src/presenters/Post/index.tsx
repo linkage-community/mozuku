@@ -46,8 +46,10 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
           >
             {author.name}
           </span>
-          <span className={styles.screenName}>@{author.screenName}</span>
-          <DateTime className={styles.time} dt={post.createdAt} />
+          <div className={styles.block}>
+            <span className={styles.screenName}>@{author.screenName}</span>
+            <DateTime className={styles.time} dt={post.createdAt} />
+          </div>
         </div>
         <div className={styles.body}>
           {post.body.parts.map((p, i) => {
