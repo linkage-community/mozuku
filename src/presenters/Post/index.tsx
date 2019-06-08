@@ -7,9 +7,10 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../../models'
-import DateTime from '../DateTime'
+import DateTime from '../../components/DateTime'
 import OGCard from '../OGCard'
 import Image from './Image'
+import DummyAvatar from './DummyAvatar'
 
 import * as styles from './post.css'
 
@@ -33,7 +34,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
           </picture>
         ) : (
           <div className={styles.icon}>
-            <div className={styles.icon__img} title="undefined" />
+            <DummyAvatar name={author.name} className={styles.icon__img} />
           </div>
         )}
         <div className={styles.head}>
