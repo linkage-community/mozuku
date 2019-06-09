@@ -97,6 +97,9 @@ export default ({
         })}
         <div className={`${styles.meta} ${metaEnabled ? styles.enabled : ''}`}>
           via {post.application.name}
+          {post.application.isAutomated && (
+            <span className={styles.meta__badge}>bot</span>
+          )}
         </div>
       </div>
     ),

@@ -13,5 +13,6 @@ declare const styles: {
   readonly ogcard: string
   readonly meta: string
   readonly enabled: string
+  readonly meta__badge: string
 }
 export = styles

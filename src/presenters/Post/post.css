@@ -76,8 +76,18 @@
 }
 
 .meta.enabled {
-  display: initial;
+  display: inline-flex;
+  align-items: center;
   margin: 4px 0 0;
   color: #999;
   font-size: 0.8em;
+}
+
+.meta__badge {
+  box-sizing: border-box;
+  border: 1px solid #999;
+  border-radius: 4px;
+  margin-left: 4px;
+  padding: 2px;
+  font-size: 0.7em;
 }
