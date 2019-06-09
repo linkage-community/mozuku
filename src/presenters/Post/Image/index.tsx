@@ -6,10 +6,12 @@ import * as styles from './image.css'
 
 export default ({
   albumFiles: files,
-  images
+  images,
+  setModalContent
 }: {
   albumFiles: AlbumFile[]
   images: PostImage[]
+  setModalContent: (albumFile: AlbumFile | null) => void
 }) => {
   return React.useMemo(() => {
     const imageFiles = files.filter(f => f.type === 'image')
@@ -24,13 +26,13 @@ export default ({
               ))}
               <img
                 title={im.fileName}
-                onClick={e => {
-                  // ここやだ
-                  const src = im.thumbnails.filter(
-                    vr => vr.url.href == e.currentTarget.currentSrc
-                  )[0]
-                  const imopen = im.directByMIME(src.mime) || im.direct
-                  window.open(imopen.url.href, '_blank')
+                onClick={() => {
+                  history.pushState(
+                    history.state,
+                    im.fileName,
+                    `#image_${im.id}`
+                  )
+                  setModalContent(im)
                 }}
               />
             </picture>

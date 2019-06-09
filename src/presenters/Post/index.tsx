@@ -13,12 +13,19 @@ import Image from './Image'
 import DummyAvatar from './DummyAvatar'
 
 import * as styles from './post.css'
+import AlbumFile from '../../models/AlbumFile'
 
 type PostProps = {
   post: Post
   metaEnabled: boolean
+  setModalContent: (albumFile: AlbumFile | null) => void
 }
-export default ({ post, post: { author }, metaEnabled }: PostProps) => {
+export default ({
+  post,
+  post: { author },
+  metaEnabled,
+  setModalContent
+}: PostProps) => {
   return useMemo(
     () => (
       <div className={styles.post}>
@@ -73,7 +80,11 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
             }
           })}
         </div>
-        <Image albumFiles={post.files} images={post.images} />
+        <Image
+          albumFiles={post.files}
+          images={post.images}
+          setModalContent={setModalContent}
+        />
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:
