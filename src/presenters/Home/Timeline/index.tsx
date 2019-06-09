@@ -30,11 +30,11 @@ export default ({
   <>
     {modalContent && (
       <>
-        <div
-          className={styles.modal_background}
+        <div className={styles.modal_background} />
+        <picture
+          className={styles.modal_container}
           onClick={onModalBackgroundClick}
-        />
-        <picture className={styles.modal_container}>
+        >
           {modalContent.directs.map(variant => (
             <source
               key={variant.id}
