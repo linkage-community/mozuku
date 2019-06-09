@@ -7,17 +7,25 @@ import {
   BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_BOLD
 } from '../../models'
-import DateTime from '../DateTime'
+import DateTime from '../../components/DateTime'
 import OGCard from '../OGCard'
 import Image from './Image'
+import DummyAvatar from './DummyAvatar'
 
 import * as styles from './post.css'
+import AlbumFile from '../../models/AlbumFile'
 
 type PostProps = {
   post: Post
   metaEnabled: boolean
+  setModalContent: (albumFile: AlbumFile | null) => void
 }
-export default ({ post, post: { author }, metaEnabled }: PostProps) => {
+export default ({
+  post,
+  post: { author },
+  metaEnabled,
+  setModalContent
+}: PostProps) => {
   return useMemo(
     () => (
       <div className={styles.post}>
@@ -33,7 +41,7 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
           </picture>
         ) : (
           <div className={styles.icon}>
-            <div className={styles.icon__img} title="undefined" />
+            <DummyAvatar name={author.name} className={styles.icon__img} />
           </div>
         )}
         <div className={styles.head}>
@@ -72,7 +80,11 @@ export default ({ post, post: { author }, metaEnabled }: PostProps) => {
             }
           })}
         </div>
-        <Image albumFiles={post.files} images={post.images} />
+        <Image
+          albumFiles={post.files}
+          images={post.images}
+          setModalContent={setModalContent}
+        />
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:
