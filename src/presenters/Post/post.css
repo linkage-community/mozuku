@@ -3,7 +3,7 @@
   grid-template-columns: auto 1fr;
   grid-column-gap: 12px;
   padding: 12px 18px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-border);
 }
 
 .post > * {
@@ -53,7 +53,7 @@
 
 .screenName,
 .time {
-  color: #999;
+  color: var(--color-caption);
 }
 
 .body {
@@ -68,7 +68,7 @@
 
 .ogcard {
   margin: 4px 0 0;
-  color: #666;
+  color: rgba(var(--color-text-raw), 0.8);
 }
 
 .meta {
@@ -79,13 +79,13 @@
   display: inline-flex;
   align-items: center;
   margin: 4px 0 0;
-  color: #999;
+  color: var(--color-caption);
   font-size: 0.8em;
 }
 
 .meta__badge {
   box-sizing: border-box;
-  border: 1px solid #999;
+  border: 1px solid var(--color-caption);
   border-radius: 4px;
   margin-left: 4px;
   padding: 2px;

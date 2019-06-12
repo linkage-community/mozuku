@@ -7,7 +7,7 @@
 .readmore_button {
   width: 100%;
   padding: 12px 24px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-border);
 }
 
 .modal_background {

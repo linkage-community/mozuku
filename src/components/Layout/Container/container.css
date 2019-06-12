@@ -2,6 +2,6 @@
   width: 100%;
   max-width: 720px;
   margin: 48px auto 0;
-  background-color: #fff;
+  background-color: var(--color-foreground);
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04), 0 0 16px 0 rgba(0, 0, 0, 0.04);
 }

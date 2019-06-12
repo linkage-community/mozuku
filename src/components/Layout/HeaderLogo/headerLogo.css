@@ -11,5 +11,5 @@
 }
 
 .logo a:hover {
-  background: #fafafa;
+  background-color: rgba(var(--color-text-raw), 0.05);
 }

@@ -3,7 +3,11 @@ import { noSelect } from './index.css'
 
 export default ({ name, className }: { name: string; className: string }) => (
   <svg className={className}>
-    <rect width="100%" height="100%" style={{ fill: 'var(--color-base)' }} />
+    <rect
+      width="100%"
+      height="100%"
+      style={{ fill: 'var(--color-background)' }}
+    />
     <text
       x="50%"
       y="50%"

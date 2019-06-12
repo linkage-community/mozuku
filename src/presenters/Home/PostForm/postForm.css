@@ -1,6 +1,6 @@
 .postForm {
   position: relative;
-  background-color: #fafafa;
+  background-color: rgba(var(--color-text-raw), 0.025);
 }
 
 .textarea {
@@ -21,7 +21,7 @@
   right: 24px;
   width: 120px;
   height: 36px;
-  background-color: var(--color-main);
+  background-color: var(--color-accent);
   color: #fff;
   font-size: 0.8em;
   transform: translateY(-50%);

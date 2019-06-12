@@ -1,7 +1,7 @@
 .ogcard {
   overflow: hidden;
   box-sizing: border-box;
-  border-left: 1px solid;
+  border-left: 1px solid var(--color-text);
   padding: 4px 8px;
 }
 
