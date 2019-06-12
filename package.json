@@ -4,7 +4,7 @@
   "description": "One of seaweed, client of rinsuki/sea.",
   "repository": "https://github.com/otofune/mozuku.git",
   "author": "otofune <otofune@otofune.me>",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "private": true,
   "dependencies": {
     "autoprefixer": "^9.6.0",
