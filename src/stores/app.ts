@@ -13,10 +13,12 @@ export const PREFERENCE_DISPLAY_META_ENABLED = 'PREFERENCE_SHOW_META'
 export const PREFERENCE_NOTICE_WHEN_MENTIONED =
   'PREFERENCE_NOTICE_WHEN_MENTIONED'
 export const PREFERENCE_DISPLAY_OGCARD = 'PREFERENCE_SHOW_OGCARD'
+export const PREFERENCE_FORCE_DARK_THEME = 'PREFERENCE_FORCE_DARK_THEME'
 type PREFERENCE_KEYS =
   | typeof PREFERENCE_DISPLAY_META_ENABLED
   | typeof PREFERENCE_NOTICE_WHEN_MENTIONED
   | typeof PREFERENCE_DISPLAY_OGCARD
+  | typeof PREFERENCE_FORCE_DARK_THEME
 
 import {
   Account,
@@ -128,6 +130,9 @@ class SApp {
       this.accounts.set(me.id, me)
       this.meId = me.id
       this.initialized = true
+      if (this.preferences.get(PREFERENCE_FORCE_DARK_THEME)) {
+        this.enableForceDarkTheme()
+      }
     } catch (e) {
       alert('Check sea. You will be logged-out.')
       console.error(e)
@@ -166,6 +171,15 @@ class SApp {
   async uploadAlbumFile(name: string, blob: Blob): Promise<AlbumFile> {
     const r = await seaClient.uploadAlbumFile(name, blob)
     return new AlbumFile(r)
+  }
+
+  enableForceDarkTheme() {
+    // head
+    document.firstElementChild!.setAttribute('class', 'dark-theme-enabled')
+  }
+
+  disableForceDarkTheme() {
+    document.firstElementChild!.removeAttribute('class')
   }
 }
 

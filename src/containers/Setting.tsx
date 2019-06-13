@@ -7,7 +7,8 @@ import Setting from '../presenters/Setting'
 import timeline from '../stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
-  PREFERENCE_DISPLAY_OGCARD
+  PREFERENCE_DISPLAY_OGCARD,
+  PREFERENCE_FORCE_DARK_THEME
 } from '../stores/app'
 const { useState, useCallback } = React
 
@@ -95,6 +96,19 @@ export default () => {
     },
     []
   )
+  const onUpdateForceDarkTheme = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const checked = e.target.checked
+      if (checked) {
+        appStore.enableForceDarkTheme()
+      } else {
+        appStore.disableForceDarkTheme()
+      }
+      appStore.preferences.set(PREFERENCE_FORCE_DARK_THEME, checked)
+      appStore.savePreferences()
+    },
+    []
+  )
 
   return useObserver(() => {
     const currentConfig = {
@@ -103,7 +117,9 @@ export default () => {
       notificationEnabled:
         appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false,
       ogcardEnabled:
-        appStore.preferences.get(PREFERENCE_DISPLAY_OGCARD) || false
+        appStore.preferences.get(PREFERENCE_DISPLAY_OGCARD) || false,
+      forceDarkTheme:
+        appStore.preferences.get(PREFERENCE_FORCE_DARK_THEME) || false
     }
     return (
       <Setting
@@ -112,6 +128,7 @@ export default () => {
         onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
         onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
         onUpdateEnableOGCard={onUpdateEnableOGCard}
+        onUpdateForceDarkTheme={onUpdateForceDarkTheme}
         currentName={appStore.me ? appStore.me!.name : undefined}
         logout={appStore.logout.bind(appStore)}
         currentConfig={currentConfig}

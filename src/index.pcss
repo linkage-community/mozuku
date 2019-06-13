@@ -5,27 +5,58 @@
 }
 
 :root {
-  --color-text-raw: 70, 64, 64; /* #464040 */
-  --color-text: rgb(var(--color-text-raw));
-  --color-caption: rgb(153, 153, 153); /* #999 */
-  --color-border: rgb(238, 238, 238); /* #eee */
-  --color-accent: rgb(27, 169, 204); /* #1ba9cc */
-  --color-alert: rgb(204, 26, 26); /* #cc1a1a */
-  --color-foreground: rgb(255, 255, 255); /* #fff */
-  --color-background: rgb(223, 244, 250); /* #dff4fa */
+  --color-light-text-raw: rgb(70, 64, 64); /* #464040 */
+  --color-light-text: rgb(var(--color-light-text-raw));
+  --color-light-caption: rgb(153, 153, 153); /* #999 */
+  --color-light-border: rgb(238, 238, 238); /* #eee */
+  --color-light-accent: rgb(27, 169, 204); /* #1ba9cc */
+  --color-light-alert: rgb(204, 26, 26); /* #cc1a1a */
+  --color-light-foreground: rgb(255, 255, 255); /* #fff */
+  --color-light-background: rgb(223, 244, 250); /* #dff4fa */
+
+  --color-dark-text-raw: 255, 255, 255; /* #fff */
+  --color-dark-text: rgb(var(--color-dark-text-raw));
+  --color-dark-caption: rgb(192, 192, 192); /* #c0c0c0 */
+  --color-dark-border: rgb(41, 41, 43); /* #29292b */
+  --color-dark-accent: rgb(27, 169, 204); /* #1ba9cc */
+  --color-dark-alert: rgb(204, 26, 26); /* #cc1a1a */
+  --color-dark-foreground: rgb(28, 28, 30); /* #1c1c1e */
+  --color-dark-background: rgb(0, 0, 0); /* #000 */
+}
+
+:root {
+  --color-text-raw: var(--color-light-text-raw);
+  --color-text: var(--color-light-text);
+  --color-caption: var(--color-light-caption);
+  --color-border: var(--color-light-border);
+  --color-accent: var(--color-light-accent);
+  --color-alert: var(--color-light-alert);
+  --color-foreground: var(--color-light-foreground);
+  --color-background: var(--color-light-background);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-text-raw: 255, 255, 255; /* #fff */
-    --color-text: rgb(var(--color-text-raw));
-    --color-caption: rgb(192, 192, 192); /* #c0c0c0 */
-    --color-border: rgb(41, 41, 43); /* #29292b */
-    --color-accent: rgb(27, 169, 204); /* #1ba9cc */
-    --color-alert: rgb(204, 26, 26); /* #cc1a1a */
-    --color-foreground: rgb(28, 28, 30); /* #1c1c1e */
-    --color-background: rgb(0, 0, 0); /* #000 */
+    --color-text-raw: var(--color-dark-text-raw);
+    --color-text: var(--color-dark-text);
+    --color-caption: var(--color-dark-caption);
+    --color-border: var(--color-dark-border);
+    --color-accent: var(--color-dark-accent);
+    --color-alert: var(--color-dark-alert);
+    --color-foreground: var(--color-dark-foreground);
+    --color-background: var(--color-dark-background);
   }
+}
+
+:global .dark-theme-enabled {
+  --color-text-raw: var(--color-dark-text-raw);
+  --color-text: var(--color-dark-text);
+  --color-caption: var(--color-dark-caption);
+  --color-border: var(--color-dark-border);
+  --color-accent: var(--color-dark-accent);
+  --color-alert: var(--color-dark-alert);
+  --color-foreground: var(--color-dark-foreground);
+  --color-background: var(--color-dark-background);
 }
 
 body {

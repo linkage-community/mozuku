@@ -9,6 +9,7 @@ type TConfig = {
   showMetaEnabled: boolean
   notificationEnabled: boolean
   ogcardEnabled: boolean
+  forceDarkTheme: boolean
 }
 
 export default ({
@@ -17,6 +18,7 @@ export default ({
   onUpdateShowMetaCheckbox,
   onUpdateEnableNotificationCheckBox,
   onUpdateEnableOGCard,
+  onUpdateForceDarkTheme,
   currentName,
   currentConfig,
   logout
@@ -28,6 +30,7 @@ export default ({
     e: React.ChangeEvent<HTMLInputElement>
   ) => void
   onUpdateEnableOGCard: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpdateForceDarkTheme: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
   currentConfig: TConfig
   logout: () => void
@@ -99,6 +102,15 @@ export default ({
           checked={currentConfig.ogcardEnabled}
         />
         ウェブページのメタ情報をOGPとかから表示するやつ
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="ogcard"
+          onChange={onUpdateForceDarkTheme}
+          checked={currentConfig.forceDarkTheme}
+        />
+        Force Dark Theme
       </label>
       <div className={styles.subtitle}>Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>
