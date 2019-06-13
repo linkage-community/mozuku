@@ -94,6 +94,10 @@ class SApp {
         this.shortcuts.get(ev.charCode)!(ev)
       }
     })
+
+    if (this.preferences.get(PREFERENCE_FORCE_DARK_THEME)) {
+      this.enableForceDarkTheme()
+    }
   }
   @action
   login() {
@@ -130,9 +134,6 @@ class SApp {
       this.accounts.set(me.id, me)
       this.meId = me.id
       this.initialized = true
-      if (this.preferences.get(PREFERENCE_FORCE_DARK_THEME)) {
-        this.enableForceDarkTheme()
-      }
     } catch (e) {
       alert('Check sea. You will be logged-out.')
       console.error(e)
