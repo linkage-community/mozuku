@@ -39,21 +39,19 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
 
     return (
-      <>
-        <form className={styles.postForm} onSubmit={onSubmit}>
-          <textarea
-            rows={1}
-            className={styles.textarea}
-            disabled={draftDisabled}
-            onKeyDown={onKeyDown}
-            onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            ref={ref}
-            placeholder="What's up Otaku?"
-            value={draft}
-          />
-        </form>
+      <form className={styles.postForm} onSubmit={onSubmit}>
+        <textarea
+          rows={1}
+          className={styles.textarea}
+          disabled={draftDisabled}
+          onKeyDown={onKeyDown}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          ref={ref}
+          placeholder="What's up Otaku?"
+          value={draft}
+        />
         <div className={styles.buttons}>
           <button
             type="submit"
@@ -70,7 +68,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
             ✈️
           </button>
         </div>
-      </>
+      </form>
     )
   }
 )
