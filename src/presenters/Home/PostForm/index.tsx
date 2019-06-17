@@ -52,7 +52,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
         />
         <button
           style={{
-            bottom: isExpanded ? '20%' : '50%',
+            bottom: isExpanded ? '25%' : '50%',
             height: isExpanded ? '36px' : '32px'
           }}
           className={styles.plusButton}
@@ -63,7 +63,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
         </button>
         <button
           style={{
-            bottom: isExpanded ? '20%' : '50%',
+            bottom: isExpanded ? '25%' : '50%',
             height: isExpanded ? '36px' : '32px'
           }}
           className={styles.submitButton}
