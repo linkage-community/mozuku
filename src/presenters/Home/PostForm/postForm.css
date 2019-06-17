@@ -9,7 +9,7 @@
   min-height: 2.5em;
   padding: 12px calc(24px + 24px) 12px 18px;
   appearance: none;
-  transition: height 0.1s;
+  transition: rows 0.1s;
 }
 
 .buttons {
@@ -21,4 +21,35 @@
 .button {
   padding: .5em;
   width: 5em;
+}
+
+.files {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 2em;
+  right: 1em;
+}
+
+.file {
+  display: flex;
+  float: left;
+}
+
+.file picture img {
+  height: 2em;
+  margin: 14px 0;
+}
+
+.fileCancelButton {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  right: 12px;
+  top: 4px;
+  color: #fff;
+  background-color: var(--color-background);
+  border-radius: 50px;
+  text-align: center;
 }
