@@ -2211,10 +2211,10 @@ date-fns-tz@^1.0.7:
   resolved "https://registry.yarnpkg.com/date-fns-tz/-/date-fns-tz-1.0.7.tgz#1c80f7592cca5da4fd2085132936dcc7fa9afecd"
   integrity sha512-oNfi/3IxRfmysRIT+QJMbO/44Uj10nApAYJvlayTmNRFZG+JqdOJYXm1DWU65DNlG/ySbuQwpFkGIa3b2XFUVw==
 
-date-fns@^2.0.0-alpha.31:
-  version "2.0.0-alpha.31"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.31.tgz#51bcfdca25dfc9bea334a556ab33dfc0bb00421c"
-  integrity sha512-S19PwMqnbYsqcbCg02Yj9gv4veVNZ0OX7v2+zcd+Mq0RI7LoDKJipJjnMrTZ3Cc6blDuTce5G/pHXcVIGRwJWQ==
+date-fns@^2.0.0-alpha.34:
+  version "2.0.0-alpha.34"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.34.tgz#5d3ae7ca0d08915ccfc87a20545250af4e9c3cae"
+  integrity sha512-yjSYUHASHvzOZl++cEms+Tw7oQOFA+7Z6/lL7L3lRO9j6pMfT48N6oEyvCGo/MVlH08XWmydgf8X9Y1eedf9sQ==
 
 date-now@^0.1.4:
   version "0.1.4"
