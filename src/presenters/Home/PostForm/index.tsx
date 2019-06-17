@@ -21,6 +21,8 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
     const onFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
       setIsExpanded(true)
+      const element = event.currentTarget
+      if (element.clientWidth < 720) event.currentTarget.scrollIntoView(true)
     }
     const onBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
       if (!draft.length) setIsExpanded(false)
@@ -37,7 +39,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
     return (
       <form className={styles.postForm} onSubmit={onSubmit}>
         <textarea
-          style={{ height: isExpanded ? '128px' : '48px' }}
+          style={{ height: isExpanded ? '128px' : '64px' }}
           className={styles.textarea}
           disabled={draftDisabled}
           onKeyDown={onKeyDown}
@@ -49,7 +51,10 @@ export default forwardRef<HTMLTextAreaElement, T>(
           value={draft}
         />
         <button
-          style={{ bottom: isExpanded ? '20%' : '50%' }}
+          style={{
+            bottom: isExpanded ? '20%' : '50%',
+            height: isExpanded ? '36px' : '32px'
+          }}
           className={styles.plusButton}
           type="submit"
           disabled={draftDisabled}
@@ -57,7 +62,10 @@ export default forwardRef<HTMLTextAreaElement, T>(
           +
         </button>
         <button
-          style={{ bottom: isExpanded ? '20%' : '50%' }}
+          style={{
+            bottom: isExpanded ? '20%' : '50%',
+            height: isExpanded ? '36px' : '32px'
+          }}
           className={styles.submitButton}
           type="submit"
           disabled={draftDisabled}
