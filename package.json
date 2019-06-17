@@ -38,7 +38,7 @@
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "typed-css-modules": "^0.5.0",
-    "typescript": "^3.5.1"
+    "typescript": "^3.5.2"
   },
   "scripts": {
     "start": "parcel src/index.html",
