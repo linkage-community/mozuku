@@ -20,12 +20,12 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitDraft()
     }
     const onFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      setIsExpanded(true)
-      const element = event.currentTarget
-      if (element.clientWidth < 720) event.currentTarget.scrollIntoView(true)
+      if (!event.currentTarget.value.length) event.currentTarget.rows++
+      if (event.currentTarget.clientWidth < 720)
+        event.currentTarget.scrollIntoView(true)
     }
     const onBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      if (!draft.length) setIsExpanded(false)
+      if (!event.target.value.length) event.target.rows = 1
     }
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if ((event.ctrlKey || event.metaKey) && event.keyCode == 13) {
@@ -34,45 +34,43 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       setDraft(event.target.value)
+      if (event.target.clientHeight < event.target.scrollHeight)
+        event.target.rows++
     }
 
     return (
-      <form className={styles.postForm} onSubmit={onSubmit}>
-        <textarea
-          style={{ height: isExpanded ? '128px' : '64px' }}
-          className={styles.textarea}
-          disabled={draftDisabled}
-          onKeyDown={onKeyDown}
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          ref={ref}
-          placeholder="What's up Otaku?"
-          value={draft}
-        />
-        <button
-          style={{
-            bottom: isExpanded ? '25%' : '50%',
-            height: isExpanded ? '36px' : '32px'
-          }}
-          className={styles.plusButton}
-          type="submit"
-          disabled={draftDisabled}
-        >
-          +
-        </button>
-        <button
-          style={{
-            bottom: isExpanded ? '25%' : '50%',
-            height: isExpanded ? '36px' : '32px'
-          }}
-          className={styles.submitButton}
-          type="submit"
-          disabled={draftDisabled}
-        >
-          Send to Sea
-        </button>
-      </form>
+      <>
+        <form className={styles.postForm} onSubmit={onSubmit}>
+          <textarea
+            rows={1}
+            className={styles.textarea}
+            disabled={draftDisabled}
+            onKeyDown={onKeyDown}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            ref={ref}
+            placeholder="What's up Otaku?"
+            value={draft}
+          />
+        </form>
+        <div className={styles.buttons}>
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={draftDisabled}
+          >
+            📎
+          </button>
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={draftDisabled}
+          >
+            ✈️
+          </button>
+        </div>
+      </>
     )
   }
 )
