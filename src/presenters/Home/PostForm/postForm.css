@@ -6,23 +6,38 @@
 .textarea {
   display: block;
   width: 100%;
-  height: 60px;
-  min-height: 60px;
+  min-height: 48px;
   padding: 12px calc(120px + 24px + 24px) 12px 18px;
   appearance: none;
+  transition: height 0.1s;
 }
 
-.button {
+.submitButton {
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50%;
+  bottom: 0;
   right: 24px;
-  width: 120px;
-  height: 36px;
+  width: 100px;
+  height: 32px;
   background-color: var(--color-accent);
   color: #fff;
   font-size: 0.8em;
-  transform: translateY(-50%);
+  transform: translateY(50%);
+}
+
+.plusButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  right: 128px;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-accent);
+  color: #fff;
+  font-size: 0.8em;
+  transform: translateY(50%);
 }

@@ -18,6 +18,7 @@ export default () => {
 
   const [draft, setDraft] = useState('')
   const [draftDisabled, setDraftDisabled] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
   const submitDraft = async () => {
     setDraftDisabled(true)
     if (draft.trim().length > 0) {
@@ -39,6 +40,8 @@ export default () => {
       setDraft={setDraft}
       draftDisabled={draftDisabled}
       submitDraft={submitDraft}
+      isExpanded={isExpanded}
+      setIsExpanded={setIsExpanded}
     />
   )
 }
