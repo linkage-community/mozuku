@@ -25,6 +25,7 @@ export default () => {
       try {
         await seaClient.post('/v1/posts', { text: draft })
         setDraft('')
+        setIsExpanded(false)
       } catch (e) {
         // TODO: Add error reporting
         console.error(e)
