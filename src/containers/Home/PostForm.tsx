@@ -40,15 +40,28 @@ export default () => {
     setDraftDisabled(false)
   }
   const onFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
     if (event.target.files != null) {
-      setDraftDisabled(true)
-      Array.from(event.target.files).map(async file => {
-        const upload = await appStore.uploadAlbumFile(file.name, file)
-        if (rows < 4) setRows(4)
-        setFiles(files => [...files, upload])
-      })
-      setDraftDisabled(false)
+      await Array.from(event.target.files).map(
+        async file => await uploadAlbumFile(file)
+      )
     }
+  }
+  const onPaste = async (event: React.ClipboardEvent) => {
+    if (!draftDisabled) {
+      await Array.from(event.clipboardData.files)
+        .filter(file => file.type.split('/').shift() == 'image')
+        .map(async file => await uploadAlbumFile(file))
+    }
+  }
+  const uploadAlbumFile = async (file: File) => {
+    setDraftDisabled(true)
+    const albumFile = await appStore.uploadAlbumFile(file.name, file)
+    setFiles(files => [...files, albumFile])
+    if (rows < 3) {
+      setRows(3)
+    }
+    setDraftDisabled(false)
   }
   const onFileCancelClick = async (fileId: number) => {
     setFiles(files.filter(file => file.id != fileId))
@@ -63,6 +76,7 @@ export default () => {
       submitDraft={submitDraft}
       rows={rows}
       setRows={setRows}
+      onPaste={onPaste}
       onFileSelect={onFileSelect}
       files={files}
       onFileCancelClick={onFileCancelClick}

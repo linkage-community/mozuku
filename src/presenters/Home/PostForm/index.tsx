@@ -10,6 +10,7 @@ type T = {
   draft: string
   rows: number
   setRows: (r: number) => void
+  onPaste: (e: React.ClipboardEvent) => void
   onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
   files: AlbumFile[]
   onFileCancelClick: (n: number) => void
@@ -23,6 +24,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
       draft,
       rows,
       setRows,
+      onPaste,
       onFileSelect,
       files,
       onFileCancelClick
@@ -33,16 +35,29 @@ export default forwardRef<HTMLTextAreaElement, T>(
       e.preventDefault()
       submitDraft()
     }
-    const onFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      if (!event.currentTarget.value.trim().length && rows < 2)
-        setRows(rows + 1)
-      if (event.currentTarget.clientWidth < 720)
-        event.currentTarget.scrollIntoView(true)
+    const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
+      const textarea = event.currentTarget.querySelector('textarea')!
+      textarea.style.setProperty('max-height', '10em')
+      textarea.style.setProperty('min-height', '3em')
+      if (!textarea.value.trim().length && rows < 2) {
+        setRows(rows + 2)
+      }
+      if (textarea.clientWidth < 720) {
+        textarea.scrollIntoView(true)
+      }
     }
-    const onBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      if (!event.target.value.trim().length)
-        if (files.length) setRows(4)
-        else setRows(1)
+    const onBlur = (event: React.FocusEvent<HTMLFormElement>) => {
+      const textarea = event.currentTarget.querySelector('textarea')!
+      if (!textarea.value.trim().length) {
+        setDraft('')
+        if (files.length) {
+          setRows(3)
+        } else {
+          setRows(1)
+          textarea.style.setProperty('max-height', '3em')
+          textarea.style.setProperty('min-height', '1em')
+        }
+      }
     }
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if ((event.ctrlKey || event.metaKey) && event.keyCode == 13) {
@@ -56,15 +71,19 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
 
     return (
-      <form className={styles.postForm} onSubmit={onSubmit}>
+      <form
+        className={styles.postForm}
+        onSubmit={onSubmit}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      >
         <textarea
           rows={rows}
           className={styles.textarea}
           disabled={draftDisabled}
           onKeyDown={onKeyDown}
           onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
+          onPaste={onPaste}
           ref={ref}
           placeholder="What's up Otaku?"
           value={draft}
@@ -92,7 +111,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
           ))}
         </div>
         <div className={styles.buttons}>
-          <button className={styles.button} disabled={draftDisabled}>
+          <div className={styles.button}>
             <label htmlFor="fileSelector">
               {draftDisabled ? '🤔' : '📎'}
               <input
@@ -103,7 +122,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
                 disabled={draftDisabled}
               />
             </label>
-          </button>
+          </div>
           <button
             type="submit"
             className={styles.button}

@@ -9,7 +9,7 @@
   min-height: 2.5em;
   padding: 12px calc(24px + 24px) 12px 18px;
   appearance: none;
-  transition: rows 0.1s;
+  transition: 0.5s;
 }
 
 .buttons {
@@ -21,6 +21,7 @@
 .button {
   padding: 0.5em;
   width: 5em;
+  text-align: center;
 }
 
 .files {
