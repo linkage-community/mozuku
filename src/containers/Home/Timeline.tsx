@@ -17,7 +17,6 @@ export default () => {
   const onModalBackgroundClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    console.log('hatsudou')
     setModalContent(null)
     history.back()
   }
