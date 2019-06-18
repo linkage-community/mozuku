@@ -26,11 +26,12 @@
 
 .files {
   display: flex;
-  justify-content: center;
   align-items: center;
   position: absolute;
   bottom: 2em;
   right: 1em;
+  max-width: 50%;
+  overflow: scroll;
 }
 
 .file {
