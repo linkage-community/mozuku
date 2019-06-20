@@ -40,7 +40,7 @@ const diffFromNow = (dt: Moment): TimeDiff | undefined => {
 }
 
 export const useRelativeTimeRepresent = (dt: Moment) => {
-  const [relativeTimeRepresent, setRTR] = useState('just now')
+  const [relativeTimeRepresent, setRTR] = useState(`just now`)
   const setDiff = (d: TimeDiff) => {
     const t = `${d.duration}${d.type} ago`
     if (t !== relativeTimeRepresent) setRTR(t)
@@ -49,12 +49,16 @@ export const useRelativeTimeRepresent = (dt: Moment) => {
     let t: number
     const runner = () => {
       const next = main()
-      t = window.setTimeout(runner, next)
+      if (next) t = window.setTimeout(runner, next)
     }
     const main = () => {
       const diff = diffFromNow(dt)
       if (diff === undefined) return 500
       switch (diff.type) {
+        case Month:
+          // stop timer
+          setRTR(dt.format('D MMM YYYY'))
+          return
         case Second:
           setDiff(diff)
           return 100 * 5
