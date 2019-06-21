@@ -60,7 +60,7 @@
   height: 72px;
   display: flex;
   align-items: center;
-  overflow: scroll;
+  overflow: auto;
   padding: 12px 18px;
   transition: height 0.2s;
 }
