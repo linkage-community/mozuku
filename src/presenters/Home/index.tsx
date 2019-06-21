@@ -1,6 +1,8 @@
 import * as React from 'react'
 const { useState } = React
 
+import { Line } from 'rc-progress'
+
 import PostForm from '../../containers/Home/PostForm'
 import Timeline from '../../containers/Home/Timeline'
 import AlbumFile from '../../models/AlbumFile'
@@ -9,17 +11,23 @@ import styles from './index.css'
 
 export default () => {
   const [isDrop, setIsDrop] = useState(false)
+  const [uploadState, setUploadState] = useState(0)
   const [rows, setRows] = useState(1)
   const [files, setFiles] = useState([] as AlbumFile[])
   const [draftDisabled, setDraftDisabled] = useState(false)
   const uploadAlbumFile = async (file: File) => {
     setDraftDisabled(true)
-    const albumFile = await appStore.uploadAlbumFile(file.name, file)
+    const albumFile = await appStore.uploadAlbumFile(
+      file.name,
+      file,
+      setUploadState
+    )
     setFiles(files => [...files, albumFile])
     if (rows < 3) {
       setRows(3)
     }
     setDraftDisabled(false)
+    setUploadState(0)
   }
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -42,6 +50,9 @@ export default () => {
         <div className={styles.dragArea}>
           <p>ファイルをドラッグしてアップロード</p>
         </div>
+      </div>
+      <div hidden={!draftDisabled}>
+        <Line percent={uploadState} strokeColor="var(--color-accent)" />
       </div>
       <PostForm
         draftDisabled={draftDisabled}

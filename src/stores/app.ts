@@ -169,8 +169,12 @@ class SApp {
   }
 
   // FIXME: これいる?
-  async uploadAlbumFile(name: string, blob: Blob): Promise<AlbumFile> {
-    const r = await seaClient.uploadAlbumFile(name, blob)
+  async uploadAlbumFile(
+    name: string,
+    blob: Blob,
+    state: ((p: number) => void) | null = null
+  ): Promise<AlbumFile> {
+    const r = await seaClient.uploadAlbumFile(name, blob, state)
     return new AlbumFile(r)
   }
 
