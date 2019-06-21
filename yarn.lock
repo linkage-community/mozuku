@@ -976,6 +976,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/css-modules-loader-core@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/css-modules-loader-core/-/css-modules-loader-core-1.1.0.tgz#67af15aa16603ac2ffc1d3a7f08547ac809c3005"
+  integrity sha512-LMbyf7THPqLCPHIXAj79v9Pa193MeOHgp1fBFRR6s6VvEVHUFIcM5bc/WttslOf+lao4TURNN1X1zfW5wr2CHQ==
+  dependencies:
+    postcss "7.x.x"
+
 "@types/history@*":
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
@@ -5479,6 +5486,15 @@ postcss@6.0.1:
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
+postcss@7.x.x:
+  version "7.0.17"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.17.tgz#4da1bdff5322d4a0acaab4d87f3e782436bad31f"
+  integrity sha512-546ZowA+KZ3OasvQZHsbuEpysvwTZNGJv9EfyCQdsIDltPSWHAeTQ5fQy/Npi2ZDtLI3zs7Ps/p6wThErhm9fQ==
+  dependencies:
+    chalk "^2.4.2"
+    source-map "^0.6.1"
+    supports-color "^6.1.0"
+
 postcss@^6.0.1, postcss@^6.0.14:
   version "6.0.23"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.23.tgz#61c82cc328ac60e677645f979054eb98bc0e3324"
@@ -6812,11 +6828,12 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typed-css-modules@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/typed-css-modules/-/typed-css-modules-0.5.0.tgz#90508785b37f49f547553efccf7f7067c7b063b5"
-  integrity sha512-B/Z3E82APHoJrN+fpePwbMG8AeAejpMX+EVR/xvjGDEbwu00ze5UGwdqZZ0Jo59sggFezCjxwsmDVJacuNRZiw==
+typed-css-modules@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/typed-css-modules/-/typed-css-modules-0.5.1.tgz#9fdd3444172ec8a1f21e7e9c5fa28ef9fab0d2d9"
+  integrity sha512-7wt3NfhrPXEnUguk2qv4YdL1k/G/AI4we9wkbQ2F+ZmMNH2xISMvNR8W46GiJEVE0t4RZHDnxDQGK2RhK4P0Wg==
   dependencies:
+    "@types/css-modules-loader-core" "^1.1.0"
     camelcase "^5.3.1"
     chalk "^2.1.0"
     chokidar "^2.1.2"
