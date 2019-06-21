@@ -42,8 +42,8 @@ export default forwardRef<HTMLTextAreaElement, T>(
       if (!textarea.value.trim().length && rows < 2) {
         setRows(rows + 2)
       }
-      if (textarea.clientWidth < 720) {
-        textarea.scrollIntoView(true)
+      if (event.currentTarget.clientWidth < 720) {
+        event.currentTarget.scrollIntoView(true)
       }
     }
     const onBlur = (event: React.FocusEvent<HTMLFormElement>) => {
