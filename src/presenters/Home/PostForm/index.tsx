@@ -15,6 +15,7 @@ type T = {
   onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
   files: AlbumFile[]
   onFileCancelClick: (n: number) => void
+  isUploading: boolean
 }
 export default forwardRef<HTMLTextAreaElement, T>(
   (
@@ -28,7 +29,8 @@ export default forwardRef<HTMLTextAreaElement, T>(
       onPaste,
       onFileSelect,
       files,
-      onFileCancelClick
+      onFileCancelClick,
+      isUploading
     },
     ref
   ) => {
@@ -82,7 +84,11 @@ export default forwardRef<HTMLTextAreaElement, T>(
             minRows={rows}
           ></Textarea>
           <label className={styles.attachButton} htmlFor="fileSelector">
-            {draftDisabled ? '🤔' : <i className="uil uil-image-v" />}
+            {draftDisabled || isUploading ? (
+              '🤔'
+            ) : (
+              <i className="uil uil-image-v" />
+            )}
             <input
               type="file"
               id="fileSelector"

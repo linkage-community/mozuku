@@ -14,7 +14,8 @@ export default ({
   setRows,
   files,
   setFiles,
-  uploadAlbumFile
+  uploadAlbumFile,
+  isUploading
 }: {
   draftDisabled: boolean
   setDraftDisabled: (b: boolean) => void
@@ -23,6 +24,7 @@ export default ({
   files: AlbumFile[]
   setFiles: (f: AlbumFile[]) => void
   uploadAlbumFile: (f: File) => void
+  isUploading: boolean
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   // 110 = n
@@ -83,6 +85,7 @@ export default ({
       onFileSelect={onFileSelect}
       files={files}
       onFileCancelClick={onFileCancelClick}
+      isUploading={isUploading}
     />
   )
 }
