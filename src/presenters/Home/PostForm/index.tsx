@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as styles from './postForm.css'
 import AlbumFile from '../../../models/AlbumFile'
+import Textarea from 'react-textarea-autosize'
 const { forwardRef, useState } = React
 
 type T = {
@@ -36,15 +37,10 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitDraft()
     }
     const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
-      const textarea = event.currentTarget.querySelector('textarea')!
-      textarea.style.setProperty('max-height', '10em')
-      textarea.style.setProperty('min-height', '3em')
-      if (!textarea.value.trim().length && rows < 2) {
-        setRows(rows + 2)
-      }
       if (event.currentTarget.clientWidth < 720) {
         event.currentTarget.scrollIntoView(true)
       }
+      setRows(3)
     }
     const onBlur = (event: React.FocusEvent<HTMLFormElement>) => {
       const textarea = event.currentTarget.querySelector('textarea')!
@@ -54,8 +50,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
           setRows(3)
         } else {
           setRows(1)
-          textarea.style.setProperty('max-height', '3em')
-          textarea.style.setProperty('min-height', '1em')
         }
       }
     }
@@ -66,8 +60,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       setDraft(event.target.value)
-      if (event.target.clientHeight < event.target.scrollHeight)
-        setRows(rows + 1)
     }
 
     return (
@@ -77,17 +69,17 @@ export default forwardRef<HTMLTextAreaElement, T>(
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <textarea
-          rows={rows}
+        <Textarea
           className={styles.textarea}
           disabled={draftDisabled}
           onKeyDown={onKeyDown}
           onChange={onChange}
           onPaste={onPaste}
-          ref={ref}
+          inputRef={ref!}
           placeholder="What's up Otaku?"
           value={draft}
-        />
+          minRows={rows}
+        ></Textarea>
         <div className={styles.files}>
           {files.map(file => (
             <div className={styles.file} key={file.id}>

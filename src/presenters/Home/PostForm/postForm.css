@@ -9,7 +9,7 @@
   min-height: 2.5em;
   padding: 12px calc(24px + 24px) 12px 18px;
   appearance: none;
-  transition: 0.5s;
+  transition: height 0.2s;
 }
 
 .buttons {
