@@ -33,6 +33,20 @@
   font-size: 1.1em;
 }
 
+.spin {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .postButton {
   position: absolute;
   top: 12px;
@@ -93,7 +107,7 @@
   height: 24px;
   color: #fff;
   cursor: pointer;
-  background-color: var(--color-background);
+  background-color: var(--color-accent);
   border-radius: 50px;
   text-align: center;
 }

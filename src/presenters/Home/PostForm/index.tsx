@@ -37,6 +37,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
     const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
       if (event.currentTarget.clientWidth < 720) {
         event.currentTarget.scrollIntoView(true)
+        window.scrollTo(0, event.currentTarget.offsetTop)
       }
     }
     const onBlur = (event: React.FocusEvent<HTMLFormElement>) => {
@@ -73,8 +74,8 @@ export default forwardRef<HTMLTextAreaElement, T>(
             value={draft}
           ></Textarea>
           <label className={styles.attachButton} htmlFor="fileSelector">
-            {draftDisabled || isUploading ? (
-              '🤔'
+            {isUploading ? (
+              <i className={`uil uil-polygon ${styles.spin}`} />
             ) : (
               <i className="uil uil-image-v" />
             )}

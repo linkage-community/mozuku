@@ -3,6 +3,7 @@ declare const styles: {
   readonly postForm: string
   readonly textarea: string
   readonly attachButton: string
+  readonly spin: string
   readonly postButton: string
   readonly files: string
   readonly file: string
