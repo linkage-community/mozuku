@@ -37,7 +37,7 @@ export default () => {
     setIsDrop(false)
   }
   return (
-    <div onDrop={onDrop} onDragOver={onDragOver} onDragEnd={onDragLeave}>
+    <div onDrop={onDrop} onDragOver={onDragOver} onDragLeave={onDragLeave}>
       <div className={styles.dragAreaBackgrond} hidden={!isDrop}>
         <div className={styles.dragArea}>
           <p>ファイルをドラッグしてアップロード</p>
