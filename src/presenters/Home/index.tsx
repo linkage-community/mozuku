@@ -14,9 +14,10 @@ export default () => {
   const [uploadState, setUploadState] = useState(0)
   const [rows, setRows] = useState(1)
   const [files, setFiles] = useState([] as AlbumFile[])
+  const [isUploading, setIsUploading] = useState(false)
   const [draftDisabled, setDraftDisabled] = useState(false)
   const uploadAlbumFile = async (file: File) => {
-    setDraftDisabled(true)
+    setIsUploading(true)
     const albumFile = await appStore.uploadAlbumFile(
       file.name,
       file,
@@ -26,7 +27,7 @@ export default () => {
     if (rows < 3) {
       setRows(3)
     }
-    setDraftDisabled(false)
+    setIsUploading(false)
     setUploadState(0)
   }
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -51,7 +52,7 @@ export default () => {
           <p>ファイルをドラッグしてアップロード</p>
         </div>
       </div>
-      <div hidden={!draftDisabled}>
+      <div hidden={!isUploading}>
         <Line percent={uploadState} strokeColor="var(--color-accent)" />
       </div>
       <PostForm
