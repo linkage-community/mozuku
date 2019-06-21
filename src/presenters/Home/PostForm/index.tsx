@@ -37,10 +37,10 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitDraft()
     }
     const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
+      setRows(3)
       if (event.currentTarget.clientWidth < 720) {
         event.currentTarget.scrollIntoView(true)
       }
-      setRows(3)
     }
     const onBlur = (event: React.FocusEvent<HTMLFormElement>) => {
       const textarea = event.currentTarget.querySelector('textarea')!
