@@ -52,8 +52,12 @@ export default () => {
           <p>ファイルをドラッグしてアップロード</p>
         </div>
       </div>
-      <div hidden={!isUploading}>
-        <Line percent={uploadState} strokeColor="var(--color-accent)" />
+      <div className={styles.progressContainer} hidden={!isUploading}>
+        <Line
+          percent={uploadState}
+          strokeLinecap="square"
+          strokeColor="var(--color-accent)"
+        />
       </div>
       <PostForm
         draftDisabled={draftDisabled}
@@ -63,6 +67,7 @@ export default () => {
         files={files}
         setFiles={setFiles}
         uploadAlbumFile={uploadAlbumFile}
+        isUploading={isUploading}
       />
       <Timeline />
     </div>
