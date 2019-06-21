@@ -12,7 +12,6 @@ import styles from './index.css'
 export default () => {
   const [isDrop, setIsDrop] = useState(false)
   const [uploadState, setUploadState] = useState(0)
-  const [rows, setRows] = useState(1)
   const [files, setFiles] = useState([] as AlbumFile[])
   const [isUploading, setIsUploading] = useState(false)
   const [draftDisabled, setDraftDisabled] = useState(false)
@@ -24,9 +23,6 @@ export default () => {
       setUploadState
     )
     setFiles(files => [...files, albumFile])
-    if (rows < 3) {
-      setRows(3)
-    }
     setIsUploading(false)
     setUploadState(0)
   }
@@ -62,8 +58,6 @@ export default () => {
       <PostForm
         draftDisabled={draftDisabled}
         setDraftDisabled={setDraftDisabled}
-        rows={rows}
-        setRows={setRows}
         files={files}
         setFiles={setFiles}
         uploadAlbumFile={uploadAlbumFile}

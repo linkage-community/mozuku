@@ -9,8 +9,6 @@ type T = {
   submitDraft: () => void
   setDraft: (t: string) => void
   draft: string
-  rows: number
-  setRows: (r: number) => void
   onPaste: (e: React.ClipboardEvent) => void
   onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
   files: AlbumFile[]
@@ -24,8 +22,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitDraft,
       setDraft,
       draft,
-      rows,
-      setRows,
       onPaste,
       onFileSelect,
       files,
@@ -39,7 +35,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
       submitDraft()
     }
     const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
-      setRows(3)
       if (event.currentTarget.clientWidth < 720) {
         event.currentTarget.scrollIntoView(true)
       }
@@ -48,11 +43,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
       const textarea = event.currentTarget.querySelector('textarea')!
       if (!textarea.value.trim().length) {
         setDraft('')
-        if (files.length) {
-          setRows(3)
-        } else {
-          setRows(1)
-        }
       }
     }
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -81,7 +71,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
             inputRef={ref!}
             placeholder="What's up Otaku?"
             value={draft}
-            minRows={rows}
           ></Textarea>
           <label className={styles.attachButton} htmlFor="fileSelector">
             {draftDisabled || isUploading ? (
@@ -106,24 +95,32 @@ export default forwardRef<HTMLTextAreaElement, T>(
             Post
           </button>
         </form>
-        {files.length ? (
-          <div className={styles.files}>
-            {files.map(file => (
-              <div className={styles.file} key={file.id}>
-                <div
-                  className={styles.fileThumbnail}
-                  style={{ backgroundImage: `url(${file.thumbnail.url})` }}
-                />
-                <div
-                  className={styles.fileCancelButton}
-                  onClick={() => onFileCancelClick(file.id)}
-                >
-                  <i className="uil uil-times" />
-                </div>
+        <div
+          className={styles.files}
+          style={
+            !files.length
+              ? {
+                  height: '0px',
+                  padding: '0'
+                }
+              : {}
+          }
+        >
+          {files.map(file => (
+            <div className={styles.file} key={file.id}>
+              <div
+                className={styles.fileThumbnail}
+                style={{ backgroundImage: `url(${file.thumbnail.url})` }}
+              />
+              <div
+                className={styles.fileCancelButton}
+                onClick={() => onFileCancelClick(file.id)}
+              >
+                <i className="uil uil-times" />
               </div>
-            ))}
-          </div>
-        ) : null}
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

@@ -10,8 +10,6 @@ import AlbumFile from '../../models/AlbumFile'
 export default ({
   draftDisabled,
   setDraftDisabled,
-  rows,
-  setRows,
   files,
   setFiles,
   uploadAlbumFile,
@@ -19,8 +17,6 @@ export default ({
 }: {
   draftDisabled: boolean
   setDraftDisabled: (b: boolean) => void
-  rows: number
-  setRows: (r: number) => void
   files: AlbumFile[]
   setFiles: (f: AlbumFile[]) => void
   uploadAlbumFile: (f: File) => void
@@ -45,7 +41,6 @@ export default ({
         })
         setDraft('')
         setFiles([])
-        setRows(1)
       } catch (e) {
         // TODO: Add error reporting
         console.error(e)
@@ -79,8 +74,6 @@ export default ({
       setDraft={setDraft}
       draftDisabled={draftDisabled}
       submitDraft={submitDraft}
-      rows={rows}
-      setRows={setRows}
       onPaste={onPaste}
       onFileSelect={onFileSelect}
       files={files}
