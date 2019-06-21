@@ -1,56 +1,96 @@
+.wrapper {
+  background-color: rgba(var(--color-text-raw), 0.025);
+}
+
 .postForm {
   position: relative;
-  background-color: rgba(var(--color-text-raw), 0.025);
 }
 
 .textarea {
   display: block;
   width: 100%;
   min-height: 2.5em;
-  padding: 12px calc(24px + 24px) 12px 18px;
+  padding: 12px 172px 12px 18px;
   appearance: none;
   transition: height 0.2s;
+  resize: none;
 }
 
-.buttons {
+.attachButton {
+  position: absolute;
+  top: 12px;
+  right: 120px;
   display: flex;
-  justify-content: space-between;
-  background-color: rgba(var(--color-text-raw), 0.1);
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
 }
 
-.button {
-  padding: 0.5em;
-  width: 5em;
-  text-align: center;
+.attachButton i {
+  color: var(--color-accent);
+  font-size: 1.1em;
+}
+
+.postButton {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 86px;
+  height: 36px;
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.postButton i {
+  margin: 0 4px 0 0;
+  font-size: 1.1em;
+}
+
+.postButton i:before {
+  margin: 0;
 }
 
 .files {
   display: flex;
   align-items: center;
-  position: absolute;
-  bottom: 2em;
-  right: 1em;
-  max-width: 50%;
   overflow: scroll;
+  padding: 12px 18px;
 }
 
 .file {
-  display: flex;
-  float: left;
+  position: relative;
+  margin: 0 0 0 24px;
 }
 
-.file picture img {
-  height: 2em;
-  margin: 14px 0;
+.file:first-child {
+  margin: 0;
+}
+
+.fileThumbnail {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 4px;
 }
 
 .fileCancelButton {
-  position: relative;
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 24px;
   height: 24px;
-  right: 12px;
-  top: 4px;
   color: #fff;
+  cursor: pointer;
   background-color: var(--color-background);
   border-radius: 50px;
   text-align: center;

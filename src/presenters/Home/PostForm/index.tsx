@@ -63,67 +63,62 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
 
     return (
-      <form
-        className={styles.postForm}
-        onSubmit={onSubmit}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      >
-        <Textarea
-          className={styles.textarea}
-          disabled={draftDisabled}
-          onKeyDown={onKeyDown}
-          onChange={onChange}
-          onPaste={onPaste}
-          inputRef={ref!}
-          placeholder="What's up Otaku?"
-          value={draft}
-          minRows={rows}
-        ></Textarea>
-        <div className={styles.files}>
-          {files.map(file => (
-            <div className={styles.file} key={file.id}>
-              <picture>
-                {file.thumbnails.map(thumbnail => (
-                  <source
-                    key={thumbnail.id}
-                    srcSet={thumbnail.url.href}
-                    type={thumbnail.mime}
-                  />
-                ))}
-                <img title={file.fileName} />
-              </picture>
-              <div
-                className={styles.fileCancelButton}
-                onClick={() => onFileCancelClick(file.id)}
-              >
-                x
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className={styles.buttons}>
-          <div className={styles.button}>
-            <label htmlFor="fileSelector">
-              {draftDisabled ? '🤔' : '📎'}
-              <input
-                type="file"
-                id="fileSelector"
-                style={{ display: 'none' }}
-                onChange={onFileSelect}
-                disabled={draftDisabled}
-              />
-            </label>
-          </div>
+      <div className={styles.wrapper}>
+        <form
+          className={styles.postForm}
+          onSubmit={onSubmit}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        >
+          <Textarea
+            className={styles.textarea}
+            disabled={draftDisabled}
+            onKeyDown={onKeyDown}
+            onChange={onChange}
+            onPaste={onPaste}
+            inputRef={ref!}
+            placeholder="What's up Otaku?"
+            value={draft}
+            minRows={rows}
+          ></Textarea>
+          <label className={styles.attachButton} htmlFor="fileSelector">
+            {draftDisabled ? '🤔' : <i className="uil uil-image-v" />}
+            <input
+              type="file"
+              id="fileSelector"
+              style={{ display: 'none' }}
+              onChange={onFileSelect}
+              disabled={draftDisabled}
+            />
+          </label>
           <button
             type="submit"
-            className={styles.button}
+            className={styles.postButton}
             disabled={draftDisabled}
           >
-            ✈️
+            <i className="uil uil-anchor" />
+            Post
           </button>
-        </div>
-      </form>
+        </form>
+        {files.length ? (
+          <div className={styles.files}>
+            {files.map(file => (
+              <div className={styles.file} key={file.id}>
+                <div
+                  className={styles.fileThumbnail}
+                  style={{ backgroundImage: `url(${file.thumbnail.url})` }}
+                />
+                <div
+                  className={styles.fileCancelButton}
+                  onClick={() => onFileCancelClick(file.id)}
+                >
+                  <i className="uil uil-times" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
     )
   }
 )
