@@ -1,0 +1,28 @@
+.dragAreaBackgrond {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.dragArea {
+  height: 80%;
+  width: 80%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border: dashed 2px var(--color-accent);
+  display: table;
+}
+
+.dragArea p {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--color-text);
+  opacity: 0.8;
+}

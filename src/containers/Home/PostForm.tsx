@@ -7,7 +7,23 @@ import { useShortcut, appStore } from '../../stores'
 import PostForm from '../../presenters/Home/PostForm'
 import AlbumFile from '../../models/AlbumFile'
 
-export default () => {
+export default ({
+  draftDisabled,
+  setDraftDisabled,
+  rows,
+  setRows,
+  files,
+  setFiles,
+  uploadAlbumFile
+}: {
+  draftDisabled: boolean
+  setDraftDisabled: (b: boolean) => void
+  rows: number
+  setRows: (r: number) => void
+  files: AlbumFile[]
+  setFiles: (f: AlbumFile[]) => void
+  uploadAlbumFile: (f: File) => void
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   // 110 = n
   useShortcut(110, ev => {
@@ -16,11 +32,7 @@ export default () => {
     ev.preventDefault()
     textareaRef.current!.focus()
   })
-
-  const [rows, setRows] = useState(1)
-  const [files, setFiles] = useState([] as AlbumFile[])
   const [draft, setDraft] = useState('')
-  const [draftDisabled, setDraftDisabled] = useState(false)
   const submitDraft = async () => {
     setDraftDisabled(true)
     if (draft.trim().length > 0 || 1 <= files.length) {
@@ -53,15 +65,6 @@ export default () => {
         .filter(file => file.type.split('/').shift() == 'image')
         .map(async file => await uploadAlbumFile(file))
     }
-  }
-  const uploadAlbumFile = async (file: File) => {
-    setDraftDisabled(true)
-    const albumFile = await appStore.uploadAlbumFile(file.name, file)
-    setFiles(files => [...files, albumFile])
-    if (rows < 3) {
-      setRows(3)
-    }
-    setDraftDisabled(false)
   }
   const onFileCancelClick = async (fileId: number) => {
     setFiles(files.filter(file => file.id != fileId))
