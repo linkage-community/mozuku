@@ -34,18 +34,19 @@ export default forwardRef<HTMLTextAreaElement, T>(
       e.preventDefault()
       submitDraft()
     }
-    const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
-      if (event.currentTarget.clientWidth < 720) {
-        window.scrollTo(0, event.currentTarget.offsetTop)
+    const onFocus = (e: React.FocusEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (e.currentTarget.clientWidth < 720) {
+        e.currentTarget.scrollIntoView()
       }
     }
-    const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if ((event.ctrlKey || event.metaKey) && event.keyCode == 13) {
+    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if ((e.ctrlKey || e.metaKey) && e.keyCode == 13) {
         submitDraft()
       }
     }
-    const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setDraft(event.target.value)
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setDraft(e.target.value)
     }
 
     return (
