@@ -1,38 +1,35 @@
 import * as React from 'react'
-const { useState } = React
 
 import { Line } from 'rc-progress'
 
 import PostForm from '../../containers/Home/PostForm'
 import Timeline from '../../containers/Home/Timeline'
-import AlbumFile from '../../models/AlbumFile'
-import { appStore } from '../../stores'
 import styles from './index.css'
+import AlbumFile from '../../models/AlbumFile'
 
-export default () => {
-  const [isDrop, setIsDrop] = useState(false)
-  const [uploadState, setUploadState] = useState(0)
-  const [files, setFiles] = useState([] as AlbumFile[])
-  const [isUploading, setIsUploading] = useState(false)
-  const [draftDisabled, setDraftDisabled] = useState(false)
-  const uploadAlbumFile = async (file: File) => {
-    setIsUploading(true)
-    const albumFile = await appStore.uploadAlbumFile(
-      file.name,
-      file,
-      setUploadState
-    )
-    setFiles(files => [...files, albumFile])
-    setIsUploading(false)
-    setUploadState(0)
-  }
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setIsDrop(false)
-    Array.from(e.dataTransfer.files)
-      .filter(file => file.type.startsWith('image/'))
-      .map(file => uploadAlbumFile(file))
-  }
+export default ({
+  onDrop,
+  isDrop,
+  setIsDrop,
+  uploadAlbumFile,
+  isUploading,
+  uploadState,
+  draftDisabled,
+  setDraftDisabled,
+  files,
+  setFiles
+}: {
+  onDrop: (e: React.DragEvent<HTMLDivElement>) => void
+  isDrop: boolean
+  setIsDrop: (b: boolean) => void
+  uploadAlbumFile: (a: File) => void
+  isUploading: boolean
+  uploadState: number
+  draftDisabled: boolean
+  setDraftDisabled: (b: boolean) => void
+  files: AlbumFile[]
+  setFiles: (a: AlbumFile[]) => void
+}) => {
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDrop(true)
