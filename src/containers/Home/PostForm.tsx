@@ -57,7 +57,7 @@ export default ({
     }
   }
   const onPaste = async (event: React.ClipboardEvent) => {
-    if (!draftDisabled) {
+    if (draftDisabled) return
       await Array.from(event.clipboardData.files)
         .filter(file => file.type.split('/').shift() == 'image')
         .map(async file => await uploadAlbumFile(file))
