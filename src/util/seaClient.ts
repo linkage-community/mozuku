@@ -109,7 +109,11 @@ export class SeaClient {
       .then(r => r.data)
   }
 
-  async uploadAlbumFile(name: string, blob: Blob): Promise<any> {
+  async uploadAlbumFile(
+    name: string,
+    blob: Blob,
+    state: ((p: number) => void) | null = null
+  ): Promise<any> {
     const form = new FormData()
     form.append('file', blob)
     form.append('name', name)
@@ -117,7 +121,15 @@ export class SeaClient {
 
     const path = '/v1/album/files'
     return this.createAxiosInstance()
-      .post(this.genApiHref(path), form)
+      .post(this.genApiHref(path), form, {
+        onUploadProgress: progressEvent => {
+          if (state != null) {
+            state(
+              Math.floor((progressEvent.loaded / progressEvent.total) * 100)
+            )
+          }
+        }
+      })
       .then(r => r.data)
   }
 

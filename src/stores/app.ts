@@ -168,9 +168,20 @@ class SApp {
     return posts
   }
 
+  @observable isUploading: boolean = false
+
+  @action
+  setIsUploading(b: boolean) {
+    this.isUploading = b
+  }
+
   // FIXME: これいる?
-  async uploadAlbumFile(name: string, blob: Blob): Promise<AlbumFile> {
-    const r = await seaClient.uploadAlbumFile(name, blob)
+  async uploadAlbumFile(
+    name: string,
+    blob: Blob,
+    state: ((p: number) => void) | null = null
+  ): Promise<AlbumFile> {
+    const r = await seaClient.uploadAlbumFile(name, blob, state)
     return new AlbumFile(r)
   }
 
