@@ -168,6 +168,13 @@ class SApp {
     return posts
   }
 
+  @observable isUploading: boolean = false
+
+  @action
+  setIsUploading(b: boolean) {
+    this.isUploading = b
+  }
+
   // FIXME: これいる?
   async uploadAlbumFile(
     name: string,

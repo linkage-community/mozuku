@@ -58,7 +58,6 @@ export default ({
         files={files}
         setFiles={setFiles}
         uploadAlbumFile={uploadAlbumFile}
-        isUploading={isUploading}
       />
       <Timeline />
     </div>

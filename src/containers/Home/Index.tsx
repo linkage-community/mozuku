@@ -9,7 +9,6 @@ export default () => {
   const [isDrop, setIsDrop] = useState(false)
   const [uploadState, setUploadState] = useState(0)
   const [files, setFiles] = useState([] as AlbumFile[])
-  const [isUploading, setIsUploading] = useState(false)
   const [draftDisabled, setDraftDisabled] = useState(false)
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -19,14 +18,14 @@ export default () => {
       .map(file => uploadAlbumFile(file))
   }
   const uploadAlbumFile = async (file: File) => {
-    setIsUploading(true)
+    appStore.setIsUploading(true)
     const albumFile = await appStore.uploadAlbumFile(
       file.name,
       file,
       setUploadState
     )
     setFiles(files => [...files, albumFile])
-    setIsUploading(false)
+    appStore.setIsUploading(false)
     setUploadState(0)
   }
   return (
@@ -35,7 +34,7 @@ export default () => {
       isDrop={isDrop}
       setIsDrop={setIsDrop}
       uploadAlbumFile={uploadAlbumFile}
-      isUploading={isUploading}
+      isUploading={appStore.isUploading}
       uploadState={uploadState}
       draftDisabled={draftDisabled}
       setDraftDisabled={setDraftDisabled}
