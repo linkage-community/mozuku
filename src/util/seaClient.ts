@@ -76,16 +76,11 @@ export class SeaClient {
     this.tokenType = token.token_type
   }
 
-  private createAxiosInstance(state: ((p: number) => void) | null = null) {
+  private createAxiosInstance() {
     return axios.create({
       headers: {
         Authorization: `${this.tokenType} ${this.token}`,
         'Content-Type': 'application/json'
-      },
-      onUploadProgress: progressEvent => {
-        if (state != null) {
-          state(Math.floor((progressEvent.loaded / progressEvent.total) * 100))
-        }
       }
     })
   }
@@ -125,8 +120,16 @@ export class SeaClient {
     form.append('ifNameConflicted', 'add-date-string')
 
     const path = '/v1/album/files'
-    return this.createAxiosInstance(state)
-      .post(this.genApiHref(path), form)
+    return this.createAxiosInstance()
+      .post(this.genApiHref(path), form, {
+        onUploadProgress: progressEvent => {
+          if (state != null) {
+            state(
+              Math.floor((progressEvent.loaded / progressEvent.total) * 100)
+            )
+          }
+        }
+      })
       .then(r => r.data)
   }
 
