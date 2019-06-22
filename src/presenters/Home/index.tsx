@@ -30,7 +30,7 @@ export default () => {
     e.preventDefault()
     setIsDrop(false)
     Array.from(e.dataTransfer.files)
-      .filter(file => file.type.startsWith(‘image/‘))
+      .filter(file => file.type.startsWith('image/'))
       .map(file => uploadAlbumFile(file))
   }
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
