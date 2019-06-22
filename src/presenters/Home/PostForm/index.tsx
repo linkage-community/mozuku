@@ -36,14 +36,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
     }
     const onFocus = (event: React.FocusEvent<HTMLFormElement>) => {
       if (event.currentTarget.clientWidth < 720) {
-        event.currentTarget.scrollIntoView(true)
         window.scrollTo(0, event.currentTarget.offsetTop)
-      }
-    }
-    const onBlur = (event: React.FocusEvent<HTMLFormElement>) => {
-      const textarea = event.currentTarget.querySelector('textarea')!
-      if (!textarea.value.trim().length) {
-        setDraft('')
       }
     }
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -57,15 +50,10 @@ export default forwardRef<HTMLTextAreaElement, T>(
 
     return (
       <div className={styles.wrapper}>
-        <form
-          className={styles.postForm}
-          onSubmit={onSubmit}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        >
+        <form className={styles.postForm} onSubmit={onSubmit} onFocus={onFocus}>
           <Textarea
             className={styles.textarea}
-            disabled={draftDisabled}
+            disabled={draftDisabled || isUploading}
             onKeyDown={onKeyDown}
             onChange={onChange}
             onPaste={onPaste}
