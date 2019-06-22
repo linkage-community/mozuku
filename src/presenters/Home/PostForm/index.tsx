@@ -53,7 +53,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
         <form className={styles.postForm} onSubmit={onSubmit} onFocus={onFocus}>
           <Textarea
             className={styles.textarea}
-            disabled={draftDisabled || isUploading}
+            disabled={draftDisabled}
             onKeyDown={onKeyDown}
             onChange={onChange}
             onPaste={onPaste}
@@ -72,13 +72,13 @@ export default forwardRef<HTMLTextAreaElement, T>(
               id="fileSelector"
               style={{ display: 'none' }}
               onChange={onFileSelect}
-              disabled={draftDisabled}
+              disabled={draftDisabled || isUploading}
             />
           </label>
           <button
             type="submit"
             className={styles.postButton}
-            disabled={draftDisabled}
+            disabled={draftDisabled || isUploading}
           >
             <i className="uil uil-anchor" />
             Post
