@@ -33,7 +33,7 @@ export default ({
   const [draft, setDraft] = useState('')
   const submitDraft = async () => {
     setDraftDisabled(true)
-    if (draft.trim().length > 0 || 1 <= files.length) {
+    if (0 < draft.trim().length || 0 < files.length) {
       try {
         await seaClient.post('/v1/posts', {
           text: draft,
@@ -58,10 +58,9 @@ export default ({
   }
   const onPaste = async (event: React.ClipboardEvent) => {
     if (draftDisabled) return
-      await Array.from(event.clipboardData.files)
-        .filter(file => file.type.split('/').shift() == 'image')
-        .map(async file => await uploadAlbumFile(file))
-    }
+    await Array.from(event.clipboardData.files)
+      .filter(file => file.type.split('/').shift() == 'image')
+      .map(async file => await uploadAlbumFile(file))
   }
   const onFileCancelClick = async (fileId: number) => {
     setFiles(files.filter(file => file.id != fileId))
