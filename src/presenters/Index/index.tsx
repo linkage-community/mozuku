@@ -22,7 +22,7 @@ export default ({ me }: { me?: Account }) => {
       <Layout>
         <Header>
           <HeaderLogo />
-          <div>
+          <div className={styles.account}>
             {me ? (
               <>@{me.screenName}</>
             ) : (
@@ -31,8 +31,10 @@ export default ({ me }: { me?: Account }) => {
               </span>
             )}
           </div>
-          <div className={styles.header_setting}>
-            <Link to={{ pathname: '/settings' }}>⚙</Link>
+          <div className={styles.setting}>
+            <Link to={{ pathname: '/settings' }}>
+              <i className="uil uil-cog" />
+            </Link>
           </div>
         </Header>
         <Container>

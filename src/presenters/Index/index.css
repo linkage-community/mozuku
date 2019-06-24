@@ -1,6 +1,18 @@
-.header_setting a,
-.header_setting button {
-  text-decoration: none;
-  margin-left: 8px;
-  cursor: pointer;
+.account {
+  font-size: 16px;
+}
+
+.setting {
+  width: var(--size-minimum-tappable);
+  height: var(--size-minimum-tappable);
+  font-size: 20px;
+  line-height: var(--size-minimum-tappable);
+  text-align: center;
+}
+
+.setting a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--color-accent);
 }
