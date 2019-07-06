@@ -20,7 +20,7 @@
   height: 36px;
   width: 36px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: var(--image-border-radius-small);
 }
 
 .head {
@@ -57,7 +57,7 @@
 }
 
 .body {
-  margin: 4px 0 0;
+  margin: 4px 0;
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
@@ -67,7 +67,7 @@
 }
 
 .ogcard {
-  margin: 4px 0 0;
+  margin: 4px 0;
   color: rgba(var(--color-text-raw), 0.8);
 }
 
