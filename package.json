@@ -13,7 +13,7 @@
     "date-fns": "^2.0.0-beta.2",
     "date-fns-tz": "^1.0.7",
     "mobx": "^5.10.1",
-    "mobx-react-lite": "^1.4.0",
+    "mobx-react-lite": "^1.4.1",
     "parcel": "^1.12.3",
     "pictograph": "^2.2.0",
     "postcss-modules": "^1.4.1",
