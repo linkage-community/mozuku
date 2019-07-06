@@ -66,7 +66,13 @@ export default ({
               case BODYPART_TYPE_LINK_IMAGE:
                 return (
                   <a key={i} href={p.payload} target="_blank">
-                    {decodeURI(p.payload)}
+                    {(() => {
+                      try {
+                        return decodeURI(p.payload)
+                      } catch (_) { 
+                        return p.payload
+                      }
+                    })()}
                   </a>
                 )
               case BODYPART_TYPE_BOLD:
