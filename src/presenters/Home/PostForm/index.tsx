@@ -34,12 +34,6 @@ export default forwardRef<HTMLTextAreaElement, T>(
       e.preventDefault()
       submitDraft()
     }
-    const onFocus = (e: React.FocusEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      if (e.currentTarget.clientWidth < 720) {
-        e.currentTarget.scrollIntoView()
-      }
-    }
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if ((e.ctrlKey || e.metaKey) && e.keyCode == 13) {
         submitDraft()
@@ -51,7 +45,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
 
     return (
       <div className={styles.wrapper}>
-        <form className={styles.postForm} onSubmit={onSubmit} onFocus={onFocus}>
+        <form className={styles.postForm} onSubmit={onSubmit}>
           <Textarea
             className={styles.textarea}
             disabled={draftDisabled}

@@ -1,4 +1,10 @@
 .wrapper {
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-foreground);
+}
+.wrapper > * {
   background-color: rgba(var(--color-text-raw), 0.025);
 }
 
