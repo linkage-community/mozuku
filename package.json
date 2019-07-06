@@ -37,6 +37,7 @@
     "@types/react-router": "^5.0.2",
     "@types/react-router-dom": "^4.3.4",
     "@types/react-textarea-autosize": "^4.3.4",
+    "husky": "^3.0.0",
     "jest": "^24.8.0",
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
@@ -48,7 +49,13 @@
     "build": "parcel build src/index.html --no-source-maps",
     "gen-csstype": "tcm src",
     "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
-    "format": "prettier --write \"./src/**/*.{html,css,pcss,ts,tsx}\"",
-    "test": "jest"
+    "format": "yarn prettier --write",
+    "prettier": "prettier \"./src/**/*.{html,css,pcss,ts,tsx}\"",
+    "test": "yarn prettier --check && jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test"
+    }
   }
 }

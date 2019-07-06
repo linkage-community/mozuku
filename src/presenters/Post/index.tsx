@@ -69,7 +69,7 @@ export default ({
                     {(() => {
                       try {
                         return decodeURI(p.payload)
-                      } catch (_) { 
+                      } catch (_) {
                         return p.payload
                       }
                     })()}
