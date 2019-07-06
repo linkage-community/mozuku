@@ -1,7 +1,6 @@
 import {
   PostBody,
   BODYPART_TYPE_TEXT,
-  BODYPART_TYPE_LINK_IMAGE,
   BODYPART_TYPE_LINK,
   NewBoldMyScreenNameMiddleware,
   pruneEmptyTextMiddleware,
@@ -24,7 +23,7 @@ describe('PostBody', () => {
       const b = new PostBody(t2)
       b.process()
       expect(b.parts).toHaveLength(2)
-      expect(b.parts[1].type).toEqual(BODYPART_TYPE_LINK_IMAGE)
+      expect(b.parts[1].type).toEqual(BODYPART_TYPE_LINK)
     })
 
     const t3 = 'http://nico.ms/sm9'
