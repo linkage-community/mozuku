@@ -1,12 +1,7 @@
 import * as React from 'react'
 const { useMemo } = React
 
-import {
-  Post,
-  BODYPART_TYPE_LINK,
-  BODYPART_TYPE_LINK_IMAGE,
-  BODYPART_TYPE_BOLD
-} from '../../models'
+import { Post, BODYPART_TYPE_LINK, BODYPART_TYPE_BOLD } from '../../models'
 import DateTime from '../../components/DateTime'
 import OGCard from '../OGCard'
 import Image from './Image'
@@ -63,7 +58,6 @@ export default ({
           {post.body.parts.map((p, i) => {
             switch (p.type) {
               case BODYPART_TYPE_LINK:
-              case BODYPART_TYPE_LINK_IMAGE:
                 return (
                   <a key={i} href={p.payload} target="_blank">
                     {(() => {
@@ -86,11 +80,7 @@ export default ({
             }
           })}
         </div>
-        <Image
-          albumFiles={post.files}
-          images={post.images}
-          setModalContent={setModalContent}
-        />
+        <Image albumFiles={post.files} setModalContent={setModalContent} />
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:

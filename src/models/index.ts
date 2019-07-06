@@ -6,6 +6,5 @@ export {
   pruneEmptyTextMiddleware,
   BODYPART_TYPE_TEXT,
   BODYPART_TYPE_BOLD,
-  BODYPART_TYPE_LINK,
-  BODYPART_TYPE_LINK_IMAGE
+  BODYPART_TYPE_LINK
 } from './Post'
