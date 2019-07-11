@@ -38,6 +38,10 @@ export default () => {
 
   return useObserver(() => {
     document.title = timelineStore.title
+    const faviconElement = document.head.querySelector("link[rel='icon']")
+    if (faviconElement) {
+      faviconElement.setAttribute('href', timelineStore.icon)
+    }
     return (
       <Timeline
         posts={timelineStore.posts}

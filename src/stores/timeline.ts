@@ -10,6 +10,11 @@ import app, { PREFERENCE_NOTICE_WHEN_MENTIONED } from './app'
 import seaClient from '../util/seaClient'
 import { Post, BODYPART_TYPE_TEXT, BODYPART_TYPE_BOLD } from '../models'
 
+// @ts-ignore
+import favicon from '../static/favicon.png'
+// @ts-ignore
+import faviconActive from '../static/favicon_active.png'
+
 class TimelineStore {
   @observable postIds: number[] = []
   @observable private unreadCount: number = 0
@@ -57,6 +62,10 @@ class TimelineStore {
         : []),
       app.defaultTitle
     ].join(' ')
+  }
+
+  @computed get icon() {
+    return this.unreadCount ? faviconActive : favicon
   }
 
   @action
