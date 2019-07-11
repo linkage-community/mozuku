@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/jest": "^24.0.15",
-    "@types/node": "^12.0.12",
+    "@types/node": "^12.6.2",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
     "@types/react-router": "^5.0.3",
@@ -42,7 +42,7 @@
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "typed-css-modules": "^0.6.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "parcel src/index.html",
