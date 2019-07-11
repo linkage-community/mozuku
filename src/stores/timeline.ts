@@ -55,11 +55,6 @@ class TimelineStore {
     })
   }
   @computed get title() {
-    const faviconSelector = document.head.querySelector("link[rel='icon']")!
-    faviconSelector.setAttribute(
-      'href',
-      this.unreadCount ? faviconActive : favicon
-    )
     return [
       this.streamConnected ? '⚡️' : '🌩️',
       ...(this.connectedAndBackground && this.unreadCount
@@ -67,6 +62,10 @@ class TimelineStore {
         : []),
       app.defaultTitle
     ].join(' ')
+  }
+
+  @computed get icon() {
+    return this.unreadCount ? faviconActive : favicon
   }
 
   @action
