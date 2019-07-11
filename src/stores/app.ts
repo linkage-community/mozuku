@@ -14,11 +14,13 @@ export const PREFERENCE_NOTICE_WHEN_MENTIONED =
   'PREFERENCE_NOTICE_WHEN_MENTIONED'
 export const PREFERENCE_DISPLAY_OGCARD = 'PREFERENCE_SHOW_OGCARD'
 export const PREFERENCE_FORCE_DARK_THEME = 'PREFERENCE_FORCE_DARK_THEME'
+export const PREFERENCE_MUTE_COMPUTED_APP = 'PREFERENCE_MUTE_COMPUTED_APP'
 type PREFERENCE_KEYS =
   | typeof PREFERENCE_DISPLAY_META_ENABLED
   | typeof PREFERENCE_NOTICE_WHEN_MENTIONED
   | typeof PREFERENCE_DISPLAY_OGCARD
   | typeof PREFERENCE_FORCE_DARK_THEME
+  | typeof PREFERENCE_MUTE_COMPUTED_APP
 
 import {
   Account,
@@ -76,14 +78,20 @@ class SApp {
     this.shortcuts.delete(charCode)
   }
 
-  constructor() {
+  migrateState() {
+    localStorage.removeItem(KEYS.SAPP_CACHE_BROKEN)
+  }
+  loadClient() {
     const ss = localStorage.getItem(KEYS.SEA_CLIENT_PACK)
     if (ss) {
       seaClient.unpack(ss)
       this.loggedIn = true
     }
-    localStorage.removeItem(KEYS.SAPP_CACHE_BROKEN)
+  }
 
+  constructor() {
+    this.migrateState()
+    this.loadClient()
     this.loadPreferences()
 
     window.addEventListener('visibilitychange', () => {

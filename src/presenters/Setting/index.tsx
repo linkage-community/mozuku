@@ -10,6 +10,7 @@ type TConfig = {
   notificationEnabled: boolean
   ogcardEnabled: boolean
   forceDarkTheme: boolean
+  muteComputedApp: boolean
 }
 
 export default ({
@@ -19,6 +20,7 @@ export default ({
   onUpdateEnableNotificationCheckBox,
   onUpdateEnableOGCard,
   onUpdateForceDarkTheme,
+  onUpdateMuteComputedApp,
   currentName,
   currentConfig,
   logout
@@ -31,6 +33,7 @@ export default ({
   ) => void
   onUpdateEnableOGCard: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUpdateForceDarkTheme: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpdateMuteComputedApp: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
   currentConfig: TConfig
   logout: () => void
@@ -111,6 +114,15 @@ export default ({
           checked={currentConfig.forceDarkTheme}
         />
         Force Dark Theme
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="mute-computed-app"
+          onChange={onUpdateMuteComputedApp}
+          checked={currentConfig.muteComputedApp}
+        />
+        Mute Computed Apps
       </label>
       <div className={styles.subtitle}>Danger zone</div>
       <label>ほんとはメニュー用意してそこに入れたい</label>

@@ -8,7 +8,8 @@ import timeline from '../stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
-  PREFERENCE_FORCE_DARK_THEME
+  PREFERENCE_FORCE_DARK_THEME,
+  PREFERENCE_MUTE_COMPUTED_APP
 } from '../stores/app'
 const { useState, useCallback } = React
 
@@ -109,6 +110,14 @@ export default () => {
     },
     []
   )
+  const onUpdateMuteComputedApp = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      // FIXME: ここきたない
+      appStore.preferences.set(PREFERENCE_MUTE_COMPUTED_APP, e.target.checked)
+      appStore.savePreferences()
+    },
+    []
+  )
 
   return useObserver(() => {
     const currentConfig = {
@@ -119,7 +128,9 @@ export default () => {
       ogcardEnabled:
         appStore.preferences.get(PREFERENCE_DISPLAY_OGCARD) || false,
       forceDarkTheme:
-        appStore.preferences.get(PREFERENCE_FORCE_DARK_THEME) || false
+        appStore.preferences.get(PREFERENCE_FORCE_DARK_THEME) || false,
+      muteComputedApp:
+        appStore.preferences.get(PREFERENCE_MUTE_COMPUTED_APP) || false
     }
     return (
       <Setting
@@ -129,6 +140,7 @@ export default () => {
         onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
         onUpdateEnableOGCard={onUpdateEnableOGCard}
         onUpdateForceDarkTheme={onUpdateForceDarkTheme}
+        onUpdateMuteComputedApp={onUpdateMuteComputedApp}
         currentName={appStore.me ? appStore.me!.name : undefined}
         logout={appStore.logout.bind(appStore)}
         currentConfig={currentConfig}

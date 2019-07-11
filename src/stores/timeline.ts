@@ -5,7 +5,10 @@ import { observable, computed, action } from 'mobx'
 import $ from 'cafy'
 import { differenceInSeconds } from 'date-fns'
 
-import app, { PREFERENCE_NOTICE_WHEN_MENTIONED } from './app'
+import app, {
+  PREFERENCE_NOTICE_WHEN_MENTIONED,
+  PREFERENCE_MUTE_COMPUTED_APP
+} from './app'
 
 import seaClient from '../util/seaClient'
 import { Post, BODYPART_TYPE_TEXT, BODYPART_TYPE_BOLD } from '../models'
@@ -30,6 +33,11 @@ class TimelineStore {
   private get notificationEnabled() {
     return app.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
   }
+  private shouldMute(p: Post) {
+    if (!app.preferences.get(PREFERENCE_MUTE_COMPUTED_APP)) return false
+    if (p.application.isAutomated) return true
+    return false
+  }
 
   constructor() {
     app.subscribeHiddenChange(hidden => {
@@ -48,11 +56,14 @@ class TimelineStore {
   }
 
   @computed get posts() {
-    return this.postIds.map(id => {
-      const p = app.posts.get(id)
-      if (!p) throw new Error('なんかおかしい')
-      return p
-    })
+    return this.postIds
+      .map(id => {
+        const p = app.posts.get(id)
+        if (!p) throw new Error('なんかおかしい')
+        if (this.shouldMute(p)) return
+        return p
+      })
+      .filter(p => !!p)
   }
   @computed get title() {
     return [
