@@ -47,7 +47,7 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --no-source-maps",
-    "gen-csstype": "tcm src",
+    "gen-csstype": "tcm src && prettier \"./src/**/*.{css.d.ts}\"",
     "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
     "format": "yarn prettier --write",
     "prettier": "prettier \"./src/**/*.{html,css,pcss,ts,tsx}\"",
