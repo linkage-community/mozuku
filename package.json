@@ -26,7 +26,8 @@
     "react-textarea-autosize": "^7.1.0",
     "react-use-promise": "^0.2.0",
     "riassumere": "^0.3.4",
-    "sanitize.css": "^10.0.0"
+    "sanitize.css": "^10.0.0",
+    "transform-ts": "^0.1.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -42,6 +43,7 @@
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "typed-css-modules": "^0.6.0",
+    "types-serviceworker": "^0.0.1",
     "typescript": "^3.5.3"
   },
   "scripts": {

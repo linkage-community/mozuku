@@ -6910,6 +6910,11 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
+transform-ts@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/transform-ts/-/transform-ts-0.1.2.tgz#a3316b7d99c0d659ca5cca7d071f541aeb6ea424"
+  integrity sha512-LWmAr+ATTMBckcN/Gkg1+fWqp4idJyn5z5TSkcdMijTOD/QH3mOXYJ+YC7l1+8nIAaHGIeNWolFnOPnUySW2Uw==
+
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
@@ -6978,6 +6983,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+types-serviceworker@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/types-serviceworker/-/types-serviceworker-0.0.1.tgz#3d356e176d3b987d2164b34e609c591e67d31f1c"
+  integrity sha512-EKO/SZ3AsHEZsqv+bsdlTCz5k955riOksnYGlG6JhVwNTVsPWj/TScTbiNVZ5+mmX8TcEXF0C8aSxUw0jTDpIw==
 
 typescript@^3.5.3:
   version "3.5.3"
