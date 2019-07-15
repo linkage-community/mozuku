@@ -1,6 +1,6 @@
 declare const styles: {
   readonly image: string
-  readonly image__size: string
+  readonly imageSize: string
   readonly imageCount: string
 }
 export = styles

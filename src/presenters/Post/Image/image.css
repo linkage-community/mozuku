@@ -12,7 +12,7 @@
   object-fit: cover;
 }
 
-.image__size {
+.imageSize {
   position: relative;
   pointer-events: none;
 }
