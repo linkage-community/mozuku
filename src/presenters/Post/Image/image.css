@@ -11,3 +11,27 @@
   border-radius: var(--image-border-radius-small);
   object-fit: cover;
 }
+
+.image__size {
+  position: relative;
+  pointer-events: none;
+}
+
+.image__size p {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 4px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--color-caption);
+  background-color: var(--color-background);
+  opacity: 0.8;
+  font-size: 0.8em;
+}
+
+.imageCount {
+  color: var(--color-caption);
+  font-size: 0.8em;
+}
