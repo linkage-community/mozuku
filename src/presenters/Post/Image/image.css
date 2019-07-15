@@ -32,4 +32,5 @@
   background-color: var(--color-background);
   opacity: 0.8;
   font-size: 0.8em;
+  border-radius: 0 0 var(--image-border-radius-small) 0;
 }
