@@ -1,11 +1,14 @@
-.image {
+.images {
   display: flex;
   overflow-x: auto;
   margin: 4px 0;
 }
 
+.image {
+  padding-right: 4px;
+}
+
 .image img {
-  margin-right: 4px;
   width: 144px;
   height: 144px;
   border-radius: var(--image-border-radius-small);
@@ -22,7 +25,7 @@
   bottom: 0;
   right: 0;
   padding: 4px;
-  margin: 0 4px;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   color: var(--color-caption);

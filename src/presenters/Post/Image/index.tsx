@@ -18,10 +18,10 @@ export default ({
       <>
         <div className={styles.imageCount}>{imageFiles.length} attachments</div>
 
-        <div className={styles.image}>
+        <div className={styles.images}>
           {imageFiles.length ? (
             imageFiles.map((im, k) => (
-              <>
+              <div className={styles.image}>
                 <picture key={k}>
                   {im.thumbnails.map(t => (
                     <source key={t.id} srcSet={t.url.href} type={t.mime} />
@@ -41,7 +41,7 @@ export default ({
                 <div className={styles.imageSize}>
                   <p>{filesize(im.direct.size)}</p>
                 </div>
-              </>
+              </div>
             ))
           ) : (
             <></>
