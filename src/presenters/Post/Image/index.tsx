@@ -38,7 +38,7 @@ export default ({
                     }}
                   />
                 </picture>
-                <div className={styles.image__size}>
+                <div className={styles.imageSize}>
                   <p>{filesize(im.direct.size)}</p>
                 </div>
               </>
