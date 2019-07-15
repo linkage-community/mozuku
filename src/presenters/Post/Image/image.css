@@ -17,7 +17,7 @@
   pointer-events: none;
 }
 
-.image__size p {
+.imageSize p {
   position: absolute;
   bottom: 0;
   right: 0;
