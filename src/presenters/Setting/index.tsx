@@ -59,26 +59,26 @@ export default ({
 
   return (
     <div className={styles.setting}>
-      <div className={styles.title}>Settings</div>
+      <div className={styles.title}>設定</div>
       <form onSubmit={callback}>
-        <div className={styles.subtitle}>Account Settings</div>
+        <div className={styles.subtitle}>アカウント設定</div>
         <label>
-          <span className={styles.text}>Name</span>
+          <span className={styles.text}>名前</span>
           <input type="text" ref={refName} defaultValue={currentName} />
         </label>
         <label>
-          <span className={styles.text}>Avatar</span>
+          <span className={styles.text}>アバター</span>
           <input type="file" ref={refFile} accept="image/*" />
         </label>
         <input
           className={styles.submitButton}
           type="submit"
-          value="Update"
+          value="更新"
           disabled={updateDisabled}
         />
       </form>
       <div className={styles.subtitle}>Mozuku Settings</div>
-      <label>チェック入れたら即時反映される</label>
+      <label>チェックを入れたらすぐに反映されます</label>
       <label>
         <input
           type="checkbox"
@@ -86,7 +86,7 @@ export default ({
           onChange={onUpdateShowMetaCheckbox}
           checked={currentConfig.showMetaEnabled}
         />
-        via表示するやつ
+        アプリケーションの表示
       </label>
       <label>
         <input
@@ -95,7 +95,7 @@ export default ({
           onChange={onUpdateEnableNotificationCheckBox}
           checked={currentConfig.notificationEnabled}
         />
-        タブが隠れてて開いてるときにリプライを通知するやつ
+        バックグラウンドで開かれているときリプライを通知する
       </label>
       <label>
         <input
@@ -104,7 +104,7 @@ export default ({
           onChange={onUpdateEnableOGCard}
           checked={currentConfig.ogcardEnabled}
         />
-        ウェブページのメタ情報をOGPとかから表示するやつ
+        共有されたウェブページのプレビューを表示する
       </label>
       <label>
         <input
@@ -113,7 +113,7 @@ export default ({
           onChange={onUpdateForceDarkTheme}
           checked={currentConfig.forceDarkTheme}
         />
-        Force Dark Theme
+        ダークモードを強制する
       </label>
       <label>
         <input
@@ -122,14 +122,14 @@ export default ({
           onChange={onUpdateMuteComputedApp}
           checked={currentConfig.muteComputedApp}
         />
-        Mute Computed Apps
+        機械的な投稿を無視する
       </label>
       <div className={styles.subtitle}>Danger zone</div>
-      <label>ほんとはメニュー用意してそこに入れたい</label>
+      {/*ほんとはメニュー用意してそこに入れたい*/}
       <input
         className={`${styles.submitButton} ${styles.alert}`}
         type="submit"
-        value="Logout"
+        value="ログアウト"
         onClick={onLogout}
       />
       <div className={styles.subtitle}>Built with ❤️</div>
