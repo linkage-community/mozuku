@@ -1,0 +1,19 @@
+{
+  "name": "Mozuku",
+  "short_name": "Mozuku",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "One of seaweed, client of rinsuki/sea",
+  "icons": [{
+      "src": "./logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
