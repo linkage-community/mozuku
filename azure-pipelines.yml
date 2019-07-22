@@ -4,28 +4,32 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - master
 
 pr:
-- master
+  - master
 
 pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    yarn
-  displayName: 'Install dependencies'
+  - script: |
+      yarn
+    displayName: 'Install dependencies'
 
-- script: |
-    yarn prettier --check "./src/**/*.{html,css,ts,tsx}"
-  displayName: 'Run prettier'
+  - script: |
+      yarn prettier --check "./src/**/*.{html,css,ts,tsx}"
+    displayName: 'Run prettier'
 
-- script: |
-    yarn test
-  displayName: 'Run test'
+  - script: |
+      yarn run lint
+    displayName: 'Run ESLint'
+
+  - script: |
+      yarn test
+    displayName: 'Run test'

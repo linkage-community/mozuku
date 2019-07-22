@@ -63,13 +63,13 @@
     "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
     "format": "yarn prettier --write",
     "prettier": "prettier \"./src/**/*.{html,css,pcss,ts,tsx}\"",
-    "test": "yarn prettier --check && jest",
+    "test": "jest",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "yarn run lint --fix"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test --onlyChanged"
+      "pre-commit": "yarn run lint && yarn prettier --check && yarn test --onlyChanged"
     }
   }
 }
