@@ -27,7 +27,7 @@
     "react-textarea-autosize": "^7.1.0",
     "react-use-promise": "^0.2.0",
     "riassumere": "^0.3.4",
-    "sanitize.css": "^10.0.0"
+    "sanitize.css": "^11.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
