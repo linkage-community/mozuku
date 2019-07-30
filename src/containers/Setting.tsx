@@ -4,7 +4,6 @@ import { useObserver } from 'mobx-react-lite'
 import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../stores'
 import seaClient from '../util/seaClient'
 import Setting from '../presenters/Setting'
-import timeline from '../stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
@@ -81,9 +80,9 @@ export default () => {
   const onUpdateEnableNotificationCheckBox = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
-        timeline.enableNotification()
+        appStore.enableNotification()
       } else {
-        timeline.disableNotification()
+        appStore.disableNotification()
       }
     },
     []

@@ -22,9 +22,6 @@ class TimelineStore {
   private stream?: WebSocket
   private streamPilot?: number
   private streamLastPingFromServer?: Date
-  private get notificationEnabled() {
-    return app.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
-  }
 
   constructor() {
     app.subscribeHiddenChange(hidden => {
@@ -85,7 +82,6 @@ class TimelineStore {
     this.postIds = Array.from(idsSet.values())
 
     this.countUnread(idsSet.size - tc)
-    this.showNotification(posts)
   }
   @action
   private async push(...p: any[]) {
@@ -139,56 +135,6 @@ class TimelineStore {
     return this._readingMore
   }
 
-  enableNotification(): Promise<void> {
-    const set = () => {
-      app.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
-      app.savePreferences()
-    }
-
-    if (Notification.permission === 'denied') return Promise.reject()
-    if (Notification.permission === 'granted') {
-      set()
-      return Promise.resolve()
-    }
-    if (Notification.permission !== 'default') {
-      console.error(Notification.permission)
-      throw new Error('どういうことかわかりません...')
-    }
-    return new Promise((resolve, reject) => {
-      Notification.requestPermission(status => {
-        if (status === 'denied' || status === 'default') return reject()
-        set()
-        return resolve()
-      })
-    })
-  }
-  disableNotification() {
-    app.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, false)
-    app.savePreferences()
-  }
-  showNotification(pp: Post[]) {
-    if (!this.notificationEnabled || !this.connectedAndBackground) return
-    pp.forEach(p => {
-      const l = p.body.parts.filter(b => {
-        // ここどうにかする (現時点では BOLD になっているのは mention のみということを利用してしまっている)
-        return b.type === BODYPART_TYPE_BOLD
-      }).length
-      if (!l) return
-      const n = new Notification(
-        `${p.author.name} (@${p.author.screenName}) mentioned you`,
-        {
-          body: p.body.parts
-            .filter(p => p.type === BODYPART_TYPE_TEXT)
-            .map(p => p.payload)
-            .join(''),
-          icon: p.author.avatarFile
-            ? p.author.avatarFile.thumbnail.url.href
-            : undefined
-        }
-      )
-      n.addEventListener('click', () => window.focus())
-    })
-  }
   private enableStreamPilot() {
     if (this.streamPilot) return
     const interval = 1000

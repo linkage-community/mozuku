@@ -30,6 +30,19 @@ import AlbumFile from '../models/AlbumFile'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 
+function urlB64ToUint8Array(base64String: string) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
+  const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/')
+
+  const rawData = window.atob(base64)
+  const outputArray = new Uint8Array(rawData.length)
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i)
+  }
+  return outputArray
+}
+
 class SApp {
   readonly defaultTitle = 'Mozuku'
 
@@ -97,6 +110,9 @@ class SApp {
 
     if (this.preferences.get(PREFERENCE_FORCE_DARK_THEME)) {
       this.enableForceDarkTheme()
+    }
+    if (this.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED)) {
+      this.subscribeWebPush()
     }
   }
   @action
@@ -192,6 +208,59 @@ class SApp {
 
   disableForceDarkTheme() {
     document.firstElementChild!.removeAttribute('class')
+  }
+
+  private async subscribeWebPush(force: boolean = false) {
+    const registration = (await Promise.race([
+      navigator.serviceWorker.ready,
+      (() =>
+        new Promise((_, rej) => {
+          setTimeout(() => rej(new Error('timeout')), 3 * 1000)
+        }))()
+    ])) as ServiceWorkerRegistration
+
+    const oldSubscription = await registration.pushManager.getSubscription()
+    console.dir(oldSubscription)
+    if (oldSubscription) {
+      if (!force) return
+      oldSubscription.unsubscribe()
+    }
+
+    const key = await seaClient.get('/v1/webpush/server_key')
+    const pushRegistration = await registration.pushManager.subscribe({
+      applicationServerKey: urlB64ToUint8Array(key.applicationServerKey),
+      userVisibleOnly: true
+    })
+
+    try {
+      await seaClient.post(
+        '/v1/webpush/subscriptions',
+        pushRegistration.toJSON()
+      )
+    } catch (e) {
+      pushRegistration.unsubscribe()
+      throw e
+    }
+  }
+  async enableNotification(): Promise<void> {
+    const set = () => {
+      this.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
+      this.savePreferences()
+    }
+
+    // Check notification permisson
+    if (Notification.permission === 'denied') return Promise.reject()
+    if (Notification.permission !== 'granted') {
+      const status = await Notification.requestPermission()
+      if (status === 'denied' || status === 'default') throw new Error()
+    }
+
+    await this.subscribeWebPush(true)
+    set()
+  }
+  disableNotification() {
+    this.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, false)
+    this.savePreferences()
   }
 }
 
