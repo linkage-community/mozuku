@@ -13,12 +13,14 @@ import AlbumFile from '../../models/AlbumFile'
 type PostProps = {
   post: Post
   metaEnabled: boolean
+  spreadEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
 }
 export default ({
   post,
   post: { author },
   metaEnabled,
+  spreadEnabled,
   setModalContent
 }: PostProps) => {
   return useMemo(
@@ -80,7 +82,11 @@ export default ({
             }
           })}
         </div>
-        <Image albumFiles={post.files} setModalContent={setModalContent} />
+        <Image
+          albumFiles={post.files}
+          spreadEnabled={spreadEnabled}
+          setModalContent={setModalContent}
+        />
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:

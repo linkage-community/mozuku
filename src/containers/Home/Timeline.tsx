@@ -5,6 +5,7 @@ import { useObserver } from 'mobx-react-lite'
 import {
   appStore,
   PREFERENCE_DISPLAY_META_ENABLED,
+  PREFERENCE_SPREAD_IMAGE_ENABLED,
   timelineStore,
   useTimeline
 } from '../../stores'
@@ -49,6 +50,9 @@ export default () => {
         readMoreDisabled={timelineStore.readMoreDisabled}
         postMetaEnabled={appStore.preferences.get(
           PREFERENCE_DISPLAY_META_ENABLED
+        )}
+        spreadImageEnabled={appStore.preferences.get(
+          PREFERENCE_SPREAD_IMAGE_ENABLED
         )}
         modalContent={modalContent}
         setModalContent={setModalContent}

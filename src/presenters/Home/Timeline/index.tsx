@@ -11,6 +11,7 @@ export default ({
   readMore,
   readMoreDisabled,
   postMetaEnabled = false,
+  spreadImageEnabled = false,
   modalContent,
   setModalContent,
   onModalBackgroundClick,
@@ -20,6 +21,7 @@ export default ({
   readMore: () => void
   readMoreDisabled: boolean
   postMetaEnabled?: boolean
+  spreadImageEnabled?: boolean
   modalContent: AlbumFile | null
   setModalContent: (albumFile: AlbumFile | null) => void
   onModalBackgroundClick: (
@@ -52,6 +54,7 @@ export default ({
           <Post
             post={post}
             metaEnabled={postMetaEnabled}
+            spreadEnabled={spreadImageEnabled}
             setModalContent={setModalContent}
           />
         </li>

@@ -9,7 +9,8 @@ import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
   PREFERENCE_FORCE_DARK_THEME,
-  PREFERENCE_MUTE_COMPUTED_APP
+  PREFERENCE_MUTE_COMPUTED_APP,
+  PREFERENCE_SPREAD_IMAGE_ENABLED
 } from '../stores/app'
 const { useState, useCallback } = React
 
@@ -118,6 +119,17 @@ export default () => {
     },
     []
   )
+  const onUpdateEnableSpreadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      // FIXME: ここきたない
+      appStore.preferences.set(
+        PREFERENCE_SPREAD_IMAGE_ENABLED,
+        e.target.checked
+      )
+      appStore.savePreferences()
+    },
+    []
+  )
 
   return useObserver(() => {
     const currentConfig = {
@@ -130,7 +142,9 @@ export default () => {
       forceDarkTheme:
         appStore.preferences.get(PREFERENCE_FORCE_DARK_THEME) || false,
       muteComputedApp:
-        appStore.preferences.get(PREFERENCE_MUTE_COMPUTED_APP) || false
+        appStore.preferences.get(PREFERENCE_MUTE_COMPUTED_APP) || false,
+      spreadImageEnabled:
+        appStore.preferences.get(PREFERENCE_SPREAD_IMAGE_ENABLED) || false
     }
     return (
       <Setting
@@ -141,6 +155,7 @@ export default () => {
         onUpdateEnableOGCard={onUpdateEnableOGCard}
         onUpdateForceDarkTheme={onUpdateForceDarkTheme}
         onUpdateMuteComputedApp={onUpdateMuteComputedApp}
+        onUpdateEnableSpreadImage={onUpdateEnableSpreadImage}
         currentName={appStore.me ? appStore.me!.name : undefined}
         logout={appStore.logout.bind(appStore)}
         currentConfig={currentConfig}

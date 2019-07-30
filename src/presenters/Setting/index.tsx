@@ -11,6 +11,7 @@ type TConfig = {
   ogcardEnabled: boolean
   forceDarkTheme: boolean
   muteComputedApp: boolean
+  spreadImageEnabled: boolean
 }
 
 export default ({
@@ -21,6 +22,7 @@ export default ({
   onUpdateEnableOGCard,
   onUpdateForceDarkTheme,
   onUpdateMuteComputedApp,
+  onUpdateEnableSpreadImage,
   currentName,
   currentConfig,
   logout
@@ -34,6 +36,7 @@ export default ({
   onUpdateEnableOGCard: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUpdateForceDarkTheme: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUpdateMuteComputedApp: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpdateEnableSpreadImage: (e: React.ChangeEvent<HTMLInputElement>) => void
   currentName?: string
   currentConfig: TConfig
   logout: () => void
@@ -123,6 +126,15 @@ export default ({
           checked={currentConfig.muteComputedApp}
         />
         機械的な投稿を無視する
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="spread-image"
+          onChange={onUpdateEnableSpreadImage}
+          checked={currentConfig.spreadImageEnabled}
+        />
+        画像を展開する
       </label>
       <div className={styles.subtitle}>Danger zone</div>
       {/*ほんとはメニュー用意してそこに入れたい*/}
