@@ -6,7 +6,7 @@ type AlbumFileVariantBody = {
   score: number
   extension: string
   mime: string
-  type: 'image' | 'thumbnail'
+  type: 'image' | 'thumbnail' | 'video'
   size: number
   url: string
 }
@@ -18,7 +18,7 @@ interface AlbumFileBody {
 
 export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
   id: number
-  type: 'image' | 'thumbnail'
+  type: 'image' | 'thumbnail' | 'video'
   // #region 無視してもいいかも
   score: number
   extension: string
@@ -31,7 +31,7 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
     return $.obj({
       id: $.num,
       // 現時点での対応
-      type: $.str.or(['image', 'thumbnail']),
+      type: $.str.or(['image', 'thumbnail', 'video']),
       score: $.num,
       extension: $.string,
       mime: $.str,
@@ -43,7 +43,7 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
   constructor(v: AlbumFileVariantBody) {
     const variant = this.validate(v)
     this.id = variant.id
-    this.type = variant.type as 'image' | 'thumbnail'
+    this.type = variant.type as 'image' | 'thumbnail' | 'video'
     this.score = variant.score
     this.extension = variant.extension
     this.mime = variant.mime
@@ -66,8 +66,7 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
 }
 export default class AlbumFile implements Model<AlbumFileBody> {
   id: number
-  // FIXME: video 実装されるまで Body に type がないので
-  type = 'image' as const
+  type: string // FIXME: Please use constant value check instead of $.str (move to transform-ts?)
   fileName: string
   variants = new Map<AlbumFileVariant['type'], AlbumFileVariant[]>()
 
@@ -75,6 +74,7 @@ export default class AlbumFile implements Model<AlbumFileBody> {
     return $.obj({
       id: $.num,
       name: $.str,
+      type: $.str, // FIXME: Please use constant value check instead of $.str (move to transform-ts?)
       variants: $.arr()
     }).throw(f)
   }
@@ -82,6 +82,7 @@ export default class AlbumFile implements Model<AlbumFileBody> {
   constructor(f: AlbumFileBody) {
     const file = this.validate(f)
     this.id = file.id
+    this.type = file.type
     this.fileName = file.name
     file.variants.map(v => {
       const variant = new AlbumFileVariant(v)

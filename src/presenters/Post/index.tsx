@@ -80,7 +80,16 @@ export default ({
             }
           })}
         </div>
-        <Image albumFiles={post.files} setModalContent={setModalContent} />
+        {post.files.length && post.files[0].type === 'video' ? (
+          <video
+            poster={post.files[0].thumbnail.url}
+            src={post.files[0].variants.get('video')[0].url}
+            controls
+            style={{ width: '90vw', maxWidth: 320 }}
+          />
+        ) : (
+          <Image albumFiles={post.files} setModalContent={setModalContent} />
+        )}
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:
