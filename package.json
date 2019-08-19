@@ -40,7 +40,7 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/react-textarea-autosize": "^4.3.4",
     "husky": "^3.0.2",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "typed-css-modules": "^0.6.0",
