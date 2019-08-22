@@ -19,7 +19,7 @@
     "pictograph": "^2.2.0",
     "postcss-modules": "^1.4.1",
     "prettier": "^1.18.2",
-    "rc-progress": "^2.5.1",
+    "rc-progress": "^2.5.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
