@@ -29,22 +29,37 @@ export default ({
 }) => (
   <>
     {modalContent && (
-      <>
-        <div className={styles.modal_background} />
-        <picture
-          className={styles.modal_container}
-          onClick={onModalBackgroundClick}
-        >
-          {modalContent.directs.map(variant => (
-            <source
-              key={variant.id}
-              srcSet={variant.url.href}
-              type={variant.mime}
+      <div className={styles.modal_background}>
+        {modalContent.type === 'image' ? (
+          <picture
+            className={styles.modal_container}
+            onClick={onModalBackgroundClick}
+          >
+            {modalContent.directs.map(variant => (
+              <source
+                key={variant.id}
+                srcSet={variant.url.href}
+                type={variant.mime}
+              />
+            ))}
+            <img onClick={onModalImageClick} />
+          </picture>
+        ) : modalContent.type === 'video' ? (
+          <div
+            className={styles.modal_container}
+            onClick={onModalBackgroundClick}
+          >
+            <video
+              poster={modalContent.thumbnail.url.href}
+              src={modalContent.variants.get('video')![0].url.href}
+              controls
+              autoPlay
             />
-          ))}
-          <img onClick={onModalImageClick} />
-        </picture>
-      </>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     )}
     <ul className={styles.timeline}>
       {posts.map(post => (
