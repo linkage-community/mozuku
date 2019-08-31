@@ -6,6 +6,7 @@
 
 .image {
   padding-right: 4px;
+  position: relative;
 }
 
 .image img {
@@ -36,15 +37,20 @@
 }
 
 .imageCover {
-  position: relative;
+  display: flex;
+  position: absolute;
   pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .imageCover span {
   font-size: 2em;
   position: absolute;
-  bottom: 0;
-  margin: 8px;
   opacity: 0.8;
   color: var(--color-caption);
   background-color: var(--color-background);
