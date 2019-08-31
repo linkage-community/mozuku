@@ -54,6 +54,7 @@ export default ({
               src={modalContent.variants.get('video')![0].url.href}
               controls
               autoPlay
+              onClick={onModalImageClick}
             />
           </div>
         ) : (
