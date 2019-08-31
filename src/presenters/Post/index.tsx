@@ -80,14 +80,7 @@ export default ({
             }
           })}
         </div>
-        {post.files.length && post.files[0].type === 'video' ? (
-          <video
-            poster={post.files[0].thumbnail.url.href}
-            src={post.files[0].variants.get('video')![0].url.href}
-            controls
-            style={{ width: '100%', maxWidth: '100%', maxHeight: '90vh' }}
-          />
-        ) : (
+        {0 < post.files.length && (
           <Image albumFiles={post.files} setModalContent={setModalContent} />
         )}
         {post.body.parts.map((p, i) => {
