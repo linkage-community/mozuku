@@ -34,3 +34,19 @@
   font-size: 0.8em;
   border-radius: 0 0 var(--image-border-radius-small) 0;
 }
+
+.imageCover {
+  position: relative;
+  pointer-events: none;
+}
+
+.imageCover span {
+  font-size: 2em;
+  position: absolute;
+  bottom: 0;
+  margin: 8px;
+  opacity: 0.8;
+  color: var(--color-caption);
+  background-color: var(--color-background);
+  border-radius: var(--image-border-radius-small);
+}

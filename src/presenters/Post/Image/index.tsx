@@ -57,6 +57,9 @@ export default ({
                   <div className={styles.imageSize}>
                     <p>{filesize(im.variants.get('video')![0].size)}</p>
                   </div>
+                  <div className={styles.imageCover}>
+                    <span className="uil uil-play"></span>
+                  </div>
                 </div>
               )
             default:
