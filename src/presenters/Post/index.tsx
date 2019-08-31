@@ -82,10 +82,10 @@ export default ({
         </div>
         {post.files.length && post.files[0].type === 'video' ? (
           <video
-            poster={post.files[0].thumbnail.url}
-            src={post.files[0].variants.get('video')[0].url}
+            poster={post.files[0].thumbnail.url.href}
+            src={post.files[0].variants.get('video')![0].url.href}
             controls
-            style={{ width: '90vw', maxWidth: 320 }}
+            style={{ width: '100%', maxWidth: '100%', maxHeight: '90vh' }}
           />
         ) : (
           <Image albumFiles={post.files} setModalContent={setModalContent} />
