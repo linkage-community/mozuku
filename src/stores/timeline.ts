@@ -190,7 +190,7 @@ class TimelineStore {
   showNotification(pp: Post[]) {
     if (!this.notificationEnabled || !this.connectedAndBackground) return
     pp.forEach(p => {
-      if (!p.nodes.filter(n => isMention(n) && n.value === app.me!.screenName))
+      if (!p.nodes.some(n => isMention(n) && n.value === app.me!.screenName))
         return
       const n = new Notification(
         `${p.author.name} (@${p.author.screenName}) mentioned you`,
