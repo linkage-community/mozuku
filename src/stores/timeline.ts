@@ -11,12 +11,13 @@ import app, {
 } from './app'
 
 import seaClient from '../util/seaClient'
-import { Post, BODYPART_TYPE_TEXT, BODYPART_TYPE_BOLD } from '../models'
+import { Post } from '../models'
 
 // @ts-ignore
 import favicon from '../static/favicon.png'
 // @ts-ignore
 import faviconActive from '../static/favicon_active.png'
+import { isMention, isText } from '@linkage-community/bottlemail'
 
 class TimelineStore {
   @observable postIds: number[] = []
@@ -189,17 +190,14 @@ class TimelineStore {
   showNotification(pp: Post[]) {
     if (!this.notificationEnabled || !this.connectedAndBackground) return
     pp.forEach(p => {
-      const l = p.body.parts.filter(b => {
-        // ここどうにかする (現時点では BOLD になっているのは mention のみということを利用してしまっている)
-        return b.type === BODYPART_TYPE_BOLD
-      }).length
-      if (!l) return
+      if (!p.nodes.filter(n => isMention(n) && n.value === app.me!.screenName))
+        return
       const n = new Notification(
         `${p.author.name} (@${p.author.screenName}) mentioned you`,
         {
-          body: p.body.parts
-            .filter(p => p.type === BODYPART_TYPE_TEXT)
-            .map(p => p.payload)
+          body: p.nodes
+            .filter(n => isText(n))
+            .map(p => p.value)
             .join(''),
           icon: p.author.avatarFile
             ? p.author.avatarFile.thumbnail.url.href
