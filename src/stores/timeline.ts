@@ -17,7 +17,7 @@ import { Post } from '../models'
 import favicon from '../static/favicon.png'
 // @ts-ignore
 import faviconActive from '../static/favicon_active.png'
-import { isMention, isText } from '@linkage-community/bottlemail'
+import { isMention } from '@linkage-community/bottlemail'
 
 class TimelineStore {
   @observable postIds: number[] = []
@@ -196,9 +196,10 @@ class TimelineStore {
         `${p.author.name} (@${p.author.screenName}) mentioned you`,
         {
           body: p.nodes
-            .filter(n => isText(n))
+            .filter(n => !isMention(n))
             .map(p => p.value)
-            .join(''),
+            .join('')
+            .trim(),
           icon: p.author.avatarFile
             ? p.author.avatarFile.thumbnail.url.href
             : undefined
