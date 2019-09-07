@@ -22,12 +22,7 @@ type PREFERENCE_KEYS =
   | typeof PREFERENCE_FORCE_DARK_THEME
   | typeof PREFERENCE_MUTE_COMPUTED_APP
 
-import {
-  Account,
-  Post,
-  NewBoldMyScreenNameMiddleware,
-  pruneEmptyTextMiddleware
-} from '../models'
+import { Account, Post } from '../models'
 import AlbumFile from '../models/AlbumFile'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
@@ -158,19 +153,7 @@ class SApp {
   }
   async setPosts(ps: any[]) {
     // cast to post
-    const pms = await Promise.all(ps.map(async (p: any) => new Post(p)))
-    // custom process for domain
-    const posts = await Promise.all(
-      pms.map(post => {
-        // model に閉じれない物をここにおきます
-        if (!this.me) return post // ほとんどの場合ありえない (呼び出しタイミングを考えると)
-        post.body.process([
-          NewBoldMyScreenNameMiddleware(this.me),
-          pruneEmptyTextMiddleware
-        ])
-        return post
-      })
-    )
+    const posts = await Promise.all(ps.map(async (p: any) => new Post(p)))
     posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
     posts.forEach(p => this.posts.set(p.id, this.wrapPostWithLatestAccount(p)))
     return posts
