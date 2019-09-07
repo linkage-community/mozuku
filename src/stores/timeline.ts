@@ -31,9 +31,6 @@ class TimelineStore {
   private streamPilot?: number
   private streamLastPingFromServer?: Date
 
-  private get notificationEnabled() {
-    return app.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
-  }
   private shouldMute(p: Post) {
     if (!app.preferences.get(PREFERENCE_MUTE_COMPUTED_APP)) return false
     if (p.application.isAutomated) return true
