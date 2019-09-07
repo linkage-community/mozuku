@@ -1,7 +1,7 @@
 import * as React from 'react'
 const { useMemo } = React
 
-import { Post, BODYPART_TYPE_LINK, BODYPART_TYPE_BOLD } from '../../models'
+import { Post } from '../../models'
 import DateTime from '../DateTime'
 import OGCard from '../../containers/OGCard'
 import Image from './Image'
@@ -9,6 +9,17 @@ import DummyAvatar from './DummyAvatar'
 
 import * as styles from './post.css'
 import AlbumFile from '../../models/AlbumFile'
+
+import {
+  EmojiNameKind,
+  MentionKind,
+  LinkKind
+} from '@linkage-community/bottlemail'
+
+interface pictograph {
+  dic: { [emojiName: string]: string }
+}
+const pictograph: pictograph = require('pictograph')
 
 type PostProps = {
   post: Post
@@ -55,40 +66,44 @@ export default ({
           </div>
         </div>
         <div className={styles.body}>
-          {post.body.parts.map((p, i) => {
-            switch (p.type) {
-              case BODYPART_TYPE_LINK:
+          {post.nodes.map((node, i) => {
+            switch (node.kind) {
+              case LinkKind:
                 return (
-                  <a key={i} href={p.payload} target="_blank">
+                  <a key={i} href={node.raw} target="_blank">
                     {(() => {
                       try {
-                        return decodeURI(p.payload)
+                        return decodeURI(node.raw)
                       } catch (_) {
-                        return p.payload
+                        return node.raw
                       }
                     })()}
                   </a>
                 )
-              case BODYPART_TYPE_BOLD:
+              case MentionKind:
                 return (
                   <span key={i} className={styles.bold}>
-                    {p.payload}
+                    {node.raw}
                   </span>
                 )
+              case EmojiNameKind:
+                return (
+                  <React.Fragment key={i}>
+                    {pictograph.dic[node.value] || node.raw}
+                  </React.Fragment>
+                )
               default:
-                return <React.Fragment key={i}>{p.payload}</React.Fragment>
+                return <React.Fragment key={i}>{node.raw}</React.Fragment>
             }
           })}
         </div>
         {0 < post.files.length && (
           <Image albumFiles={post.files} setModalContent={setModalContent} />
         )}
-        {post.body.parts.map((p, i) => {
-          switch (p.type) {
-            case BODYPART_TYPE_LINK:
-              return (
-                <OGCard key={i} url={p.payload} className={styles.ogcard} />
-              )
+        {post.nodes.map((node, i) => {
+          switch (node.kind) {
+            case LinkKind:
+              return <OGCard key={i} url={node.raw} className={styles.ogcard} />
             default:
               return <React.Fragment key={i} />
           }
