@@ -128,12 +128,13 @@ class SApp {
       this.preferences = new Map(pp)
     }
   }
+  fetchMe() {
+    return seaClient.get('/v1/account').then((d: any) => new Account(d))
+  }
 
   async init() {
     try {
-      const me = await seaClient
-        .get('/v1/account')
-        .then((d: any) => new Account(d))
+      const me = await this.fetchMe()
       this.accounts.set(me.id, me)
       this.meId = me.id
       this.initialized = true
