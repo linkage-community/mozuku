@@ -19,6 +19,12 @@ const transformPush = $.obj({
   post: $.optional(transformPushPost)
 })
 
+self.addEventListener('activate', () => {
+  console.log('ServiceWorker is activated.')
+})
+
+self.addEventListener('fetch', () => {})
+
 self.addEventListener('push', async pushEvent => {
   const d: unknown = pushEvent.data && pushEvent.data.json()
   const reportError = async (message: string) => {

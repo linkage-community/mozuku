@@ -2,8 +2,8 @@ import * as React from 'react'
 const { useMemo } = React
 
 import { Post, BODYPART_TYPE_LINK, BODYPART_TYPE_BOLD } from '../../models'
-import DateTime from '../../components/DateTime'
-import OGCard from '../OGCard'
+import DateTime from '../DateTime'
+import OGCard from '../../containers/OGCard'
 import Image from './Image'
 import DummyAvatar from './DummyAvatar'
 
@@ -80,7 +80,9 @@ export default ({
             }
           })}
         </div>
-        <Image albumFiles={post.files} setModalContent={setModalContent} />
+        {0 < post.files.length && (
+          <Image albumFiles={post.files} setModalContent={setModalContent} />
+        )}
         {post.body.parts.map((p, i) => {
           switch (p.type) {
             case BODYPART_TYPE_LINK:

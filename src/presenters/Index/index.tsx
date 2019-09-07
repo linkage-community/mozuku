@@ -9,10 +9,10 @@ import Home from '../../containers/Home/Index'
 import NotFound from '../NotFound'
 import Setting from '../../containers/Setting'
 
-import Layout from '../../components/Layout'
-import Header from '../../components/Layout/Header'
-import HeaderLogo from '../../components/Layout/HeaderLogo'
-import Container from '../../components/Layout/Container'
+import Layout from '../Layout'
+import Header from '../Layout/Header'
+import HeaderLogo from '../Layout/HeaderLogo'
+import Container from '../Layout/Container'
 
 import * as styles from '../Index/index.css'
 

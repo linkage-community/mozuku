@@ -1,13 +1,58 @@
-.image {
+.images {
   display: flex;
   overflow-x: auto;
   margin: 4px 0;
 }
 
+.image {
+  padding-right: 4px;
+  position: relative;
+}
+
 .image img {
-  margin-right: 4px;
   width: 144px;
   height: 144px;
   border-radius: var(--image-border-radius-small);
   object-fit: cover;
+}
+
+.imageSize {
+  position: relative;
+  pointer-events: none;
+}
+
+.imageSize p {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 4px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--color-caption);
+  background-color: var(--color-background);
+  opacity: 0.8;
+  font-size: 0.8em;
+  border-radius: 0 0 var(--image-border-radius-small) 0;
+}
+
+.imageCover {
+  display: flex;
+  position: absolute;
+  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.imageCover span {
+  font-size: 2em;
+  position: absolute;
+  opacity: 0.8;
+  color: var(--color-caption);
+  background-color: var(--color-background);
+  border-radius: var(--image-border-radius-small);
 }

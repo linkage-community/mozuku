@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import Layout from '../../components/Layout'
-import Header from '../../components/Layout/Header'
-import HeaderLogo from '../../components/Layout/HeaderLogo'
-import Container from '../../components/Layout/Container'
+import Layout from '../Layout'
+import Header from '../Layout/Header'
+import HeaderLogo from '../Layout/HeaderLogo'
+import Container from '../Layout/Container'
 
 import * as styles from '../Login/login.css'
 

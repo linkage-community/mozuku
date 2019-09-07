@@ -30,7 +30,9 @@ import { appStore } from './stores'
 import Index from './containers/Index'
 import Login from './presenters/Login'
 
-navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
+}
 
 const RedirectToLogin = ({ location }: RouteComponentProps) => (
   <Redirect
