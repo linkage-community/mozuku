@@ -88,9 +88,9 @@ export default ({
                 )
               case EmojiNameKind:
                 return (
-                  <React.Fragment key={i}>
+                  <span key={i} title={node.raw}>
                     {pictograph.dic[node.value] || node.raw}
-                  </React.Fragment>
+                  </span>
                 )
               default:
                 return <React.Fragment key={i}>{node.raw}</React.Fragment>
