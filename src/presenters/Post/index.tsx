@@ -16,10 +16,7 @@ import {
   LinkKind
 } from '@linkage-community/bottlemail'
 
-interface pictograph {
-  dic: { [emojiName: string]: string }
-}
-const pictograph: pictograph = require('pictograph')
+import pictograph = require('pictograph')
 
 type PostProps = {
   post: Post
