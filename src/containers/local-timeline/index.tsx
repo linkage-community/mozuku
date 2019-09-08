@@ -1,8 +1,8 @@
 import * as React from 'react'
 const { useState } = React
 
-import Home from '../../presenters/Home'
-import AlbumFile from '../../models/AlbumFile'
+import { LocalTimelinePage } from '../../presenters'
+import { AlbumFile } from '../../models'
 import { appStore } from '../../stores'
 
 export default () => {
@@ -29,7 +29,7 @@ export default () => {
     setUploadState(0)
   }
   return (
-    <Home
+    <LocalTimelinePage
       onDrop={onDrop}
       isDrop={isDrop}
       setIsDrop={setIsDrop}

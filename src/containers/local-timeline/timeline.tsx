@@ -8,8 +8,8 @@ import {
   timelineStore,
   useTimeline
 } from '../../stores'
-import Timeline from '../../presenters/Home/Timeline'
-import AlbumFile from '../../models/AlbumFile'
+import Timeline from '../../presenters/local-timeline-content/timeline'
+import { AlbumFile } from '../../models'
 
 export default () => {
   useTimeline()

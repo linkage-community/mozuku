@@ -1,8 +1,8 @@
 import * as React from 'react'
-import * as styles from './postForm.css'
-import AlbumFile from '../../../models/AlbumFile'
+import * as styles from './post-form.css'
+import { AlbumFile } from '../../../models'
 import Textarea from 'react-textarea-autosize'
-const { forwardRef, useState } = React
+const { forwardRef } = React
 
 type T = {
   draftDisabled: boolean

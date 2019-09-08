@@ -4,8 +4,8 @@ const { useState, useRef } = React
 import seaClient from '../../util/seaClient'
 import { useShortcut, appStore } from '../../stores'
 
-import PostForm from '../../presenters/Home/PostForm'
-import AlbumFile from '../../models/AlbumFile'
+import PostForm from '../../presenters/local-timeline-content/post-form'
+import { AlbumFile } from '../../models'
 
 export default ({
   draftDisabled,

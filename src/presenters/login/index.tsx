@@ -1,18 +1,15 @@
 import * as React from 'react'
 
-import Layout from '../Layout'
-import Header from '../Layout/Header'
-import HeaderLogo from '../Layout/HeaderLogo'
-import Container from '../Layout/Container'
+import { Layout, LayoutHeader, LayoutHeaderLogo, LayoutContainer } from '../'
 
-import * as styles from '../Login/login.css'
+import * as styles from './login.css'
 
 export default ({ authURL }: { authURL: URL }) => (
   <Layout>
-    <Header>
-      <HeaderLogo disabled={true} />
-    </Header>
-    <Container>
+    <LayoutHeader>
+      <LayoutHeaderLogo disabled={true} />
+    </LayoutHeader>
+    <LayoutContainer>
       <div className={styles.landing}>
         <h1>Greetings</h1>
         {/* FIXME: このメッセージは仮置き */}
@@ -26,6 +23,6 @@ export default ({ authURL }: { authURL: URL }) => (
           <a href={authURL.href}>Use Mozuku</a>
         </h2>
       </div>
-    </Container>
+    </LayoutContainer>
   </Layout>
 )

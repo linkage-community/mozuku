@@ -22,8 +22,7 @@ type PREFERENCE_KEYS =
   | typeof PREFERENCE_FORCE_DARK_THEME
   | typeof PREFERENCE_MUTE_COMPUTED_APP
 
-import { Account, Post } from '../models'
-import AlbumFile from '../models/AlbumFile'
+import { Account, Post, AlbumFile } from '../models'
 
 export type ShortcutFn = (ev: KeyboardEvent) => void
 

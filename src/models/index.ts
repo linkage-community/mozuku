@@ -1,3 +1,4 @@
-export { default as Account } from './Account'
-export { default as Application } from './Application'
-export { default as Post } from './Post'
+export { default as Account } from './account'
+export { default as Application } from './application'
+export { default as Post } from './post'
+export { default as AlbumFile } from './album-file'

@@ -2,12 +2,12 @@ import * as React from 'react'
 const { useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
-import { appStore } from '../stores'
-import Index from '../presenters/Index'
+import { appStore } from '../../stores'
+import { Home } from '../../presenters'
 
 export default () => {
   useEffect(() => {
     appStore.init()
   }, [])
-  return useObserver(() => <Index me={appStore.me} />)
+  return useObserver(() => <Home me={appStore.me} />)
 }

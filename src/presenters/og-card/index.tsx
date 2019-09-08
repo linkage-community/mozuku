@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import * as styles from '../OGCard/ogcard.css'
+import * as styles from './ogcard.css'
 import { ISummary } from 'riassumere/built/interfaces'
 
 export default ({

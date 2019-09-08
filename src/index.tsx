@@ -27,8 +27,8 @@ import seaClient from './util/seaClient'
 import { useObserver } from 'mobx-react-lite'
 import { appStore } from './stores'
 
-import Index from './containers/Index'
-import Login from './presenters/Login'
+import { HomePage } from './containers'
+import { Login } from './presenters'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
@@ -85,7 +85,7 @@ const App = () => {
           <Route exact path="/login" component={LoginWrapper} />
         )}
         {!appStore.loggedIn && <Route component={RedirectToLogin} />}
-        <Route component={Index} />
+        <Route component={HomePage} />
       </Switch>
     </BrowserRouter>
   ))

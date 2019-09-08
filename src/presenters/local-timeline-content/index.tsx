@@ -2,10 +2,10 @@ import * as React from 'react'
 
 import { Line } from 'rc-progress'
 
-import PostForm from '../../containers/Home/PostForm'
-import Timeline from '../../containers/Home/Timeline'
+import PostForm from '../../containers/local-timeline/post-form'
+import Timeline from '../../containers/local-timeline/timeline'
 import styles from './index.css'
-import AlbumFile from '../../models/AlbumFile'
+import { AlbumFile } from '../../models'
 
 export default ({
   onDrop,

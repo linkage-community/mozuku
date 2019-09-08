@@ -1,10 +1,9 @@
 import * as React from 'react'
 
-import { Post as PostModel } from '../../../models'
-import Post from '../../Post'
+import { Post as PostModel, AlbumFile } from '../../../models'
+import { Post } from '../../'
 
 import * as styles from './timeline.css'
-import AlbumFile from '../../../models/AlbumFile'
 
 export default ({
   posts,

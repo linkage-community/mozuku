@@ -5,23 +5,23 @@ import { Link, BrowserRouter } from 'react-router-dom'
 
 import { Account } from '../../models'
 
-import Home from '../../containers/Home/Index'
-import NotFound from '../NotFound'
-import Setting from '../../containers/Setting'
+import { LocalTimeline, SettingPage } from '../../containers'
+import {
+  NotFound,
+  Layout,
+  LayoutContainer,
+  LayoutHeaderLogo,
+  LayoutHeader
+} from '..'
 
-import Layout from '../Layout'
-import Header from '../Layout/Header'
-import HeaderLogo from '../Layout/HeaderLogo'
-import Container from '../Layout/Container'
-
-import * as styles from '../Index/index.css'
+import * as styles from './index.css'
 
 export default ({ me }: { me?: Account }) => {
   return (
     <BrowserRouter>
       <Layout>
-        <Header>
-          <HeaderLogo />
+        <LayoutHeader>
+          <LayoutHeaderLogo />
           <div className={styles.account}>
             {me ? (
               <>@{me.screenName}</>
@@ -36,14 +36,14 @@ export default ({ me }: { me?: Account }) => {
               <i className="uil uil-cog" />
             </Link>
           </div>
-        </Header>
-        <Container>
+        </LayoutHeader>
+        <LayoutContainer>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/settings" component={Setting} />
+            <Route exact path="/" component={LocalTimeline} />
+            <Route exact path="/settings" component={SettingPage} />
             <Route component={NotFound} />
           </Switch>
-        </Container>
+        </LayoutContainer>
       </Layout>
     </BrowserRouter>
   )

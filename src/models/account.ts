@@ -1,6 +1,6 @@
 import $ from 'cafy'
-import Model, { validateDate } from './_Model'
-import AlbumFile from './AlbumFile'
+import Model, { validateDate } from './_base'
+import { AlbumFile } from '.'
 
 type AccountBody = {
   id: number
