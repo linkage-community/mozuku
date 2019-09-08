@@ -5282,10 +5282,10 @@ physical-cpu-count@^2.0.0:
   resolved "https://registry.yarnpkg.com/physical-cpu-count/-/physical-cpu-count-2.0.0.tgz#18de2f97e4bf7a9551ad7511942b5496f7aba660"
   integrity sha1-GN4vl+S/epVRrXURlCtUlverpmA=
 
-pictograph@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/pictograph/-/pictograph-2.2.0.tgz#da16fe68085f9213546e3338ad2db41ec8efb60f"
-  integrity sha512-3ng8x3nGvhf3jYH93TK1C4Gh1vUOL7D1H8EDVuZ/TE8ZxKN1ib3LAGP+Oic9ENTtP3GmoGRjtogoDQmhfzMtOw==
+pictograph@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/pictograph/-/pictograph-2.2.1.tgz#ca8055f2448084e3133c82e4a40b02bac19042c4"
+  integrity sha512-9aXk09VoTngPhxghBQxysLZ2zuvUtdsMtsHzS34wnq1pD5xniDlbAP172iGzsAX1QzE74qSqeYJk7McHs02eXA==
 
 pify@^2.0.0:
   version "2.3.0"
