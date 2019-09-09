@@ -69,14 +69,8 @@ export default () => {
     []
   )
   const onUpdateShowMetaCheckbox = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      // FIXME: ここきたない
-      appStore.preferences.set(
-        PREFERENCE_DISPLAY_META_ENABLED,
-        e.target.checked
-      )
-      appStore.savePreferences()
-    },
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      appStore.setPreference(PREFERENCE_DISPLAY_META_ENABLED, e.target.checked),
     []
   )
   const onUpdateEnableNotificationCheckBox = useCallback(
@@ -90,47 +84,38 @@ export default () => {
     []
   )
   const onUpdateEnableOGCard = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      // FIXME: ここきたない
-      appStore.preferences.set(PREFERENCE_DISPLAY_OGCARD, e.target.checked)
-      appStore.savePreferences()
-    },
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      appStore.setPreference(PREFERENCE_DISPLAY_OGCARD, e.target.checked),
     []
   )
   const onUpdateForceDarkTheme = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      // TODO: ここの分岐を移動する
       const checked = e.target.checked
       if (checked) {
         appStore.enableForceDarkTheme()
       } else {
         appStore.disableForceDarkTheme()
       }
-      appStore.preferences.set(PREFERENCE_FORCE_DARK_THEME, checked)
-      appStore.savePreferences()
+      appStore.setPreference(PREFERENCE_FORCE_DARK_THEME, checked)
     },
     []
   )
   const onUpdateMuteComputedApp = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      // FIXME: ここきたない
-      appStore.preferences.set(PREFERENCE_MUTE_COMPUTED_APP, e.target.checked)
-      appStore.savePreferences()
-    },
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      appStore.setPreference(PREFERENCE_MUTE_COMPUTED_APP, e.target.checked),
     []
   )
 
   return useObserver(() => {
     const currentConfig = {
-      showMetaEnabled:
-        appStore.preferences.get(PREFERENCE_DISPLAY_META_ENABLED) || false,
-      notificationEnabled:
-        appStore.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false,
-      ogcardEnabled:
-        appStore.preferences.get(PREFERENCE_DISPLAY_OGCARD) || false,
-      forceDarkTheme:
-        appStore.preferences.get(PREFERENCE_FORCE_DARK_THEME) || false,
-      muteComputedApp:
-        appStore.preferences.get(PREFERENCE_MUTE_COMPUTED_APP) || false
+      showMetaEnabled: appStore.getPreference(PREFERENCE_DISPLAY_META_ENABLED),
+      notificationEnabled: appStore.getPreference(
+        PREFERENCE_NOTICE_WHEN_MENTIONED
+      ),
+      ogcardEnabled: appStore.getPreference(PREFERENCE_DISPLAY_OGCARD),
+      forceDarkTheme: appStore.getPreference(PREFERENCE_FORCE_DARK_THEME),
+      muteComputedApp: appStore.getPreference(PREFERENCE_MUTE_COMPUTED_APP)
     }
     return (
       <Setting

@@ -11,7 +11,7 @@ export default ({
   className: string
 }) => {
   const r = useOGP(url)
-  if (!r || !appStore.preferences.get(PREFERENCE_DISPLAY_OGCARD)) return <></>
+  if (!r || !appStore.getPreference(PREFERENCE_DISPLAY_OGCARD)) return <></>
   return OGCard(
     Object.assign(
       {

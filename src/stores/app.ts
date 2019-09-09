@@ -56,7 +56,7 @@ class SApp {
     })
   }
 
-  @observable preferences: Map<PREFERENCE_KEYS, boolean> = new Map()
+  @observable private _preferences: Map<PREFERENCE_KEYS, boolean> = new Map()
 
   @observable meId!: number
   @computed get me() {
@@ -97,7 +97,7 @@ class SApp {
       }
     })
 
-    if (this.preferences.get(PREFERENCE_FORCE_DARK_THEME)) {
+    if (this.getPreference(PREFERENCE_FORCE_DARK_THEME)) {
       this.enableForceDarkTheme()
     }
   }
@@ -114,17 +114,32 @@ class SApp {
     this.loggedIn = false
   }
 
+  @computed
+  get getPreference(): (key: PREFERENCE_KEYS) => boolean {
+    // FIXME: yokunaine
+    // MobX は getter にしか computed を付与できないので
+    // > @computed
+    // > getPreference(key: PREFERENCE_KEYS): boolean
+    // ができなかった
+    return (key: PREFERENCE_KEYS) => this._preferences.get(key) || false
+  }
+  @action
+  setPreference(key: PREFERENCE_KEYS, value: boolean) {
+    this._preferences.set(key, value)
+    this.savePreferences()
+    return
+  }
   savePreferences() {
     localStorage.setItem(
       KEYS.SAPP_PREFERENCE,
-      JSON.stringify(Array.from(this.preferences))
+      JSON.stringify(Array.from(this._preferences))
     )
   }
   loadPreferences() {
     const p = localStorage.getItem(KEYS.SAPP_PREFERENCE)
     if (p) {
       const pp = JSON.parse(p)
-      this.preferences = new Map(pp)
+      this._preferences = new Map(pp)
     }
   }
   fetchMe() {

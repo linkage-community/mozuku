@@ -32,10 +32,10 @@ class TimelineStore {
   private streamPilot?: number
   private streamLastPingFromServer?: Date
   private get notificationEnabled() {
-    return app.preferences.get(PREFERENCE_NOTICE_WHEN_MENTIONED) || false
+    return app.getPreference(PREFERENCE_NOTICE_WHEN_MENTIONED)
   }
   private shouldMute(p: Post) {
-    if (!app.preferences.get(PREFERENCE_MUTE_COMPUTED_APP)) return false
+    if (!app.getPreference(PREFERENCE_MUTE_COMPUTED_APP)) return false
     if (p.application.isAutomated) return true
     return false
   }
@@ -161,14 +161,9 @@ class TimelineStore {
   }
 
   enableNotification(): Promise<void> {
-    const set = () => {
-      app.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
-      app.savePreferences()
-    }
-
     if (Notification.permission === 'denied') return Promise.reject()
     if (Notification.permission === 'granted') {
-      set()
+      app.setPreference(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
       return Promise.resolve()
     }
     if (Notification.permission !== 'default') {
@@ -178,14 +173,13 @@ class TimelineStore {
     return new Promise((resolve, reject) => {
       Notification.requestPermission(status => {
         if (status === 'denied' || status === 'default') return reject()
-        set()
+        app.setPreference(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
         return resolve()
       })
     })
   }
   disableNotification() {
-    app.preferences.set(PREFERENCE_NOTICE_WHEN_MENTIONED, false)
-    app.savePreferences()
+    app.setPreference(PREFERENCE_NOTICE_WHEN_MENTIONED, false)
   }
   showNotification(pp: Post[]) {
     if (!this.notificationEnabled || !this.connectedAndBackground) return
