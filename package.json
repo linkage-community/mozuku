@@ -42,7 +42,7 @@
     "husky": "^3.0.8",
     "jest": "^24.9.0",
     "rimraf": "^3.0.0",
-    "ts-jest": "^24.0.2",
+    "ts-jest": "^24.1.0",
     "typed-css-modules": "^0.6.2",
     "typescript": "^3.6.4"
   },
