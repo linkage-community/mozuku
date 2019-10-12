@@ -17,7 +17,7 @@
     "mobx": "^5.14.0",
     "mobx-react-lite": "^1.4.1",
     "parcel": "^1.12.4",
-    "pictograph": "^2.2.1",
+    "pictograph": "^2.3.0",
     "postcss-modules": "^1.4.1",
     "prettier": "^1.18.2",
     "rc-progress": "^2.5.2",
