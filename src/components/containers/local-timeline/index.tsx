@@ -2,8 +2,8 @@ import * as React from 'react'
 const { useState } = React
 
 import { LocalTimelinePage } from '../../presenters'
-import { AlbumFile } from '../../models'
-import { appStore } from '../../stores'
+import { AlbumFile } from '../../../models'
+import { appStore } from '../../../stores'
 
 export default () => {
   const [isDrop, setIsDrop] = useState(false)

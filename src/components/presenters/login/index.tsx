@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Layout, LayoutHeader, LayoutHeaderLogo, LayoutContainer } from '../'
+import { Layout, LayoutHeader, LayoutHeaderLogo, LayoutContainer } from '..'
 
 import * as styles from './login.css'
 

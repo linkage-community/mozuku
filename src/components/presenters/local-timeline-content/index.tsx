@@ -5,7 +5,7 @@ import { Line } from 'rc-progress'
 import PostForm from '../../containers/local-timeline/post-form'
 import Timeline from '../../containers/local-timeline/timeline'
 import styles from './index.css'
-import { AlbumFile } from '../../models'
+import { AlbumFile } from '../../../models'
 
 export default ({
   onDrop,

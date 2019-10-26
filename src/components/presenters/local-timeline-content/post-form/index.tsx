@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as styles from './post-form.css'
-import { AlbumFile } from '../../../models'
+import { AlbumFile } from '../../../../models'
 import Textarea from 'react-textarea-autosize'
 const { forwardRef } = React
 

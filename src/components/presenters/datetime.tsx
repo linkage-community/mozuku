@@ -1,6 +1,6 @@
 import * as React from 'react'
 const { useMemo } = React
-import { useRelativeTimeRepresent } from '../util/hooks'
+import { useRelativeTimeRepresent } from '../../util/hooks'
 import { format } from 'date-fns-tz'
 
 export default ({ dt, className }: { dt: Date; className: string }) => {

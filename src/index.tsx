@@ -27,8 +27,8 @@ import seaClient from './util/seaClient'
 import { useObserver } from 'mobx-react-lite'
 import { appStore } from './stores'
 
-import { HomePage } from './containers'
-import { Login } from './presenters'
+import { HomePage } from './components/containers'
+import { Login } from './components/presenters'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })

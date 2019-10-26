@@ -7,9 +7,9 @@ import {
   PREFERENCE_DISPLAY_META_ENABLED,
   timelineStore,
   useTimeline
-} from '../../stores'
+} from '../../../stores'
 import Timeline from '../../presenters/local-timeline-content/timeline'
-import { AlbumFile } from '../../models'
+import { AlbumFile } from '../../../models'
 
 export default () => {
   useTimeline()

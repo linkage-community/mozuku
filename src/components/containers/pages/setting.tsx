@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../stores'
-import seaClient from '../../util/seaClient'
+import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../../stores'
+import seaClient from '../../../util/seaClient'
 import { Setting } from '../../presenters'
-import timeline from '../../stores/timeline'
+import timeline from '../../../stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
   PREFERENCE_FORCE_DARK_THEME,
   PREFERENCE_MUTE_COMPUTED_APP
-} from '../../stores/app'
+} from '../../../stores/app'
 const { useState, useCallback } = React
 
 const read = (f: File): Promise<Blob> =>

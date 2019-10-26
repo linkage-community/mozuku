@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Switch, Route } from 'react-router'
 import { Link, BrowserRouter } from 'react-router-dom'
 
-import { Account } from '../../models'
+import { Account } from '../../../models'
 
 import { LocalTimeline, SettingPage } from '../../containers'
 import {

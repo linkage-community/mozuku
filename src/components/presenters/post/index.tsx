@@ -1,15 +1,15 @@
 import * as React from 'react'
 const { useMemo } = React
 
-import { Post } from '../../models'
-import { DateTime } from '../'
+import { Post } from '../../../models'
+import { DateTime } from '..'
 import { OGCard } from '../../containers'
 
 import Image from './image'
 import DummyAvatar from './dummy-avatar'
 
 import * as styles from './post.css'
-import { AlbumFile } from '../../models'
+import { AlbumFile } from '../../../models'
 
 import {
   EmojiNameKind,

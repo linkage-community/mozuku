@@ -1,11 +1,11 @@
 import * as React from 'react'
 const { useState, useRef } = React
 
-import seaClient from '../../util/seaClient'
-import { useShortcut, appStore } from '../../stores'
+import seaClient from '../../../util/seaClient'
+import { useShortcut, appStore } from '../../../stores'
 
 import PostForm from '../../presenters/local-timeline-content/post-form'
-import { AlbumFile } from '../../models'
+import { AlbumFile } from '../../../models'
 
 export default ({
   draftDisabled,
