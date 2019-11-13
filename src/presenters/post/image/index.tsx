@@ -1,6 +1,6 @@
 import * as React from 'react'
 import filesize from 'filesize'
-import AlbumFile from '../../../models/AlbumFile'
+import AlbumFile from '../../../models/album-file'
 
 import * as styles from './image.css'
 
@@ -15,6 +15,17 @@ export default ({
     () => (
       <div className={styles.images}>
         {files.map((im, k) => {
+          if (im.thumbnail == null) {
+            return (
+              <div className={styles.image} key={k}>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
+                <div className={styles.imageSize}>
+                  <p>deleted</p>
+                </div>
+                <div className={styles.imageCover}>😢</div>
+              </div>
+            )
+          }
           switch (im.type) {
             case 'image':
               return (
