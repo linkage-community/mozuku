@@ -95,10 +95,10 @@ export default class AlbumFile implements Model<AlbumFileBody> {
   }
 
   get thumbnails() {
-    return this.variants.get('thumbnail')!
+    return this.variants.get('thumbnail') || []
   }
   get directs() {
-    return this.variants.get('image')!
+    return this.variants.get('image') || []
   }
 
   // FIXME: undefined にならないけどおかしいかも
