@@ -65,25 +65,24 @@ export default ({
     )}
 
     <ul className={styles.timeline}>
-      {posts.map((post, idx, arr) => (
-        <InView
-          as="li"
-          threshold={1.0}
-          onChange={(inView, entry) => {
-            if (inView && idx === arr.length - 1) {
-              readMore()
-            }
-          }}
-          key={post.id}
-        >
+      {posts.map(post => (
+        <li key={post.id}>
           <Post
             post={post}
             metaEnabled={postMetaEnabled}
             setModalContent={setModalContent}
           />
-        </InView>
+        </li>
       ))}
-      <li>
+      <InView
+        as="li"
+        threshold={1.0}
+        onChange={(inView, entry) => {
+          if (inView && 0 < posts.length) {
+            readMore()
+          }
+        }}
+      >
         <button
           className={styles.readmore_button}
           disabled={readMoreDisabled}
@@ -94,7 +93,7 @@ export default ({
         >
           READ MORE
         </button>
-      </li>
+      </InView>
     </ul>
   </>
 )
