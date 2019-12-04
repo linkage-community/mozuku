@@ -91,7 +91,7 @@ export default ({
             readMore()
           }}
         >
-          READ MORE
+          {readMoreDisabled ? 'LOADING...' : 'READ MORE'}
         </button>
       </InView>
     </ul>
