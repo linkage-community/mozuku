@@ -23,6 +23,7 @@
     "rc-progress": "^2.5.2",
     "react": "^16.11.0",
     "react-dom": "^16.10.2",
+    "react-intersection-observer": "^8.25.2",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.1.2",
     "react-textarea-autosize": "^7.1.0",

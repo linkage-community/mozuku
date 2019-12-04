@@ -31,16 +31,8 @@ export default () => {
       return
     }
     window.addEventListener('popstate', watchHistoryBack)
-    const onWindowScroll = () => {
-      const scrolled = window.document.body.scrollHeight - window.scrollY
-      if (scrolled < 1000 && !timelineStore.readMoreDisabled) {
-        timelineStore.readMore.bind(timelineStore)()
-      }
-    }
-    window.addEventListener('scroll', onWindowScroll)
     return () => {
       window.removeEventListener('popstate', watchHistoryBack)
-      window.removeEventListener('scroll', onWindowScroll)
     }
   }, [])
 

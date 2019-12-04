@@ -5,6 +5,8 @@ import { Post } from '../../'
 
 import * as styles from './timeline.css'
 
+import { InView } from 'react-intersection-observer'
+
 export default ({
   posts,
   readMore,
@@ -61,15 +63,25 @@ export default ({
         )}
       </div>
     )}
+
     <ul className={styles.timeline}>
-      {posts.map(post => (
-        <li key={post.id}>
+      {posts.map((post, idx, arr) => (
+        <InView
+          as="li"
+          threshold={1.0}
+          onChange={(inView, entry) => {
+            if (inView && idx === arr.length - 1) {
+              readMore()
+            }
+          }}
+          key={post.id}
+        >
           <Post
             post={post}
             metaEnabled={postMetaEnabled}
             setModalContent={setModalContent}
           />
-        </li>
+        </InView>
       ))}
       <li>
         <button
