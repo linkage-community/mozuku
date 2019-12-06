@@ -5,6 +5,8 @@ import { Post } from '../../'
 
 import * as styles from './timeline.css'
 
+import { InView } from 'react-intersection-observer'
+
 export default ({
   posts,
   readMore,
@@ -61,6 +63,7 @@ export default ({
         )}
       </div>
     )}
+
     <ul className={styles.timeline}>
       {posts.map(post => (
         <li key={post.id}>
@@ -71,7 +74,15 @@ export default ({
           />
         </li>
       ))}
-      <li>
+      <InView
+        as="li"
+        threshold={1.0}
+        onChange={(inView, entry) => {
+          if (inView && 0 < posts.length) {
+            readMore()
+          }
+        }}
+      >
         <button
           className={styles.readmore_button}
           disabled={readMoreDisabled}
@@ -80,9 +91,9 @@ export default ({
             readMore()
           }}
         >
-          READ MORE
+          {readMoreDisabled ? 'LOADING...' : 'READ MORE'}
         </button>
-      </li>
+      </InView>
     </ul>
   </>
 )
