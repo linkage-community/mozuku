@@ -18,6 +18,7 @@ import {
 } from '@linkage-community/bottlemail'
 
 import pictograph = require('pictograph')
+import config from '../../config'
 
 type PostProps = {
   post: Post
@@ -60,7 +61,17 @@ export default ({
           </span>
           <div className={styles.block}>
             <span className={styles.screenName}>@{author.screenName}</span>
-            <DateTime className={styles.time} dt={post.createdAt} />
+            <a
+              className={styles.time}
+              target="_blank"
+              href={`${(() => {
+                const u = new URL(config.sea)
+                u.pathname = `/posts/${post.id}`
+                return u.href
+              })()}`}
+            >
+              <DateTime dt={post.createdAt} />
+            </a>
           </div>
         </div>
         <div className={styles.body}>
