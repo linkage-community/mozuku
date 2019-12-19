@@ -3,7 +3,7 @@ const { useMemo } = React
 import { useRelativeTimeRepresent } from '../util/hooks'
 import { format } from 'date-fns-tz'
 
-export default ({ dt, className }: { dt: Date; className: string }) => {
+export default ({ dt, className }: { dt: Date; className?: string }) => {
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)
   const absoluteTimeRepresent = useMemo(
     () => format(dt, 'HH:mm:ss · d MMM yyyy', { timeZone: 'Asia/Tokyo' }),
