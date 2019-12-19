@@ -65,7 +65,7 @@ export default ({
               className={styles.time}
               target="_blank"
               href={`${(() => {
-                const u = new URL(config.oauth)
+                const u = new URL(config.sea)
                 u.pathname = `/posts/${post.id}`
                 return u.href
               })()}`}
