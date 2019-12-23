@@ -45,7 +45,7 @@
     "rimraf": "^3.0.0",
     "ts-jest": "^24.2.0",
     "typed-css-modules": "^0.6.3",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "scripts": {
     "start": "parcel src/index.html",
