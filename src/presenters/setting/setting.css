@@ -14,9 +14,10 @@
 }
 
 .setting label {
-  display: block;
+  display: flex;
   margin-left: 16px;
   margin-top: 4px;
+  align-items: center;
 }
 
 .setting label input[type='text'] {
@@ -37,9 +38,9 @@
 
 .text {
   display: inline-block;
-  text-align: right;
-  margin-right: 8px;
-  min-width: 50px;
+  text-align: left;
+  margin-right: 16px;
+  min-width: 75px;
 }
 
 .submitButton {
