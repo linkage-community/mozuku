@@ -124,7 +124,9 @@ export default () => {
           updateDisabled={disabled}
           update={update}
           onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
-          onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
+          onUpdateEnableNotificationCheckBox={
+            onUpdateEnableNotificationCheckBox
+          }
           onUpdateEnableOGCard={onUpdateEnableOGCard}
           onUpdateForceDarkTheme={onUpdateForceDarkTheme}
           onUpdateMuteComputedApp={onUpdateMuteComputedApp}

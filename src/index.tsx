@@ -27,9 +27,8 @@ import seaClient from './uso/util/seaClient'
 import { useObserver } from 'mobx-react-lite'
 import { appStore } from './uso/stores'
 
-import { LocalTimeline } from './uso/containers'
 import { NotFound } from './uso/presenters'
-import { Login, Setting } from './pages'
+import { Login, Setting, Home } from './pages'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
@@ -96,10 +95,13 @@ render(
   <Authenticate>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={LocalTimeline} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/settings" component={Setting} />
-        <Route children={({ location }) => <NotFound pathname={location.pathname} />} />
+        <Route
+          children={({ location }) => <NotFound pathname={location.pathname} />}
+        />
       </Switch>
     </BrowserRouter>
   </Authenticate>,
-  document.getElementById('app'))
+  document.getElementById('app')
+)

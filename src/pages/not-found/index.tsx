@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
-import { Container, HeaderContainer, HeaderLogo, BodyContainer } from '../_layout'
+import {
+  Container,
+  HeaderContainer,
+  HeaderLogo,
+  BodyContainer
+} from '../_layout'
 
 const NotFound: React.FC<{ pathname: string }> = ({ pathname }) => (
   <Container>
@@ -10,7 +15,7 @@ const NotFound: React.FC<{ pathname: string }> = ({ pathname }) => (
     </HeaderContainer>
     <BodyContainer>
       <h2>ここにはなにも、ない</h2>
-      { pathname ? <code>{pathname}</code> : null }
+      {pathname ? <code>{pathname}</code> : null}
       <br />
       <Link to={{ pathname: '/' }}>もどる</Link>
     </BodyContainer>

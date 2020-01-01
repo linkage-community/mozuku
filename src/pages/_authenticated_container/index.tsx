@@ -11,7 +11,10 @@ import {
 
 import * as styles from './index.css'
 
-const AuthenticatedContainer: React.FC<{ me?: Account }> = ({ me, children }) => {
+const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
+  me,
+  children
+}) => {
   return (
     <Container>
       <HeaderContainer>
@@ -31,9 +34,7 @@ const AuthenticatedContainer: React.FC<{ me?: Account }> = ({ me, children }) =>
           </Link>
         </div>
       </HeaderContainer>
-      <BodyContainer>
-        { children }
-      </BodyContainer>
+      <BodyContainer>{children}</BodyContainer>
     </Container>
   )
 }
