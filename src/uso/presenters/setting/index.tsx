@@ -1,7 +1,7 @@
 import * as React from 'react'
 const { useCallback, useRef } = React
 
-import Config from '../../config'
+import Config from '../../../config'
 
 import * as styles from './setting.css'
 

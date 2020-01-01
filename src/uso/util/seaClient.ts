@@ -183,7 +183,7 @@ export class SeaClient {
   }
 }
 
-import Config from '../config'
+import Config from '../../config'
 export default new SeaClient(
   Config.oauth,
   Config.api,

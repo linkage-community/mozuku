@@ -1,17 +1,18 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../stores'
-import seaClient from '../../util/seaClient'
-import { Setting } from '../../presenters'
-import timeline from '../../stores/timeline'
+import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../uso/stores'
+import seaClient from '../../uso/util/seaClient'
+import { Setting } from '../../uso/presenters'
+import timeline from '../../uso/stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
   PREFERENCE_FORCE_DARK_THEME,
   PREFERENCE_MUTE_COMPUTED_APP
-} from '../../stores/app'
+} from '../../uso/stores/app'
 const { useState, useCallback } = React
+import Container from '../_authenticated_container'
 
 const read = (f: File): Promise<Blob> =>
   new Promise((res, rej) => {
@@ -118,18 +119,20 @@ export default () => {
       muteComputedApp: appStore.getPreference(PREFERENCE_MUTE_COMPUTED_APP)
     }
     return (
-      <Setting
-        updateDisabled={disabled}
-        update={update}
-        onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
-        onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
-        onUpdateEnableOGCard={onUpdateEnableOGCard}
-        onUpdateForceDarkTheme={onUpdateForceDarkTheme}
-        onUpdateMuteComputedApp={onUpdateMuteComputedApp}
-        currentName={appStore.me ? appStore.me!.name : undefined}
-        logout={appStore.logout.bind(appStore)}
-        currentConfig={currentConfig}
-      />
+      <Container me={appStore.me}>
+        <Setting
+          updateDisabled={disabled}
+          update={update}
+          onUpdateShowMetaCheckbox={onUpdateShowMetaCheckbox}
+          onUpdateEnableNotificationCheckBox={onUpdateEnableNotificationCheckBox}
+          onUpdateEnableOGCard={onUpdateEnableOGCard}
+          onUpdateForceDarkTheme={onUpdateForceDarkTheme}
+          onUpdateMuteComputedApp={onUpdateMuteComputedApp}
+          currentName={appStore.me ? appStore.me!.name : undefined}
+          logout={appStore.logout.bind(appStore)}
+          currentConfig={currentConfig}
+        />
+      </Container>
     )
   })
 }

@@ -14,9 +14,10 @@ import seaClient from '../util/seaClient'
 import { Post } from '../models'
 
 // @ts-ignore
-import favicon from '../static/favicon.png'
+import favicon from '../../static/favicon.png'
 // @ts-ignore
-import faviconActive from '../static/favicon_active.png'
+import faviconActive from '../../static/favicon_active.png'
+
 import { isMention } from '@linkage-community/bottlemail'
 
 class TimelineStore {

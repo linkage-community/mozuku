@@ -22,13 +22,14 @@ import { Route, Switch, Redirect, RouteComponentProps } from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 
-import seaClient from './util/seaClient'
+import seaClient from './uso/util/seaClient'
 
 import { useObserver } from 'mobx-react-lite'
-import { appStore } from './stores'
+import { appStore } from './uso/stores'
 
-import { HomePage } from './containers'
-import { Login } from './presenters'
+import { LocalTimeline } from './uso/containers'
+import { NotFound } from './uso/presenters'
+import { Login, Setting } from './pages'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
@@ -76,7 +77,7 @@ const Callback = ({ location }: RouteComponentProps) => {
   return <Redirect to={{ pathname: state || '/' }} />
 }
 
-const App = () => {
+const Authenticate: React.FC = ({ children }) => {
   return useObserver(() => (
     <BrowserRouter>
       <Switch>
@@ -85,10 +86,20 @@ const App = () => {
           <Route exact path="/login" component={LoginWrapper} />
         )}
         {!appStore.loggedIn && <Route component={RedirectToLogin} />}
-        <Route component={HomePage} />
+        <Route children={children} />
       </Switch>
     </BrowserRouter>
   ))
 }
 
-render(<App />, document.getElementById('app'))
+render(
+  <Authenticate>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={LocalTimeline} />
+        <Route exact path="/settings" component={Setting} />
+        <Route children={({ location }) => <NotFound pathname={location.pathname} />} />
+      </Switch>
+    </BrowserRouter>
+  </Authenticate>,
+  document.getElementById('app'))
