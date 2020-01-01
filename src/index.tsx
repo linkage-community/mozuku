@@ -22,12 +22,12 @@ import { Route, Switch, Redirect, RouteComponentProps } from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 
-import seaClient from './uso/util/seaClient'
+import seaClient from './furui/util/seaClient'
 
 import { useObserver } from 'mobx-react-lite'
-import { appStore } from './uso/stores'
+import { appStore } from './furui/stores'
 
-import { NotFound } from './uso/presenters'
+import { NotFound } from './furui/presenters'
 import { Login, Setting, Home } from './pages'
 
 if ('serviceWorker' in navigator) {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Account } from '../../uso/models'
+import { Account } from '../../furui/models'
 
 import {
   Container,
@@ -20,13 +20,7 @@ const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
       <HeaderContainer>
         <HeaderLogo />
         <div className={styles.account}>
-          {me ? (
-            <>@{me.screenName}</>
-          ) : (
-            <span>
-              <i>[誰?]</i>
-            </span>
-          )}
+          <span>{me ? <>@{me.screenName}</> : <i>[誰?]</i>}</span>
         </div>
         <div className={styles.setting}>
           <Link to={{ pathname: '/settings' }}>

@@ -2,7 +2,7 @@ import * as React from 'react'
 const { useMemo } = React
 
 import { Post } from '../../models'
-import { DateTime } from '..'
+import { DateTime } from '../../presenters'
 import { OGCard } from '../../containers'
 
 import Image from './image'

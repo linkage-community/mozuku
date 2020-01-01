@@ -2,7 +2,7 @@ import $ from 'cafy'
 import parse, { NodeType } from '@linkage-community/bottlemail'
 import Model, { validateDate } from './_base'
 
-import { Application, Account, AlbumFile } from '.'
+import { Application, Account, AlbumFile } from '../models'
 
 export default class Post implements Model {
   id: number

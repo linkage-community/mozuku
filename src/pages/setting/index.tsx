@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../uso/stores'
-import seaClient from '../../uso/util/seaClient'
-import { Setting } from '../../uso/presenters'
-import timeline from '../../uso/stores/timeline'
+import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../furui/stores'
+import seaClient from '../../furui/util/seaClient'
+import { Setting } from '../../furui/presenters'
+import timeline from '../../furui/stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
   PREFERENCE_FORCE_DARK_THEME,
   PREFERENCE_MUTE_COMPUTED_APP
-} from '../../uso/stores/app'
+} from '../../furui/stores/app'
 const { useState, useCallback } = React
 import Container from '../_authenticated_container'
 

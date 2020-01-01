@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { Post as PostModel, AlbumFile } from '../../../models'
-import { Post } from '../..'
+import { Post } from '../../../presenters'
 
 import * as styles from './timeline.css'
 

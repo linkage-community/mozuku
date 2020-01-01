@@ -2,9 +2,9 @@ import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
 import Container from '../_authenticated_container'
-import { appStore } from '../../uso/stores'
+import { appStore } from '../../furui/stores'
 import AuthenticatedContainer from '../_authenticated_container'
-import { LocalTimeline } from '../../uso/containers'
+import { LocalTimeline } from '../../furui/containers'
 
 const { useEffect } = React
 
