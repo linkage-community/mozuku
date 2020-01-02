@@ -1,8 +1,10 @@
 import * as React from 'react'
 const { useState, useRef } = React
 
-import seaClient from '../../util/seaClient'
-import { useShortcut, appStore } from '../../stores'
+import seaAPI from '../../../sea-api'
+import { appStore } from '../../stores'
+
+import { useShortcut } from '../../../components/hooks'
 
 import PostForm from '../../presenters/local-timeline-content/post-form'
 import { AlbumFile } from '../../models'
@@ -33,7 +35,7 @@ export default ({
     setDraftDisabled(true)
     if (0 < draft.trim().length || 0 < files.length) {
       try {
-        await seaClient.post('/v1/posts', {
+        await seaAPI.post('/v1/posts', {
           text: draft,
           fileIds: files.map(file => file.id)
         })

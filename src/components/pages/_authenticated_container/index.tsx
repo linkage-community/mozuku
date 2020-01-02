@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Account } from '../../furui/models'
+import { Account } from '../../../furui/models'
 
 import {
   Container,

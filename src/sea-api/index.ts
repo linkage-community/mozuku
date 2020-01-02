@@ -76,7 +76,7 @@ export class SeaClient {
     this.tokenType = token.token_type
   }
 
-  private createAxiosInstance() {
+  private get axios() {
     return axios.create({
       headers: {
         Authorization: `${this.tokenType} ${this.token}`,
@@ -92,21 +92,15 @@ export class SeaClient {
   }
 
   get(path: string) {
-    return this.createAxiosInstance()
-      .get(this.genApiHref(path))
-      .then(r => r.data)
+    return this.axios.get(this.genApiHref(path)).then(r => r.data)
   }
 
   post(path: string, data: any) {
-    return this.createAxiosInstance()
-      .post(this.genApiHref(path), data)
-      .then(r => r.data)
+    return this.axios.post(this.genApiHref(path), data).then(r => r.data)
   }
 
   patch(path: string, data: any) {
-    return this.createAxiosInstance()
-      .patch(this.genApiHref(path), data)
-      .then(r => r.data)
+    return this.axios.patch(this.genApiHref(path), data).then(r => r.data)
   }
 
   async uploadAlbumFile(
@@ -120,7 +114,7 @@ export class SeaClient {
     form.append('ifNameConflicted', 'add-date-string')
 
     const path = '/v1/album/files'
-    return this.createAxiosInstance()
+    return this.axios
       .post(this.genApiHref(path), form, {
         onUploadProgress: progressEvent => {
           if (state != null) {
@@ -183,7 +177,7 @@ export class SeaClient {
   }
 }
 
-import Config from '../../config'
+import Config from '../config'
 export default new SeaClient(
   Config.oauth,
   Config.api,

@@ -22,13 +22,13 @@ import { Route, Switch, Redirect, RouteComponentProps } from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 
-import seaClient from './furui/util/seaClient'
+import seaClient from './sea-api'
 
 import { useObserver } from 'mobx-react-lite'
 import { appStore } from './furui/stores'
 
 import { NotFound } from './furui/presenters'
-import { Login, Setting, Home } from './pages'
+import { LoginEntrance, Setting, Home } from './components/pages'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
@@ -48,7 +48,7 @@ const LoginWrapper = ({ location }: RouteComponentProps) => {
     new URLSearchParams(location.search).get('next') ||
     ''
   const authURL = seaClient.getAuthorizeURL(next)
-  return <Login authURL={new URL(authURL)} />
+  return <LoginEntrance authURL={new URL(authURL)} />
 }
 const Callback = ({ location }: RouteComponentProps) => {
   const code = new URLSearchParams(location.search).get('code')

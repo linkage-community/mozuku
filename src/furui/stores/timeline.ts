@@ -10,7 +10,7 @@ import app, {
   PREFERENCE_MUTE_COMPUTED_APP
 } from './app'
 
-import seaClient from '../util/seaClient'
+import seaAPI from '../../sea-api'
 import { Post } from '../models'
 
 // @ts-ignore
@@ -127,7 +127,7 @@ class TimelineStore {
     query.set('count', count.toString(10))
     if (sinceId) query.set('sinceId', sinceId.toString(10))
 
-    const timeline = await seaClient
+    const timeline = await seaAPI
       .get('/v1/timelines/public?' + query.toString())
       .then((tl: any) => {
         if (!Array.isArray(tl)) throw new Error('?')
@@ -142,7 +142,7 @@ class TimelineStore {
       const query = new URLSearchParams()
       if (this.postIds.length)
         query.set('maxId', this.postIds[this.postIds.length - 1].toString(10))
-      const timeline = await seaClient
+      const timeline = await seaAPI
         .get('/v1/timelines/public' + `?${query.toString()}`)
         .then((tl: any) => {
           if (!Array.isArray(tl)) throw new Error('?')
@@ -258,7 +258,7 @@ class TimelineStore {
     this.streamPilot = window.setTimeout(pilot, interval)
   }
   async openStream() {
-    const stream = await seaClient.connectStream('v1/timelines/public')
+    const stream = await seaAPI.connectStream('v1/timelines/public')
     this.streamConnected = true
     this.stream = stream
     // for reconnecting

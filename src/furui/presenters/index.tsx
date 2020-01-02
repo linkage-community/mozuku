@@ -6,7 +6,5 @@ export { default as Post } from './post'
 export { default as OGCard } from './og-card'
 
 // Page
-// TODO: move to containers
-export { default as NotFound } from '../../pages/not-found'
 // 名前なんとかする
 export { default as LocalTimelinePage } from './local-timeline-content'

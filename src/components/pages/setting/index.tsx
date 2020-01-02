@@ -1,18 +1,21 @@
 import * as React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
-import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../furui/stores'
-import seaClient from '../../furui/util/seaClient'
-import { Setting } from '../../furui/presenters'
-import timeline from '../../furui/stores/timeline'
+import {
+  appStore,
+  PREFERENCE_DISPLAY_META_ENABLED
+} from '../../../furui/stores'
+import seaAPI from '../../../sea-api'
+import { Setting } from '../../../furui/presenters'
+import timeline from '../../../furui/stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
   PREFERENCE_FORCE_DARK_THEME,
   PREFERENCE_MUTE_COMPUTED_APP
-} from '../../furui/stores/app'
+} from '../../../furui/stores/app'
 const { useState, useCallback } = React
-import Container from '../_authenticated_container'
+import AuthenticatedContainer from '../_authenticated_container'
 
 const read = (f: File): Promise<Blob> =>
   new Promise((res, rej) => {
@@ -57,7 +60,7 @@ export default () => {
         }
 
         // TODO: Move to client
-        appStore.setAccounts([await seaClient.patch('/v1/account', data)])
+        appStore.setAccounts([await seaAPI.patch('/v1/account', data)])
         // FIXME: もっといい手段で伝える
         alert('更新成功！')
       } catch (e) {
@@ -119,7 +122,7 @@ export default () => {
       muteComputedApp: appStore.getPreference(PREFERENCE_MUTE_COMPUTED_APP)
     }
     return (
-      <Container me={appStore.me}>
+      <AuthenticatedContainer me={appStore.me}>
         <Setting
           updateDisabled={disabled}
           update={update}
@@ -134,7 +137,7 @@ export default () => {
           logout={appStore.logout.bind(appStore)}
           currentConfig={currentConfig}
         />
-      </Container>
+      </AuthenticatedContainer>
     )
   })
 }

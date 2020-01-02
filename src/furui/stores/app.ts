@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
-
 import { observable, computed, action } from 'mobx'
 
-import seaClient from '../util/seaClient'
+import seaAPI from '../../sea-api'
 const KEYS = Object.freeze({
   SEA_CLIENT_PACK: 'mozuku::seaClientState',
   SAPP_CACHE_BROKEN: 'mozuku::stores::App',
@@ -23,8 +21,6 @@ type PREFERENCE_KEYS =
   | typeof PREFERENCE_MUTE_COMPUTED_APP
 
 import { Account, Post, AlbumFile } from '../models'
-
-export type ShortcutFn = (ev: KeyboardEvent) => void
 
 class SApp {
   readonly defaultTitle = 'Mozuku'
@@ -62,15 +58,6 @@ class SApp {
   @computed get me() {
     return this.meId ? this.accounts.get(this.meId) : undefined
   }
-  private shortcuts: Map<number, ShortcutFn> = new Map()
-  addShortcut(charCode: number, callback: ShortcutFn) {
-    // 複数 callback 同じキーに設定しない (atarimae)
-    // TODO: 同時に押していい感じに！ってキーバインディングしたいかもしれないのであとでやる かも
-    this.shortcuts.set(charCode, callback)
-  }
-  removeShortcut(charCode: number) {
-    this.shortcuts.delete(charCode)
-  }
 
   migrateState() {
     localStorage.removeItem(KEYS.SAPP_CACHE_BROKEN)
@@ -78,7 +65,7 @@ class SApp {
   loadClient() {
     const ss = localStorage.getItem(KEYS.SEA_CLIENT_PACK)
     if (ss) {
-      seaClient.unpack(ss)
+      seaAPI.unpack(ss)
       this.loggedIn = true
     }
   }
@@ -103,13 +90,13 @@ class SApp {
   }
   @action
   login() {
-    const p = seaClient.pack()
+    const p = seaAPI.pack()
     localStorage.setItem(KEYS.SEA_CLIENT_PACK, p)
     this.loggedIn = true
   }
   @action
   logout() {
-    seaClient.clear()
+    seaAPI.clear()
     localStorage.removeItem(KEYS.SEA_CLIENT_PACK)
     this.loggedIn = false
   }
@@ -143,7 +130,7 @@ class SApp {
     }
   }
   fetchMe() {
-    return seaClient.get('/v1/account').then((d: any) => new Account(d))
+    return seaAPI.get('/v1/account').then((d: any) => new Account(d))
   }
 
   async init() {
@@ -187,7 +174,7 @@ class SApp {
     blob: Blob,
     state: ((p: number) => void) | null = null
   ): Promise<AlbumFile> {
-    const r = await seaClient.uploadAlbumFile(name, blob, state)
+    const r = await seaAPI.uploadAlbumFile(name, blob, state)
     return new AlbumFile(r)
   }
 
@@ -203,13 +190,3 @@ class SApp {
 
 const app = new SApp()
 export default app
-
-export const useShortcut = (charCode: number, callback: ShortcutFn) => {
-  // custom react hook for shortcut
-  useEffect(() => {
-    app.addShortcut(charCode, callback)
-    return () => {
-      app.removeShortcut(charCode)
-    }
-  }, [])
-}
