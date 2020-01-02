@@ -7,7 +7,7 @@ import { LocalTimeline } from '../../../furui/containers'
 
 const { useEffect } = React
 
-const LocalTimelinePage: React.FC = () => {
+const Home: React.FC = () => {
   useEffect(() => {
     appStore.init()
   }, [])
@@ -19,4 +19,4 @@ const LocalTimelinePage: React.FC = () => {
     )
   })
 }
-export default LocalTimelinePage
+export default Home
