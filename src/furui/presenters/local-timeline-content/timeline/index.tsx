@@ -48,7 +48,7 @@ export default ({
       <InView
         as="li"
         threshold={1.0}
-        onChange={(inView, entry) => {
+        onChange={inView => {
           if (inView && 0 < posts.length) {
             readMore()
           }
