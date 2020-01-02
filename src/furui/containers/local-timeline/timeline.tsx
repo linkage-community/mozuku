@@ -14,17 +14,11 @@ import { AlbumFile } from '../../models'
 export default () => {
   useTimeline()
   const [modalContent, setModalContent] = useState(null as AlbumFile | null)
-  const onModalBackgroundClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const onModalClose = () => {
     setModalContent(null)
     history.back()
   }
-  const onModalImageClick = (
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>
-  ) => {
-    window.open(e.currentTarget.currentSrc, '_blank')
-  }
+  const openTab = (url: string) => window.open(url, '_blank')
   useEffect(() => {
     const watchHistoryBack = () => {
       setModalContent(null)
@@ -52,8 +46,8 @@ export default () => {
         )}
         modalContent={modalContent}
         setModalContent={setModalContent}
-        onModalBackgroundClick={onModalBackgroundClick}
-        onModalImageClick={onModalImageClick}
+        onModalClose={onModalClose}
+        openInNewTab={openTab}
       />
     )
   })

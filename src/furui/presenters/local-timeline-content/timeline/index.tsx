@@ -6,6 +6,7 @@ import { Post } from '../../../presenters'
 import * as styles from './timeline.css'
 
 import { InView } from 'react-intersection-observer'
+import FileModal from '../../../../components/file-modal'
 
 export default ({
   posts,
@@ -14,8 +15,8 @@ export default ({
   postMetaEnabled = false,
   modalContent,
   setModalContent,
-  onModalBackgroundClick,
-  onModalImageClick
+  onModalClose,
+  openInNewTab
 }: {
   posts: PostModel[]
   readMore: () => void
@@ -23,47 +24,17 @@ export default ({
   postMetaEnabled?: boolean
   modalContent: AlbumFile | null
   setModalContent: (albumFile: AlbumFile | null) => void
-  onModalBackgroundClick: (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => void
-  onModalImageClick: (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => void
+  onModalClose: () => void
+  openInNewTab: (path: string) => void
 }) => (
   <>
     {modalContent && (
-      <div className={styles.modal_background}>
-        {modalContent.type === 'image' ? (
-          <picture
-            className={styles.modal_container}
-            onClick={onModalBackgroundClick}
-          >
-            {modalContent.directs.map(variant => (
-              <source
-                key={variant.id}
-                srcSet={variant.url.href}
-                type={variant.mime}
-              />
-            ))}
-            <img onClick={onModalImageClick} />
-          </picture>
-        ) : modalContent.type === 'video' ? (
-          <div
-            className={styles.modal_container}
-            onClick={onModalBackgroundClick}
-          >
-            <video
-              poster={modalContent.thumbnail.url.href}
-              src={modalContent.variants.get('video')![0].url.href}
-              controls
-              autoPlay
-              onClick={onModalImageClick}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
+      <FileModal
+        file={modalContent}
+        openInNewTab={openInNewTab}
+        onClose={onModalClose}
+      />
     )}
-
     <ul className={styles.timeline}>
       {posts.map(post => (
         <li key={post.id}>

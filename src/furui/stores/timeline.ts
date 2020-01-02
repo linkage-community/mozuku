@@ -65,7 +65,7 @@ class TimelineStore {
         if (this.shouldMute(p)) return
         return p
       })
-      .filter(p => !!p)
+      .filter(p => !!p) as Post[]
   }
   @computed get title() {
     return [

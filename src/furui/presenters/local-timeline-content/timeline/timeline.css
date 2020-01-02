@@ -9,34 +9,3 @@
   padding: 12px 24px;
   border-top: 1px solid var(--color-border);
 }
-
-.modal_background {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  background-color: rgba(10, 10, 10, 0.5);
-  left: 0;
-  top: 0;
-  z-index: 25;
-}
-
-.modal_container {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 50;
-  padding: 3rem;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-flex;
-}
-
-.modal_container img,
-.modal_container video {
-  width: auto;
-  max-width: 100%;
-  max-height: 100%;
-  margin: auto;
-}

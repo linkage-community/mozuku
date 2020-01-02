@@ -157,7 +157,6 @@ export class SeaAPI {
         const w = new WebSocket(
           this.api.replace('https://', 'wss://').replace('http://', 'ws://')
         )
-        // send handshake
         w.addEventListener('open', () => {
           w.send(
             JSON.stringify({
