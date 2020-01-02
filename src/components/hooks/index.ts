@@ -1,2 +1,2 @@
 export * from './use-relative-time-represent'
-export * from './use-keypress'
+export * from './use-shortcut'
