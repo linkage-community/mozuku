@@ -96,6 +96,7 @@ render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/settings" component={Setting} />
+        <Route exact path="/login" children={<Redirect to={'/'} />} />
         <Route
           children={({ location }) => <NotFound pathname={location.pathname} />}
         />
