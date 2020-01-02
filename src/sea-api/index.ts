@@ -1,7 +1,7 @@
 import $ from 'cafy'
 import axios from 'axios'
 
-export class SeaClient {
+export class SeaAPI {
   private oauth: string
   private clientId: string
   private clientSecret: string
@@ -178,7 +178,7 @@ export class SeaClient {
 }
 
 import Config from '../config'
-export default new SeaClient(
+export default new SeaAPI(
   Config.oauth,
   Config.api,
   Config.app.id,

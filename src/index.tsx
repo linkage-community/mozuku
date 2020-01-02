@@ -27,8 +27,7 @@ import seaClient from './sea-api'
 import { useObserver } from 'mobx-react-lite'
 import { appStore } from './furui/stores'
 
-import { NotFound } from './furui/presenters'
-import { LoginEntrance, Setting, Home } from './components/pages'
+import { LoginEntrance, Setting, Home, NotFound } from './components/pages'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })

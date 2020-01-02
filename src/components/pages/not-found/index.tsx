@@ -14,10 +14,10 @@ const NotFound: React.FC<{ pathname: string }> = ({ pathname }) => (
       <HeaderLogo />
     </HeaderContainer>
     <BodyContainer>
-      <h2>ここにはなにも、ない</h2>
-      {pathname ? <code>{pathname}</code> : null}
-      <br />
-      <Link to={{ pathname: '/' }}>もどる</Link>
+      <div style={{ padding: '12px 18px' }}>
+        <h2>未存在 {pathname || '”不明”'} 項</h2>
+        <Link to={{ pathname: '/' }}>戻る</Link>
+      </div>
     </BodyContainer>
   </Container>
 )
