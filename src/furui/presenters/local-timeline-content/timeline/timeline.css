@@ -1,0 +1,11 @@
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.readmore_button {
+  width: 100%;
+  padding: 12px 24px;
+  border-top: 1px solid var(--color-border);
+}

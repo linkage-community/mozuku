@@ -22,13 +22,12 @@ import { Route, Switch, Redirect, RouteComponentProps } from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 
-import seaClient from './util/seaClient'
+import seaClient from './sea-api'
 
 import { useObserver } from 'mobx-react-lite'
-import { appStore } from './stores'
+import { appStore } from './furui/stores'
 
-import { HomePage } from './containers'
-import { Login } from './presenters'
+import { LoginEntrance, Setting, Home, NotFound } from './components/pages'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
@@ -48,7 +47,7 @@ const LoginWrapper = ({ location }: RouteComponentProps) => {
     new URLSearchParams(location.search).get('next') ||
     ''
   const authURL = seaClient.getAuthorizeURL(next)
-  return <Login authURL={new URL(authURL)} />
+  return <LoginEntrance authURL={new URL(authURL)} />
 }
 const Callback = ({ location }: RouteComponentProps) => {
   const code = new URLSearchParams(location.search).get('code')
@@ -76,7 +75,7 @@ const Callback = ({ location }: RouteComponentProps) => {
   return <Redirect to={{ pathname: state || '/' }} />
 }
 
-const App = () => {
+const Authenticate: React.FC = ({ children }) => {
   return useObserver(() => (
     <BrowserRouter>
       <Switch>
@@ -85,10 +84,23 @@ const App = () => {
           <Route exact path="/login" component={LoginWrapper} />
         )}
         {!appStore.loggedIn && <Route component={RedirectToLogin} />}
-        <Route component={HomePage} />
+        <Route children={children} />
       </Switch>
     </BrowserRouter>
   ))
 }
 
-render(<App />, document.getElementById('app'))
+render(
+  <Authenticate>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/settings" component={Setting} />
+        <Route
+          children={({ location }) => <NotFound pathname={location.pathname} />}
+        />
+      </Switch>
+    </BrowserRouter>
+  </Authenticate>,
+  document.getElementById('app')
+)
