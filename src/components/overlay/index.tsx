@@ -8,17 +8,7 @@ const Overlay: React.FC = ({ children }) => {
   }
   return ReactDOM.createPortal(
     // FIXME
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        position: 'fixed',
-        left: 0,
-        top: 0
-      }}
-    >
-      {children}
-    </div>,
+    children,
     overlayEl
   )
 }
