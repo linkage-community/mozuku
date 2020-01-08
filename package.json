@@ -9,7 +9,7 @@
   "dependencies": {
     "@linkage-community/bottlemail": "^2.1.0",
     "autoprefixer": "^9.7.3",
-    "axios": "^0.19.0",
+    "axios": "^0.19.1",
     "cafy": "^15.2.0",
     "date-fns": "^2.8.1",
     "date-fns-tz": "^1.0.8",
