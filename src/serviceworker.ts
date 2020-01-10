@@ -8,5 +8,5 @@ self.addEventListener('fetch', (event: unknown) => {
   if (url.hostname !== 'analizzatore.prezzemolo.org') return
   url.host = 'ogp-syutoku-kun.herokuapp.com'
   url.pathname = '/api/v1/fetch'
-  fetchEvent.respondWith(fetch({ ...fetchEvent.request, url: url.href }))
+  fetchEvent.respondWith(fetch(url.href))
 })
