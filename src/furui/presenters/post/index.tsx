@@ -20,6 +20,46 @@ import pictograph = require('pictograph')
 import config from '../../../config'
 import Avatar from '../../../components/avatar'
 
+const Body: React.FC<{
+  bodyNodes: Post['nodes']
+  className: string
+}> = ({ bodyNodes, className }) => {
+  return (
+    <div className={className}>
+      {bodyNodes.map((node, i) => {
+        switch (node.kind) {
+          case LinkKind:
+            return (
+              <a key={i} href={node.raw} target="_blank">
+                {(() => {
+                  try {
+                    return decodeURI(node.raw)
+                  } catch (_) {
+                    return node.raw
+                  }
+                })()}
+              </a>
+            )
+          case MentionKind:
+            return (
+              <span key={i} className={styles.bold}>
+                {node.raw}
+              </span>
+            )
+          case EmojiNameKind:
+            return (
+              <span key={i} title={node.raw}>
+                {pictograph.dic[node.value] || node.raw}
+              </span>
+            )
+          default:
+            return <React.Fragment key={i}>{node.raw}</React.Fragment>
+        }
+      })}
+    </div>
+  )
+}
+
 type PostProps = {
   post: Post
   metaEnabled: boolean
@@ -62,38 +102,7 @@ export default ({
             </a>
           </div>
         </div>
-        <div className={styles.body}>
-          {post.nodes.map((node, i) => {
-            switch (node.kind) {
-              case LinkKind:
-                return (
-                  <a key={i} href={node.raw} target="_blank">
-                    {(() => {
-                      try {
-                        return decodeURI(node.raw)
-                      } catch (_) {
-                        return node.raw
-                      }
-                    })()}
-                  </a>
-                )
-              case MentionKind:
-                return (
-                  <span key={i} className={styles.bold}>
-                    {node.raw}
-                  </span>
-                )
-              case EmojiNameKind:
-                return (
-                  <span key={i} title={node.raw}>
-                    {pictograph.dic[node.value] || node.raw}
-                  </span>
-                )
-              default:
-                return <React.Fragment key={i}>{node.raw}</React.Fragment>
-            }
-          })}
-        </div>
+        <Body bodyNodes={post.nodes} className={styles.body} />
         {0 < post.files.length && (
           <Files albumFiles={post.files} setModalContent={setModalContent} />
         )}

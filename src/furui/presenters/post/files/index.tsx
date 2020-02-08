@@ -19,7 +19,7 @@ const Nothing: React.FC = function Nothing() {
 const Image: React.FC<{
   image: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}> = function Image({ image, openFileModal }) {
+}> = ({ image, openFileModal }) => {
   return (
     <div className={styles.image}>
       <picture>
@@ -38,7 +38,7 @@ const Image: React.FC<{
 const Video: React.FC<{
   video: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}> = function Video({ video, openFileModal }) {
+}> = ({ video, openFileModal }) => {
   return (
     <div className={styles.image}>
       <img
@@ -58,7 +58,7 @@ const Video: React.FC<{
 const File: React.FC<{
   file: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}> = function File({ file, openFileModal }) {
+}> = ({ file, openFileModal }) => {
   if (file.thumbnail == null) {
     return <Nothing />
   }
