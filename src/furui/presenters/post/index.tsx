@@ -23,7 +23,7 @@ import Avatar from '../../../components/avatar'
 const Body: React.FC<{
   bodyNodes: Post['nodes']
   className: string
-}> = function PostBody({ bodyNodes, className }) {
+}> = ({ bodyNodes, className }) => {
   return (
     <div className={className}>
       {bodyNodes.map((node, i) => {
