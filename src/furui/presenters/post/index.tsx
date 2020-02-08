@@ -6,7 +6,6 @@ import { DateTime } from '../../presenters'
 import { OGCard } from '../../containers'
 
 import Image from './image'
-import DummyAvatar from './dummy-avatar'
 
 import * as styles from './post.css'
 import { AlbumFile } from '../../models'
@@ -19,6 +18,7 @@ import {
 
 import pictograph = require('pictograph')
 import config from '../../../config'
+import Avatar from '../../../components/avatar'
 
 type PostProps = {
   post: Post
@@ -34,21 +34,9 @@ export default ({
   return useMemo(
     () => (
       <div className={styles.post}>
-        {author.avatarFile ? (
-          <picture className={styles.icon}>
-            {author.avatarFile.thumbnails.map(t => (
-              <source key={t.id} srcSet={t.url.href} type={t.mime} />
-            ))}
-            <img
-              className={styles.icon__img}
-              title={author.avatarFile.fileName}
-            />
-          </picture>
-        ) : (
-          <div className={styles.icon}>
-            <DummyAvatar name={author.name} className={styles.icon__img} />
-          </div>
-        )}
+        <div className={styles.icon}>
+          <Avatar account={post.author} className={styles.icon__img} />
+        </div>
         <div className={styles.head}>
           <span
             className={[
