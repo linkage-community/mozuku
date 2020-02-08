@@ -10,7 +10,7 @@
     "@linkage-community/bottlemail": "^2.1.0",
     "autoprefixer": "^9.7.4",
     "axios": "^0.19.2",
-    "cafy": "^15.2.0",
+    "cafy": "^15.2.1",
     "date-fns": "^2.9.0",
     "date-fns-tz": "^1.0.9",
     "filesize": "^6.0.1",
