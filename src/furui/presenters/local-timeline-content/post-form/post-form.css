@@ -18,6 +18,7 @@
   display: block;
   width: 100%;
   min-height: 60px;
+  max-height: 50vh;
   padding: 12px 172px 12px 18px;
   appearance: none;
   transition: height 0.2s;
