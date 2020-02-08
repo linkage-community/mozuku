@@ -28,6 +28,16 @@ import { useObserver } from 'mobx-react-lite'
 import { appStore } from './furui/stores'
 
 import { LoginEntrance, Setting, Home, NotFound } from './components/pages'
+import { PREFERENCE_FORCE_DARK_THEME } from './furui/stores/app'
+
+if (
+  window.matchMedia('prefers-color-scheme: dark').matches ||
+  appStore.getPreference(PREFERENCE_FORCE_DARK_THEME)
+) {
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', '#000')
+}
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
