@@ -5,7 +5,7 @@ import { Post } from '../../models'
 import { DateTime } from '../../presenters'
 import { OGCard } from '../../containers'
 
-import Image from './image'
+import Files from './files'
 
 import * as styles from './post.css'
 import { AlbumFile } from '../../models'
@@ -95,7 +95,7 @@ export default ({
           })}
         </div>
         {0 < post.files.length && (
-          <Image albumFiles={post.files} setModalContent={setModalContent} />
+          <Files albumFiles={post.files} setModalContent={setModalContent} />
         )}
         {post.nodes.map((node, i) => {
           switch (node.kind) {
