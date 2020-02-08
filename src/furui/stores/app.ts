@@ -176,10 +176,16 @@ class SApp {
   enableForceDarkTheme() {
     // head
     document.firstElementChild!.setAttribute('class', 'dark-theme-enabled')
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', '#000')
   }
 
   disableForceDarkTheme() {
     document.firstElementChild!.removeAttribute('class')
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', '#1ba9cc')
   }
 }
 

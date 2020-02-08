@@ -28,12 +28,10 @@ import { useObserver } from 'mobx-react-lite'
 import { appStore } from './furui/stores'
 
 import { LoginEntrance, Setting, Home, NotFound } from './components/pages'
-import { PREFERENCE_FORCE_DARK_THEME } from './furui/stores/app'
 
-if (
-  window.matchMedia('prefers-color-scheme: dark').matches ||
-  appStore.getPreference(PREFERENCE_FORCE_DARK_THEME)
-) {
+if (window.matchMedia('prefers-color-scheme: dark').matches) {
+  // TODO: dark -> light になったときの検知ができない
+  // CSSTricks によると animation を動かして animationstart で検知できるらしいが… https://css-tricks.com/media-query-change-detection-in-javascript-through-css-animations/
   document
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute('content', '#000')
