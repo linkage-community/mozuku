@@ -10,6 +10,7 @@ import {
 } from '../_layout'
 
 import * as styles from './index.css'
+import { BrowserProvider } from '../../browser-provider'
 
 const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
   me,
@@ -17,18 +18,20 @@ const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
 }) => {
   return (
     <Container>
-      <HeaderContainer>
-        <HeaderLogo />
-        <div className={styles.account}>
-          <span>{me ? <>@{me.screenName}</> : <i>[誰?]</i>}</span>
-        </div>
-        <div className={styles.setting}>
-          <Link to={{ pathname: '/settings' }}>
-            <i className="uil uil-cog" />
-          </Link>
-        </div>
-      </HeaderContainer>
-      <BodyContainer>{children}</BodyContainer>
+      <BrowserProvider>
+        <HeaderContainer>
+          <HeaderLogo />
+          <div className={styles.account}>
+            <span>{me ? <>@{me.screenName}</> : <i>[誰?]</i>}</span>
+          </div>
+          <div className={styles.setting}>
+            <Link to={{ pathname: '/settings' }}>
+              <i className="uil uil-cog" />
+            </Link>
+          </div>
+        </HeaderContainer>
+        <BodyContainer>{children}</BodyContainer>
+      </BrowserProvider>
     </Container>
   )
 }

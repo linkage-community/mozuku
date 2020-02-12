@@ -4,7 +4,7 @@ const { useState, useRef } = React
 import seaAPI from '../../../sea-api'
 import { appStore } from '../../stores'
 
-import { useShortcut } from '../../../components/hooks'
+import { useBrowserHooks } from '../../../components/browser-provider'
 
 import PostForm from '../../presenters/local-timeline-content/post-form'
 import { AlbumFile } from '../../models'
@@ -23,6 +23,7 @@ export default ({
   uploadAlbumFile: (f: File) => void
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const { useShortcut } = useBrowserHooks()
   // 110 = n
   useShortcut(110, ev => {
     const el = textareaRef.current!
