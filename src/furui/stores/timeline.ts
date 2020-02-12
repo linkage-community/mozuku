@@ -56,9 +56,9 @@ class TimelineStore {
       this._hidden = true
     })
   }
-  private countUnread(cnt: number) {
+  private countUnread(posts: Post[]) {
     if (!this.connectedAndBackground) return
-    this.unreadCount += cnt
+    this.unreadCount += posts.filter(p => !this.shouldMute(p)).length
   }
 
   @computed get posts() {
@@ -110,7 +110,7 @@ class TimelineStore {
     const tc = this.postIds.length
     this.postIds = Array.from(idsSet.values())
 
-    this.countUnread(idsSet.size - tc)
+    this.countUnread(posts)
     this.showNotification(posts)
   }
   @action
