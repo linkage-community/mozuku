@@ -10,8 +10,9 @@ export default ({
   url: string
   className: string
 }) => {
+  if (!appStore.getPreference(PREFERENCE_DISPLAY_OGCARD)) return <></>
   const r = useWebpageMeta(url)
-  if (!r || !appStore.getPreference(PREFERENCE_DISPLAY_OGCARD)) return <></>
+  if (!r) return <></>
   return OGCard(
     Object.assign(
       {
