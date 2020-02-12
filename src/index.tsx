@@ -29,6 +29,14 @@ import { appStore } from './furui/stores'
 
 import { LoginEntrance, Setting, Home, NotFound } from './components/pages'
 
+if (window.matchMedia('prefers-color-scheme: dark').matches) {
+  // TODO: dark -> light になったときの検知ができない
+  // CSSTricks によると animation を動かして animationstart で検知できるらしいが… https://css-tricks.com/media-query-change-detection-in-javascript-through-css-animations/
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', '#000')
+}
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./serviceworker.ts', { scope: '/' })
 }

@@ -78,11 +78,6 @@ class SApp {
     window.addEventListener('visibilitychange', () => {
       this.setHidden(document.hidden)
     })
-    window.document.addEventListener('keypress', ev => {
-      if (this.shortcuts.has(ev.charCode)) {
-        this.shortcuts.get(ev.charCode)!(ev)
-      }
-    })
 
     if (this.getPreference(PREFERENCE_FORCE_DARK_THEME)) {
       this.enableForceDarkTheme()
@@ -181,10 +176,16 @@ class SApp {
   enableForceDarkTheme() {
     // head
     document.firstElementChild!.setAttribute('class', 'dark-theme-enabled')
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', '#000')
   }
 
   disableForceDarkTheme() {
     document.firstElementChild!.removeAttribute('class')
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', '#1ba9cc')
   }
 }
 
