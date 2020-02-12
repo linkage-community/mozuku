@@ -6,7 +6,7 @@ type BrowserContext = {
   useForceUpdatePerEverySecond: typeof useForceUpdatePerEverySecond
 }
 
-const defaultValue = {
+const defaultValue: BrowserContext = {
   useShortcut: useShortcut,
   useForceUpdatePerEverySecond: useForceUpdatePerEverySecond
 }

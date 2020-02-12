@@ -11,6 +11,13 @@ import {
 
 import * as styles from './index.css'
 import { BrowserProvider } from '../../browser-provider'
+import { WebpageMetaProvider } from '../../webpage-meta-provider'
+
+const AppProvider: React.FC = ({ children }) => (
+  <BrowserProvider>
+    <WebpageMetaProvider>{children}</WebpageMetaProvider>
+  </BrowserProvider>
+)
 
 const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
   me,
@@ -18,7 +25,7 @@ const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
 }) => {
   return (
     <Container>
-      <BrowserProvider>
+      <AppProvider>
         <HeaderContainer>
           <HeaderLogo />
           <div className={styles.account}>
@@ -31,7 +38,7 @@ const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
           </div>
         </HeaderContainer>
         <BodyContainer>{children}</BodyContainer>
-      </BrowserProvider>
+      </AppProvider>
     </Container>
   )
 }
