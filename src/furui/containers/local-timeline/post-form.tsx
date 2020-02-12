@@ -24,8 +24,7 @@ export default ({
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { useShortcut } = useBrowserHooks()
-  // 110 = n
-  useShortcut(110, ev => {
+  useShortcut('n'.charCodeAt(0), ev => {
     const el = textareaRef.current!
     if (el.isEqualNode(document.activeElement)) return
     ev.preventDefault()
