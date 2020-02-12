@@ -10,7 +10,7 @@ const timer = () => {
 timer()
 
 export const useForceUpdatePerEverySecond = () => {
-  const [, forceUpdate] = useReducer(x => x + 1, 0)
+  const [, forceUpdate] = useReducer((x: number) => x + 1, 0)
   useEffect(() => {
     const runner = () => {
       forceUpdate()
