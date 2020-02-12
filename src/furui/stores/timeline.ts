@@ -20,6 +20,10 @@ import faviconActive from '../../static/favicon_active.png'
 
 import { isMention } from '@linkage-community/bottlemail'
 
+type TimelineStoreDeps = {
+  onHiddenChange: (callback: (hidden: boolean) => void) => void
+}
+
 class TimelineStore {
   @observable postIds: number[] = []
   @observable private unreadCount: number = 0
@@ -41,8 +45,8 @@ class TimelineStore {
     return false
   }
 
-  constructor() {
-    app.subscribeHiddenChange(hidden => {
+  constructor({ onHiddenChange }: TimelineStoreDeps) {
+    onHiddenChange(hidden => {
       if (!hidden) {
         // reset counter
         this.unreadCount = 0
@@ -52,9 +56,9 @@ class TimelineStore {
       this._hidden = true
     })
   }
-  private countUnread(cnt: number) {
+  private countUnread(posts: Post[]) {
     if (!this.connectedAndBackground) return
-    this.unreadCount += cnt
+    this.unreadCount += posts.filter(p => !this.shouldMute(p)).length
   }
 
   @computed get posts() {
@@ -106,7 +110,7 @@ class TimelineStore {
     const tc = this.postIds.length
     this.postIds = Array.from(idsSet.values())
 
-    this.countUnread(idsSet.size - tc)
+    this.countUnread(posts)
     this.showNotification(posts)
   }
   @action
@@ -299,7 +303,9 @@ class TimelineStore {
   }
 }
 
-const timeline = new TimelineStore()
+const timeline = new TimelineStore({
+  onHiddenChange: app.subscribeHiddenChange.bind(app)
+})
 export default timeline
 
 export const useTimeline = () =>

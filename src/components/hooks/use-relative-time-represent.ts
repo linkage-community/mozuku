@@ -8,6 +8,7 @@ import {
   differenceInSeconds,
   format
 } from 'date-fns'
+import { useBrowserHooks } from '../browser-provider'
 
 const Month = 'mo'
 const Week = 'w'
@@ -26,7 +27,7 @@ type TimeDiff = {
   duration: number
 }
 const diffFromNow = (dt: Date): TimeDiff | undefined => {
-  const now = new Date()
+  const now = Date.now()
 
   const months = differenceInMonths(now, dt)
   if (months > 0) return { type: Month, duration: months }
@@ -47,45 +48,12 @@ const diffFromNow = (dt: Date): TimeDiff | undefined => {
   if (seconds > 0) return { type: Second, duration: seconds }
 }
 
-// 虚無
-const timerSubscribers = new Set<() => void>()
-const timer = () => {
-  Array.from(timerSubscribers.values()).forEach(async f => {
-    f()
-  })
-  window.setTimeout(timer, 1000)
-}
-timer()
-
 export const useRelativeTimeRepresent = (dt: Date) => {
-  const [relativeTimeRepresent, setRTR] = useState(`0`)
-  const setDiff = (d: TimeDiff) => {
-    const t = `${d.duration}${d.type}`
-    if (t !== relativeTimeRepresent) setRTR(t)
-  }
-  useEffect(() => {
-    const runner = () => {
-      const diff = main()
-      if (!diff) timerSubscribers.delete(runner)
-    }
-    const main = () => {
-      const diff = diffFromNow(dt)
-      if (diff === undefined) return true
-      switch (diff.type) {
-        case Month:
-          // stop timer
-          setRTR(format(dt, 'd MMM yyyy'))
-          return false
-        default:
-          setDiff(diff)
-          return true
-      }
-    }
-    runner()
-    timerSubscribers.add(runner)
-    return () => {
-      timerSubscribers.delete(runner)
-    }
-  }, [])
-  return relativeTimeRepresent
+  const { useForceUpdatePerEverySecond } = useBrowserHooks()
+  useForceUpdatePerEverySecond()
+
+  const diff = diffFromNow(dt)
+  if (!diff) return
+  if (diff.type === Month) return format(dt, 'd MMM yyyy')
+  return `${diff.duration}${diff.type}`
 }
