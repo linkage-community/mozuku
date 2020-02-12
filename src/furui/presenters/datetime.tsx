@@ -1,7 +1,7 @@
 import * as React from 'react'
 const { useMemo } = React
 import { format } from 'date-fns-tz'
-import { useRelativeTimeRepresent } from '../../components/hooks/use-relative-time-represent'
+import { useRelativeTimeRepresent } from '../../components/hooks'
 
 export default ({ dt, className }: { dt: Date; className?: string }) => {
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)
