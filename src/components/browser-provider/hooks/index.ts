@@ -1,2 +1,2 @@
-export * from './use-relative-time-represent'
 export * from './use-shortcut'
+export * from './use-force-update-per-every-second'

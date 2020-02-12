@@ -304,7 +304,7 @@ class TimelineStore {
 }
 
 const timeline = new TimelineStore({
-  onHiddenChange: app.subscribeHiddenChange
+  onHiddenChange: app.subscribeHiddenChange.bind(app)
 })
 export default timeline
 

@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { useShortcut, useRelativeTimeRepresent } from './hooks'
+import { useShortcut, useForceUpdatePerEverySecond } from './hooks'
 
 type BrowserContext = {
-  useRelativeTimeRepresent: typeof useRelativeTimeRepresent
   useShortcut: typeof useShortcut
+  useForceUpdatePerEverySecond: typeof useForceUpdatePerEverySecond
 }
 
 const defaultValue = {
-  useRelativeTimeRepresent: useRelativeTimeRepresent,
-  useShortcut: useShortcut
+  useShortcut: useShortcut,
+  useForceUpdatePerEverySecond: useForceUpdatePerEverySecond
 }
 // FIXME: BrowserContext.Provider に value を *必ず* 渡す必要があるので {} as any で無意味な値を突っこんでいるが、本当にこれでいいのか?
 export const BrowserContext = React.createContext<BrowserContext>({} as any)

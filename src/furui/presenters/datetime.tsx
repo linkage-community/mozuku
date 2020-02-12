@@ -1,10 +1,9 @@
 import * as React from 'react'
 const { useMemo } = React
 import { format } from 'date-fns-tz'
-import { useBrowserHooks } from '../../components/browser-provider'
+import { useRelativeTimeRepresent } from '../../components/hooks/use-relative-time-represent'
 
 export default ({ dt, className }: { dt: Date; className?: string }) => {
-  const { useRelativeTimeRepresent } = useBrowserHooks()
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)
   const absoluteTimeRepresent = useMemo(
     () => format(dt, 'HH:mm:ss · d MMM yyyy', { timeZone: 'Asia/Tokyo' }),
