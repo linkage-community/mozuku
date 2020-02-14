@@ -1,5 +1,6 @@
 import * as React from 'react'
-import riassumere, { interfaces as IRiassumere } from 'riassumere'
+import { interfaces as IRiassumere } from 'riassumere'
+import axios from 'axios'
 
 type WebpageMetaContext = {
   getDescription: (href: string) => Promise<IRiassumere.ISummary | undefined>
@@ -11,11 +12,13 @@ const defaultValue: WebpageMetaContext = {
     if (clawlCaches.has(href)) {
       return clawlCaches.get(href)
     }
-    const r = await riassumere(href)
+    const r = await axios.get(`https://ricapitolare.now.sh`, {
+      params: { uri: href },
+    })
     // あり得ないので無視
-    if (Array.isArray(r)) return
-    clawlCaches.set(href, r)
-    return r
+    if (Array.isArray(r.data)) return
+    clawlCaches.set(href, r.data)
+    return r.data
   },
 }
 // FIXME: Provider に value を *必ず* 渡す必要があるので {} as any で無意味な値を突っこんでいるが、本当にこれでいいのか?
