@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import {
   differenceInMonths,
   differenceInWeeks,
@@ -26,34 +25,32 @@ type TimeDiff = {
     | typeof Second
   duration: number
 }
-const diffFromNow = (dt: Date): TimeDiff | undefined => {
-  const now = Date.now()
-
-  const months = differenceInMonths(now, dt)
+const diffFrom = (dt: Date, nowInMs: number): TimeDiff | undefined => {
+  const months = differenceInMonths(nowInMs, dt)
   if (months > 0) return { type: Month, duration: months }
 
-  const weeks = differenceInWeeks(now, dt)
+  const weeks = differenceInWeeks(nowInMs, dt)
   if (weeks > 0) return { type: Week, duration: weeks }
 
-  const days = differenceInDays(now, dt)
+  const days = differenceInDays(nowInMs, dt)
   if (days > 0) return { type: Day, duration: days }
 
-  const hours = differenceInHours(now, dt)
+  const hours = differenceInHours(nowInMs, dt)
   if (hours > 0) return { type: Hour, duration: hours }
 
-  const minutes = differenceInMinutes(now, dt)
+  const minutes = differenceInMinutes(nowInMs, dt)
   if (minutes > 0) return { type: Minute, duration: minutes }
 
-  const seconds = differenceInSeconds(now, dt)
+  const seconds = differenceInSeconds(nowInMs, dt)
   if (seconds > 0) return { type: Second, duration: seconds }
 }
 
 export const useRelativeTimeRepresent = (dt: Date) => {
-  const { useForceUpdatePerEverySecond } = useBrowserHooks()
-  useForceUpdatePerEverySecond()
+  const { useCurrentTimeInMilliseconds } = useBrowserHooks()
+  const nowInMs = useCurrentTimeInMilliseconds()
+  const diff = diffFrom(dt, nowInMs)
 
-  const diff = diffFromNow(dt)
-  if (!diff) return
+  if (!diff) return '0'
   if (diff.type === Month) return format(dt, 'd MMM yyyy')
   return `${diff.duration}${diff.type}`
 }
