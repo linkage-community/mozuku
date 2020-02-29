@@ -17,6 +17,7 @@ export default ({ authURL }: { authURL: URL }) => (
     <BodyContainer>
       <div className={styles.landing}>
         <h1>Greetings</h1>
+        今すぐ認証!!!
         <h2 className={styles.authLinkContainer}>
           <span className={styles.desktopOnly}>→→→→→→→→ </span>
           <div className={styles.spOnly}>↓↓↓↓↓↓↓↓</div>
