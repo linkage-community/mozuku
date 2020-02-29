@@ -23,7 +23,7 @@ export default ({
   uploadAlbumFile: (f: File) => void
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const { useShortcut } = useBrowserHooks()
+  const { useShortcut, usePreventUnload } = useBrowserHooks()
   useShortcut('n'.charCodeAt(0), ev => {
     const el = textareaRef.current!
     if (el.isEqualNode(document.activeElement)) return
@@ -31,6 +31,7 @@ export default ({
     textareaRef.current!.focus()
   })
   const [draft, setDraft] = useState('')
+  usePreventUnload(() => draft.length !== 0)
   const submitDraft = async () => {
     setDraftDisabled(true)
     if (0 < draft.trim().length || 0 < files.length) {
