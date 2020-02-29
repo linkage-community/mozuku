@@ -17,8 +17,9 @@ export default ({ authURL }: { authURL: URL }) => (
     <BodyContainer>
       <div className={styles.landing}>
         <h1>Greetings</h1>
+        今すぐ認証!!!
         <h2>
-          <a href={authURL.href}>認証する</a>
+          →→→→→→→→ <a href={authURL.href}>認証する</a> ←←←←←←←←
         </h2>
       </div>
     </BodyContainer>
