@@ -4,6 +4,7 @@ const { useCallback, useRef } = React
 import Config from '../../../config'
 
 import * as styles from './setting.css'
+import { useBrowserHooks } from '../../../components/browser-provider'
 
 type TConfig = {
   showMetaEnabled: boolean
@@ -38,6 +39,8 @@ export default ({
   currentConfig: TConfig
   logout: () => void
 }) => {
+  const { usePreventUnload } = useBrowserHooks()
+  usePreventUnload(() => true)
   const refName = useRef<HTMLInputElement>(null)
   const refFile = useRef<HTMLInputElement>(null)
   const callback = useCallback(
