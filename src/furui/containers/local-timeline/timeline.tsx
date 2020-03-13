@@ -11,7 +11,13 @@ import {
 import Timeline from '../../presenters/local-timeline-content/timeline'
 import { AlbumFile } from '../../models'
 
-export default () => {
+export default ({
+  inReplyTo,
+  setInReplyTo
+}: {
+  inReplyTo: number | null
+  setInReplyTo: (n: number | null) => void
+}) => {
   useTimeline()
   const [modalContent, setModalContent] = useState(null as AlbumFile | null)
   const onModalClose = () => {
@@ -48,6 +54,8 @@ export default () => {
         setModalContent={setModalContent}
         onModalClose={onModalClose}
         openInNewTab={openTab}
+        inReplyTo={inReplyTo}
+        setInReplyTo={setInReplyTo}
       />
     )
   })

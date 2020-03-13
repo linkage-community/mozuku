@@ -17,7 +17,9 @@ export default ({
   draftDisabled,
   setDraftDisabled,
   files,
-  setFiles
+  setFiles,
+  inReplyTo,
+  setInReplyTo
 }: {
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void
   isDrop: boolean
@@ -29,6 +31,8 @@ export default ({
   setDraftDisabled: (b: boolean) => void
   files: AlbumFile[]
   setFiles: (a: AlbumFile[]) => void
+  inReplyTo: number | null
+  setInReplyTo: (n: number | null) => void
 }) => {
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -58,8 +62,10 @@ export default ({
         files={files}
         setFiles={setFiles}
         uploadAlbumFile={uploadAlbumFile}
+        inReplyTo={inReplyTo}
+        setInReplyTo={setInReplyTo}
       />
-      <Timeline />
+      <Timeline inReplyTo={inReplyTo} setInReplyTo={setInReplyTo} />
     </div>
   )
 }

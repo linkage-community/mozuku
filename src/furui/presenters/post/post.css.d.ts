@@ -7,6 +7,8 @@ declare const styles: {
   readonly displayName: string
   readonly empty: string
   readonly time: string
+  readonly reply: string
+  readonly right: string
   readonly screenName: string
   readonly body__inReplyTo: string
   readonly body: string

@@ -14,13 +14,17 @@ export default ({
   setDraftDisabled,
   files,
   setFiles,
-  uploadAlbumFile
+  uploadAlbumFile,
+  inReplyTo,
+  setInReplyTo
 }: {
   draftDisabled: boolean
   setDraftDisabled: (b: boolean) => void
   files: AlbumFile[]
   setFiles: (f: AlbumFile[]) => void
   uploadAlbumFile: (f: File) => void
+  inReplyTo: number | null
+  setInReplyTo: (n: number | null) => void
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { useShortcut, usePreventUnload } = useBrowserHooks()
@@ -36,12 +40,21 @@ export default ({
     setDraftDisabled(true)
     if (0 < draft.trim().length || 0 < files.length) {
       try {
-        await seaAPI.post('/v1/posts', {
+        const payload: {
+          text: string
+          fileIds: number[]
+          inReplyToId?: number
+        } = {
           text: draft,
           fileIds: files.map(file => file.id)
-        })
+        }
+        if (inReplyTo) {
+          payload.inReplyToId = inReplyTo
+        }
+        await seaAPI.post('/v1/posts', payload)
         setDraft('')
         setFiles([])
+        setInReplyTo(null)
       } catch (e) {
         // TODO: Add error reporting
         console.error(e)
