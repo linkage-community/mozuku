@@ -33,9 +33,9 @@ const Body: React.FC<{
               <a key={i} href={node.raw} target="_blank">
                 {(() => {
                   try {
-                    return decodeURI(node.raw)
+                    return decodeURI(node.value)
                   } catch (_) {
-                    return node.raw
+                    return node.value || node.raw
                   }
                 })()}
               </a>
@@ -102,6 +102,21 @@ export default ({
             </a>
           </div>
         </div>
+        {post.inReplyToId && (
+          <div className={styles.body__inReplyTo}>
+            <a
+              href={`${(() => {
+                const u = new URL(config.sea)
+                u.pathname = `/posts/${post.inReplyToId}`
+                return u.href
+              })()}`}
+              target="_blank"
+              rel="noopener"
+            >
+              >>{post.inReplyToId}
+            </a>
+          </div>
+        )}
         <Body bodyNodes={post.nodes} className={styles.body} />
         {0 < post.files.length && (
           <Files albumFiles={post.files} setModalContent={setModalContent} />

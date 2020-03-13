@@ -8,6 +8,7 @@ declare const styles: {
   readonly empty: string
   readonly time: string
   readonly screenName: string
+  readonly body__inReplyTo: string
   readonly body: string
   readonly bold: string
   readonly ogcard: string
