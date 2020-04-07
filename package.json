@@ -15,7 +15,7 @@
     "date-fns-tz": "^1.0.10",
     "filesize": "^6.0.1",
     "mobx": "^5.15.4",
-    "mobx-react-lite": "^1.5.2",
+    "mobx-react-lite": "^2.0.3",
     "parcel": "^1.12.4",
     "pictograph": "^2.3.0",
     "postcss-modules": "^1.5.0",
