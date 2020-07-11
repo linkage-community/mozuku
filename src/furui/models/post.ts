@@ -14,6 +14,7 @@ export default class Post implements Model {
   files: AlbumFile[]
   application: Application
   author: Account
+  inReplyToId?: number | null
 
   private validate(post: any) {
     return $.obj({
@@ -23,7 +24,8 @@ export default class Post implements Model {
       updatedAt: validateDate,
       user: $.any,
       application: $.any,
-      files: $.any
+      files: $.any,
+      inReplyToId: $.optionalNullable.num
     }).throw(post)
   }
 
@@ -45,6 +47,7 @@ export default class Post implements Model {
     this.updatedAt = new Date(post.updatedAt)
     this.application = app
     this.author = account
+    this.inReplyToId = post.inReplyToId
   }
 
   unpack() {

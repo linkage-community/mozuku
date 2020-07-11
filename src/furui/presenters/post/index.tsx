@@ -33,9 +33,9 @@ const Body: React.FC<{
               <a key={i} href={node.raw} target="_blank">
                 {(() => {
                   try {
-                    return decodeURI(node.raw)
+                    return decodeURI(node.value)
                   } catch (_) {
-                    return node.raw
+                    return node.value || node.raw
                   }
                 })()}
               </a>
@@ -64,12 +64,16 @@ type PostProps = {
   post: Post
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
+  inReplyTo: number | null
+  setInReplyTo: (n: number | null) => void
 }
 export default ({
   post,
   post: { author },
   metaEnabled,
-  setModalContent
+  setModalContent,
+  inReplyTo,
+  setInReplyTo
 }: PostProps) => {
   return useMemo(
     () => (
@@ -89,19 +93,50 @@ export default ({
           </span>
           <div className={styles.block}>
             <span className={styles.screenName}>@{author.screenName}</span>
-            <a
-              className={styles.time}
-              target="_blank"
-              href={`${(() => {
-                const u = new URL(config.sea)
-                u.pathname = `/posts/${post.id}`
-                return u.href
-              })()}`}
-            >
-              <DateTime dt={post.createdAt} />
-            </a>
+            <span className={styles.right}>
+              <button
+                className={styles.reply}
+                onClick={() => {
+                  setInReplyTo(inReplyTo === post.id ? null : post.id)
+                }}
+              >
+                <span
+                  className={`uil ${
+                    inReplyTo === post.id
+                      ? `uil-comment-dots ${styles.reply__rotate}`
+                      : 'uil-comment'
+                  }`}
+                />
+              </button>
+              <a
+                className={styles.time}
+                target="_blank"
+                href={`${(() => {
+                  const u = new URL(config.sea)
+                  u.pathname = `/posts/${post.id}`
+                  return u.href
+                })()}`}
+              >
+                <DateTime dt={post.createdAt} />
+              </a>
+            </span>
           </div>
         </div>
+        {post.inReplyToId && (
+          <div className={styles.body__inReplyTo}>
+            <a
+              href={`${(() => {
+                const u = new URL(config.sea)
+                u.pathname = `/posts/${post.inReplyToId}`
+                return u.href
+              })()}`}
+              target="_blank"
+              rel="noopener"
+            >
+              >>{post.inReplyToId}
+            </a>
+          </div>
+        )}
         <Body bodyNodes={post.nodes} className={styles.body} />
         {0 < post.files.length && (
           <Files albumFiles={post.files} setModalContent={setModalContent} />
@@ -122,6 +157,6 @@ export default ({
         </div>
       </div>
     ),
-    [author.name, author.avatarFile && author.avatarFile.id]
+    [author.name, author.avatarFile && author.avatarFile.id, inReplyTo]
   )
 }

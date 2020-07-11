@@ -16,7 +16,9 @@ export default ({
   modalContent,
   setModalContent,
   onModalClose,
-  openInNewTab
+  openInNewTab,
+  inReplyTo,
+  setInReplyTo
 }: {
   posts: PostModel[]
   readMore: () => void
@@ -26,6 +28,8 @@ export default ({
   setModalContent: (albumFile: AlbumFile | null) => void
   onModalClose: () => void
   openInNewTab: (path: string) => void
+  inReplyTo: number | null
+  setInReplyTo: (n: number | null) => void
 }) => (
   <>
     {modalContent && (
@@ -42,6 +46,8 @@ export default ({
             post={post}
             metaEnabled={postMetaEnabled}
             setModalContent={setModalContent}
+            inReplyTo={inReplyTo}
+            setInReplyTo={setInReplyTo}
           />
         </li>
       ))}
