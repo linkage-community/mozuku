@@ -7,7 +7,7 @@ type WebpageMetaContext = {
 
 const clawlCaches = new Map<string, IRiassumere.ISummary>()
 const defaultValue: WebpageMetaContext = {
-  getDescription: async href => {
+  getDescription: async (href) => {
     if (clawlCaches.has(href)) {
       return clawlCaches.get(href)
     }
@@ -16,7 +16,7 @@ const defaultValue: WebpageMetaContext = {
     if (Array.isArray(r)) return
     clawlCaches.set(href, r)
     return r
-  }
+  },
 }
 // FIXME: Provider に value を *必ず* 渡す必要があるので {} as any で無意味な値を突っこんでいるが、本当にこれでいいのか?
 export const WebpageMetaContext = React.createContext<WebpageMetaContext>(

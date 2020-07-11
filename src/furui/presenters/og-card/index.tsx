@@ -7,7 +7,7 @@ export default ({
   className,
   title,
   description,
-  url
+  url,
 }: ISummary & {
   url: string
   className: string

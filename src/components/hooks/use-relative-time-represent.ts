@@ -5,7 +5,7 @@ import {
   differenceInHours,
   differenceInMinutes,
   differenceInSeconds,
-  format
+  format,
 } from 'date-fns'
 import { useBrowserHooks } from '../browser-provider'
 

@@ -32,7 +32,7 @@ export class SeaAPI {
   unpack(s: string) {
     const { tokenType, token } = $.obj({
       token: $.str,
-      tokenType: $.str
+      tokenType: $.str,
     }).throw(JSON.parse(s))
     this.token = token
     this.tokenType = tokenType
@@ -61,13 +61,13 @@ export class SeaAPI {
 
     const token = await fetch(tokenURL.href, {
       method: 'POST',
-      body: form
+      body: form,
     })
-      .then(r => r.json())
-      .then(r => {
+      .then((r) => r.json())
+      .then((r) => {
         return $.obj({
           token_type: $.str,
-          access_token: $.str
+          access_token: $.str,
         })
           .strict()
           .throw(r)
@@ -80,8 +80,8 @@ export class SeaAPI {
     return axios.create({
       headers: {
         Authorization: `${this.tokenType} ${this.token}`,
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
   }
 
@@ -92,15 +92,15 @@ export class SeaAPI {
   }
 
   get(path: string) {
-    return this.axios.get(this.genApiHref(path)).then(r => r.data)
+    return this.axios.get(this.genApiHref(path)).then((r) => r.data)
   }
 
   post(path: string, data: any) {
-    return this.axios.post(this.genApiHref(path), data).then(r => r.data)
+    return this.axios.post(this.genApiHref(path), data).then((r) => r.data)
   }
 
   patch(path: string, data: any) {
-    return this.axios.patch(this.genApiHref(path), data).then(r => r.data)
+    return this.axios.patch(this.genApiHref(path), data).then((r) => r.data)
   }
 
   async uploadAlbumFile(
@@ -116,15 +116,15 @@ export class SeaAPI {
     const path = '/v1/album/files'
     return this.axios
       .post(this.genApiHref(path), form, {
-        onUploadProgress: progressEvent => {
+        onUploadProgress: (progressEvent) => {
           if (state != null) {
             state(
               Math.floor((progressEvent.loaded / progressEvent.total) * 100)
             )
           }
-        }
+        },
       })
-      .then(r => r.data)
+      .then((r) => r.data)
   }
 
   connectStream(stream: string): Promise<WebSocket> {
@@ -143,7 +143,7 @@ export class SeaAPI {
           try {
             const raw = JSON.parse(ev.data)
             const data = $.obj({
-              type: $.str
+              type: $.str,
             }).throw(raw)
             if (data.type === 'success') {
               return resolve(w)
@@ -162,7 +162,7 @@ export class SeaAPI {
             JSON.stringify({
               type: 'connect',
               stream,
-              token: this.token
+              token: this.token,
             })
           )
         })

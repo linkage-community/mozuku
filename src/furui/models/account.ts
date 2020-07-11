@@ -29,7 +29,7 @@ export default class Account implements Model<AccountBody> {
       postsCount: $.num,
       createdAt: validateDate,
       updatedAt: validateDate,
-      avatarFile: $.nullable.any
+      avatarFile: $.nullable.any,
     }).throw(user)
   }
 
@@ -52,7 +52,7 @@ export default class Account implements Model<AccountBody> {
       postsCount: this.postsCount,
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),
-      avatarFile: this.avatarFile && this.avatarFile.unpack()
+      avatarFile: this.avatarFile && this.avatarFile.unpack(),
     }
   }
 }

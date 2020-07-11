@@ -10,7 +10,7 @@ export default class Application implements Model {
     return $.obj({
       id: $.num,
       name: $.str,
-      isAutomated: $.bool
+      isAutomated: $.bool,
     }).throw(app)
   }
 
@@ -25,7 +25,7 @@ export default class Application implements Model {
     return {
       id: this.id,
       name: this.name,
-      isAutomated: this.isAutomated
+      isAutomated: this.isAutomated,
     }
   }
 }

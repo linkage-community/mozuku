@@ -3,7 +3,7 @@ import {
   useShortcut,
   useForceUpdatePerEverySecond,
   useCurrentTimeInMilliseconds,
-  usePreventUnload
+  usePreventUnload,
 } from './hooks'
 
 // TODO: 型が実装に依存しているのをやめる
@@ -18,7 +18,7 @@ const defaultValue: BrowserContext = {
   useShortcut,
   useForceUpdatePerEverySecond,
   useCurrentTimeInMilliseconds,
-  usePreventUnload
+  usePreventUnload,
 }
 // FIXME: BrowserContext.Provider に value を *必ず* 渡す必要があるので {} as any で無意味な値を突っこんでいるが、本当にこれでいいのか?
 export const BrowserContext = React.createContext<BrowserContext>({} as any)

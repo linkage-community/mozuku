@@ -4,7 +4,7 @@ import seaAPI from '../../sea-api'
 const KEYS = Object.freeze({
   SEA_CLIENT_PACK: 'mozuku::seaClientState',
   SAPP_CACHE_BROKEN: 'mozuku::stores::App',
-  SAPP_PREFERENCE: 'Mozuku::AppPreference'
+  SAPP_PREFERENCE: 'Mozuku::AppPreference',
 })
 
 export const PREFERENCE_DISPLAY_META_ENABLED = 'PREFERENCE_SHOW_META'
@@ -28,7 +28,7 @@ class SApp {
   @observable hidden = document.hidden
   private setHidden(hidden: boolean) {
     this.hidden = hidden
-    this.hiddenListener.forEach(fn => fn(hidden))
+    this.hiddenListener.forEach((fn) => fn(hidden))
   }
   private hiddenListener: ((h: boolean) => void)[] = []
   subscribeHiddenChange(callback: (h: boolean) => void) {
@@ -48,7 +48,7 @@ class SApp {
         if (fieldName === 'author')
           return this.accounts.get(post.author.id) || post[fieldName]
         return post[fieldName]
-      }
+      },
     })
   }
 
@@ -142,8 +142,8 @@ class SApp {
   }
 
   async setAccounts(as: any[]) {
-    const accounts = as.map(a => new Account(a))
-    accounts.forEach(a => {
+    const accounts = as.map((a) => new Account(a))
+    accounts.forEach((a) => {
       this.accounts.set(a.id, a)
     })
     return accounts
@@ -151,8 +151,10 @@ class SApp {
   async setPosts(ps: any[]) {
     // cast to post
     const posts = await Promise.all(ps.map(async (p: any) => new Post(p)))
-    posts.map(p => p.author).forEach(a => this.accounts.set(a.id, a))
-    posts.forEach(p => this.posts.set(p.id, this.wrapPostWithLatestAccount(p)))
+    posts.map((p) => p.author).forEach((a) => this.accounts.set(a.id, a))
+    posts.forEach((p) =>
+      this.posts.set(p.id, this.wrapPostWithLatestAccount(p))
+    )
     return posts
   }
 

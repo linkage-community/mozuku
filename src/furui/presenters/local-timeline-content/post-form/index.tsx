@@ -26,7 +26,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
       onFileSelect,
       files,
       onFileCancelClick,
-      isUploading
+      isUploading,
     },
     ref
   ) => {
@@ -85,12 +85,12 @@ export default forwardRef<HTMLTextAreaElement, T>(
             !files.length
               ? {
                   height: '0px',
-                  padding: '0'
+                  padding: '0',
                 }
               : {}
           }
         >
-          {files.map(file => (
+          {files.map((file) => (
             <div className={styles.file} key={file.id}>
               <div
                 className={styles.fileThumbnail}

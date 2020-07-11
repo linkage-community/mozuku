@@ -16,7 +16,7 @@ export default ({
   setFiles,
   uploadAlbumFile,
   inReplyTo,
-  setInReplyTo
+  setInReplyTo,
 }: {
   draftDisabled: boolean
   setDraftDisabled: (b: boolean) => void
@@ -28,7 +28,7 @@ export default ({
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { useShortcut, usePreventUnload } = useBrowserHooks()
-  useShortcut('n'.charCodeAt(0), ev => {
+  useShortcut('n'.charCodeAt(0), (ev) => {
     const el = textareaRef.current!
     if (el.isEqualNode(document.activeElement)) return
     ev.preventDefault()
@@ -46,7 +46,7 @@ export default ({
           inReplyToId?: number
         } = {
           text: draft,
-          fileIds: files.map(file => file.id)
+          fileIds: files.map((file) => file.id),
         }
         if (inReplyTo) {
           payload.inReplyToId = inReplyTo
@@ -66,18 +66,18 @@ export default ({
     event.preventDefault()
     if (event.target.files != null) {
       await Array.from(event.target.files).map(
-        async file => await uploadAlbumFile(file)
+        async (file) => await uploadAlbumFile(file)
       )
     }
   }
   const onPaste = async (event: React.ClipboardEvent) => {
     if (draftDisabled) return
     await Array.from(event.clipboardData.files)
-      .filter(file => file.type.split('/').shift() == 'image')
-      .map(async file => await uploadAlbumFile(file))
+      .filter((file) => file.type.split('/').shift() == 'image')
+      .map(async (file) => await uploadAlbumFile(file))
   }
   const onFileCancelClick = async (fileId: number) => {
-    setFiles(files.filter(file => file.id != fileId))
+    setFiles(files.filter((file) => file.id != fileId))
   }
 
   return (

@@ -25,7 +25,7 @@ export default class Post implements Model {
       user: $.any,
       application: $.any,
       files: $.any,
-      inReplyToId: $.optionalNullable.num
+      inReplyToId: $.optionalNullable.num,
     }).throw(post)
   }
 
@@ -58,7 +58,7 @@ export default class Post implements Model {
       updatedAt: this.updatedAt,
       user: this.author.unpack(),
       application: this.application.unpack(),
-      files: this.files.map(file => file.unpack())
+      files: this.files.map((file) => file.unpack()),
     }
   }
 }

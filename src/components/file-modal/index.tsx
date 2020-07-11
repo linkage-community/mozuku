@@ -21,7 +21,7 @@ type ChildOpts = Omit<Opts, 'openInNewTab'> & {
 const ImageModal: React.FC<ChildOpts> = ({ onOpen, file: image, onClose }) => {
   return (
     <picture className={styles.container} onClick={onClose}>
-      {image.directs.map(variant => (
+      {image.directs.map((variant) => (
         <source
           key={variant.id}
           srcSet={variant.url.href}
@@ -49,7 +49,7 @@ const VideoModal: React.FC<ChildOpts> = ({ onOpen, file: video, onClose }) => {
 const FileModal: React.FC<Opts> = ({ onClose, file, openInNewTab }) => {
   const onOpen: (
     e: React.MouseEvent<HTMLImageElement | HTMLVideoElement, MouseEvent>
-  ) => void = e => {
+  ) => void = (e) => {
     openInNewTab(e.currentTarget.currentSrc)
   }
   return (

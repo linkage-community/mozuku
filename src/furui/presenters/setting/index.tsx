@@ -24,7 +24,7 @@ export default ({
   onUpdateMuteComputedApp,
   currentName,
   currentConfig,
-  logout
+  logout,
 }: {
   updateDisabled: boolean
   update: ({ name, avatar }: { name?: string; avatar?: File }) => Promise<void>
@@ -48,7 +48,7 @@ export default ({
       event.preventDefault()
       await update({
         name: refName.current!.value,
-        avatar: refFile.current!.files![0]
+        avatar: refFile.current!.files![0],
       })
       // prevent to upload twice
       refFile.current!.value = ''

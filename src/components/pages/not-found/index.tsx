@@ -5,7 +5,7 @@ import {
   Container,
   HeaderContainer,
   HeaderLogo,
-  BodyContainer
+  BodyContainer,
 } from '../_layout'
 
 const NotFound: React.FC<{ pathname: string }> = ({ pathname }) => (

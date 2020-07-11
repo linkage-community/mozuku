@@ -2,7 +2,7 @@ import { useEffect, useReducer } from 'react'
 
 const timerSubscribers = new Set<() => void>()
 const timer = () => {
-  Array.from(timerSubscribers.values()).forEach(async f => {
+  Array.from(timerSubscribers.values()).forEach(async (f) => {
     f()
   })
   window.setTimeout(timer, 1000)

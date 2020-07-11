@@ -7,7 +7,7 @@ import { differenceInSeconds } from 'date-fns'
 
 import app, {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
-  PREFERENCE_MUTE_COMPUTED_APP
+  PREFERENCE_MUTE_COMPUTED_APP,
 } from './app'
 
 import seaAPI from '../../sea-api'
@@ -46,7 +46,7 @@ class TimelineStore {
   }
 
   constructor({ onHiddenChange }: TimelineStoreDeps) {
-    onHiddenChange(hidden => {
+    onHiddenChange((hidden) => {
       if (!hidden) {
         // reset counter
         this.unreadCount = 0
@@ -58,18 +58,18 @@ class TimelineStore {
   }
   private countUnread(posts: Post[]) {
     if (!this.connectedAndBackground) return
-    this.unreadCount += posts.filter(p => !this.shouldMute(p)).length
+    this.unreadCount += posts.filter((p) => !this.shouldMute(p)).length
   }
 
   @computed get posts() {
     return this.postIds
-      .map(id => {
+      .map((id) => {
         const p = app.posts.get(id)
         if (!p) throw new Error('なんかおかしい')
         if (this.shouldMute(p)) return
         return p
       })
-      .filter(p => !!p) as Post[]
+      .filter((p) => !!p) as Post[]
   }
   @computed get title() {
     return [
@@ -77,7 +77,7 @@ class TimelineStore {
       ...(this.connectedAndBackground && this.unreadCount
         ? [`(${this.unreadCount})`]
         : []),
-      app.defaultTitle
+      app.defaultTitle,
     ].join(' ')
   }
 
@@ -99,10 +99,10 @@ class TimelineStore {
   private async unshift(...p: any[]) {
     // filter only ids that not seen: おそらく結構 Post のバリデーションが重たいので効率化のため
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
-    const fpp = pp.filter(p => !this.postIds.includes(p.id))
+    const fpp = pp.filter((p) => !this.postIds.includes(p.id))
 
     const posts = await app.setPosts(fpp)
-    const ids = posts.map(p => p.id)
+    const ids = posts.map((p) => p.id)
     // for safety: 上記 addPosts を読んでいる間に更新がされてた場合ちゃんと
     // 同じ投稿が1回のみタイムラインに表示される世界になってない可能性がある
     const idsSet = new Set([...ids, ...this.postIds])
@@ -116,16 +116,16 @@ class TimelineStore {
   @action
   private async push(...p: any[]) {
     const pp = p.map((p: any) => $.obj({ id: $.num }).throw(p))
-    const fpp = pp.filter(p => !this.postIds.includes(p.id))
+    const fpp = pp.filter((p) => !this.postIds.includes(p.id))
 
-    const ids = await app.setPosts(fpp).then(ps => ps.map(p => p.id))
+    const ids = await app.setPosts(fpp).then((ps) => ps.map((p) => p.id))
     const idsSet = new Set([...this.postIds, ...ids])
     this.postIds = Array.from(idsSet.values())
   }
 
   async fetch({
     sinceId,
-    count = 30
+    count = 30,
   }: { sinceId?: number; count?: number } = {}) {
     const query = new URLSearchParams()
     query.set('count', count.toString(10))
@@ -176,7 +176,7 @@ class TimelineStore {
       throw new Error('どういうことかわかりません...')
     }
     return new Promise((resolve, reject) => {
-      Notification.requestPermission(status => {
+      Notification.requestPermission((status) => {
         if (status === 'denied' || status === 'default') return reject()
         app.setPreference(PREFERENCE_NOTICE_WHEN_MENTIONED, true)
         return resolve()
@@ -188,20 +188,20 @@ class TimelineStore {
   }
   showNotification(pp: Post[]) {
     if (!this.notificationEnabled || !this.connectedAndBackground) return
-    pp.forEach(p => {
-      if (!p.nodes.some(n => isMention(n) && n.value === app.me!.screenName))
+    pp.forEach((p) => {
+      if (!p.nodes.some((n) => isMention(n) && n.value === app.me!.screenName))
         return
       const n = new Notification(
         `${p.author.name} (@${p.author.screenName}) mentioned you`,
         {
           body: p.nodes
-            .filter(n => !isMention(n))
-            .map(p => p.value)
+            .filter((n) => !isMention(n))
+            .map((p) => p.value)
             .join('')
             .trim(),
           icon: p.author.avatarFile
             ? p.author.avatarFile.thumbnail.url.href
-            : undefined
+            : undefined,
         }
       )
       n.addEventListener('click', () => window.focus())
@@ -242,7 +242,7 @@ class TimelineStore {
         if (this.stream) {
           this.stream.send(
             JSON.stringify({
-              type: 'ping'
+              type: 'ping',
             })
           )
         }
@@ -269,12 +269,12 @@ class TimelineStore {
     this.enableStreamPilot()
     this.streamLastPingFromServer = new Date()
 
-    stream.addEventListener('message', ev => {
+    stream.addEventListener('message', (ev) => {
       try {
         const m = $.obj({
           type: $.str.or(['success', 'error', 'message', 'ping']),
           message: $.optional.str,
-          content: $.optional.obj({})
+          content: $.optional.obj({}),
         }).throw(JSON.parse(ev.data))
         if (m.type === 'success') return
         if (m.type === 'error') throw new Error(m.message)
@@ -304,7 +304,7 @@ class TimelineStore {
 }
 
 const timeline = new TimelineStore({
-  onHiddenChange: app.subscribeHiddenChange.bind(app)
+  onHiddenChange: app.subscribeHiddenChange.bind(app),
 })
 export default timeline
 
