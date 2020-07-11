@@ -10,7 +10,7 @@ export default () => {
   const [uploadState, setUploadState] = useState(0)
   const [files, setFiles] = useState([] as AlbumFile[])
   const [draftDisabled, setDraftDisabled] = useState(false)
-  const [inReplyTo, setInReplyTo] = useState(null as number | null)
+  const [inReplyTo, setInReplyTo] = useState<number | null>(null)
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDrop(false)
