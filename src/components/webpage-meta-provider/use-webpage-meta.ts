@@ -10,8 +10,8 @@ export const useWebpageMeta = (href: string) => {
 
   React.useEffect(() => {
     getDescription(href)
-      .then(c => set(c))
-      .catch(e => e && console.error(e))
+      .then((c) => set(c))
+      .catch((e) => e && console.error(e))
   }, [])
 
   return description

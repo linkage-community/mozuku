@@ -18,7 +18,7 @@ export default ({
   onModalClose,
   openInNewTab,
   inReplyTo,
-  setInReplyTo
+  setInReplyTo,
 }: {
   posts: PostModel[]
   readMore: () => void
@@ -40,7 +40,7 @@ export default ({
       />
     )}
     <ul className={styles.timeline}>
-      {posts.map(post => (
+      {posts.map((post) => (
         <li key={post.id}>
           <Post
             post={post}
@@ -54,7 +54,7 @@ export default ({
       <InView
         as="li"
         threshold={1.0}
-        onChange={inView => {
+        onChange={(inView) => {
           if (inView && 0 < posts.length) {
             readMore()
           }
@@ -63,7 +63,7 @@ export default ({
         <button
           className={styles.readmore_button}
           disabled={readMoreDisabled}
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault()
             readMore()
           }}

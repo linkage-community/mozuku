@@ -15,8 +15,8 @@ export default () => {
     e.preventDefault()
     setIsDrop(false)
     Array.from(e.dataTransfer.files)
-      .filter(file => file.type.startsWith('image/'))
-      .map(file => uploadAlbumFile(file))
+      .filter((file) => file.type.startsWith('image/'))
+      .map((file) => uploadAlbumFile(file))
   }
   const uploadAlbumFile = async (file: File) => {
     appStore.setIsUploading(true)
@@ -25,7 +25,7 @@ export default () => {
       file,
       setUploadState
     )
-    setFiles(files => [...files, albumFile])
+    setFiles((files) => [...files, albumFile])
     appStore.setIsUploading(false)
     setUploadState(0)
   }

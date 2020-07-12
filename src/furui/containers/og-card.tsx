@@ -5,7 +5,7 @@ import { useWebpageMeta } from '../../components/webpage-meta-provider'
 
 export default ({
   url,
-  className = ''
+  className = '',
 }: {
   url: string
   className: string
@@ -17,7 +17,7 @@ export default ({
     Object.assign(
       {
         url,
-        className
+        className,
       },
       r
     )

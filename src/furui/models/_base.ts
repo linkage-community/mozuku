@@ -6,4 +6,4 @@ export default interface Model<T = any> {
   unpack(): T
 }
 
-export const validateDate = $.str.pipe(i => isValid(new Date(i)))
+export const validateDate = $.str.pipe((i) => isValid(new Date(i)))

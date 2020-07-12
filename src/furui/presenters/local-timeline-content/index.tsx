@@ -19,7 +19,7 @@ export default ({
   files,
   setFiles,
   inReplyTo,
-  setInReplyTo
+  setInReplyTo,
 }: {
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void
   isDrop: boolean

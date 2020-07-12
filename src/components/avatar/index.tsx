@@ -29,13 +29,13 @@ function DummyAvatar({ name, className }: { name: string; className: string }) {
 
 const Avatar: React.FC<AvatarOpts> = function Avatar({
   account,
-  className = ''
+  className = '',
 }) {
   const imageClassName = [className, styles.avatar].join(' ')
   if (account.avatarFile) {
     return (
       <picture>
-        {account.avatarFile.thumbnails.map(t => (
+        {account.avatarFile.thumbnails.map((t) => (
           <source key={t.id} srcSet={t.url.href} type={t.mime} />
         ))}
         <img className={imageClassName} title={account.avatarFile.fileName} />

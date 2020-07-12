@@ -6,14 +6,14 @@ import {
   appStore,
   PREFERENCE_DISPLAY_META_ENABLED,
   timelineStore,
-  useTimeline
+  useTimeline,
 } from '../../stores'
 import Timeline from '../../presenters/local-timeline-content/timeline'
 import { AlbumFile } from '../../models'
 
 export default ({
   inReplyTo,
-  setInReplyTo
+  setInReplyTo,
 }: {
   inReplyTo: number | null
   setInReplyTo: (n: number | null) => void

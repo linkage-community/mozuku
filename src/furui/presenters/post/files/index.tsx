@@ -23,7 +23,7 @@ const Image: React.FC<{
   return (
     <div className={styles.image}>
       <picture>
-        {image.thumbnails.map(t => (
+        {image.thumbnails.map((t) => (
           <source key={t.id} srcSet={t.url.href} type={t.mime} />
         ))}
         <img title={image.fileName} onClick={() => openFileModal(image)} />
@@ -75,7 +75,7 @@ const File: React.FC<{
 export default React.memo(
   ({
     albumFiles: files,
-    setModalContent
+    setModalContent,
   }: {
     albumFiles: AlbumFile[]
     setModalContent: (albumFile: AlbumFile | null) => void

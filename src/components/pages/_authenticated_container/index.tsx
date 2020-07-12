@@ -6,7 +6,7 @@ import {
   Container,
   BodyContainer,
   HeaderContainer,
-  HeaderLogo
+  HeaderLogo,
 } from '../_layout'
 
 import * as styles from './index.css'
@@ -21,7 +21,7 @@ const AppProvider: React.FC = ({ children }) => (
 
 const AuthenticatedContainer: React.FC<{ me?: Account }> = ({
   me,
-  children
+  children,
 }) => {
   return (
     <Container>

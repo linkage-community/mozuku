@@ -13,7 +13,7 @@ import { AlbumFile } from '../../models'
 import {
   EmojiNameKind,
   MentionKind,
-  LinkKind
+  LinkKind,
 } from '@linkage-community/bottlemail'
 
 import pictograph = require('pictograph')
@@ -73,7 +73,7 @@ export default ({
   metaEnabled,
   setModalContent,
   inReplyTo,
-  setInReplyTo
+  setInReplyTo,
 }: PostProps) => {
   return useMemo(
     () => (
@@ -86,7 +86,7 @@ export default ({
             className={[
               styles.displayName,
               // FIXME: DIRTY!
-              author.name.trim().length === 0 ? styles.empty : ''
+              author.name.trim().length === 0 ? styles.empty : '',
             ].join(' ')}
           >
             {author.name}

@@ -14,7 +14,7 @@ const COMMIT =
 export default {
   app: {
     id: process.env.CLIENT_ID,
-    secret: process.env.CLIENT_SECRET
+    secret: process.env.CLIENT_SECRET,
   },
   oauth: process.env.OAUTH_URL,
   api: process.env.API_URL,
@@ -22,6 +22,6 @@ export default {
   source: {
     repository:
       process.env.SOURCE_REPOSITORY_URL || 'https://github.com/otofune/mozuku',
-    commit: COMMIT ? COMMIT.substr(0, 7) : undefined
-  }
+    commit: COMMIT ? COMMIT.substr(0, 7) : undefined,
+  },
 }

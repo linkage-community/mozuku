@@ -4,7 +4,7 @@ import {
   Container,
   HeaderContainer,
   HeaderLogo,
-  BodyContainer
+  BodyContainer,
 } from '../_layout'
 
 import * as styles from './login.css'

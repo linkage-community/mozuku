@@ -3,7 +3,7 @@ import { useObserver } from 'mobx-react-lite'
 
 import {
   appStore,
-  PREFERENCE_DISPLAY_META_ENABLED
+  PREFERENCE_DISPLAY_META_ENABLED,
 } from '../../../furui/stores'
 import seaAPI from '../../../sea-api'
 import { Setting } from '../../../furui/presenters'
@@ -12,7 +12,7 @@ import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
   PREFERENCE_DISPLAY_OGCARD,
   PREFERENCE_FORCE_DARK_THEME,
-  PREFERENCE_MUTE_COMPUTED_APP
+  PREFERENCE_MUTE_COMPUTED_APP,
 } from '../../../furui/stores/app'
 const { useState, useCallback } = React
 import AuthenticatedContainer from '../_authenticated_container'
@@ -119,7 +119,7 @@ export default () => {
       ),
       ogcardEnabled: appStore.getPreference(PREFERENCE_DISPLAY_OGCARD),
       forceDarkTheme: appStore.getPreference(PREFERENCE_FORCE_DARK_THEME),
-      muteComputedApp: appStore.getPreference(PREFERENCE_MUTE_COMPUTED_APP)
+      muteComputedApp: appStore.getPreference(PREFERENCE_MUTE_COMPUTED_APP),
     }
     return (
       <AuthenticatedContainer me={appStore.me}>

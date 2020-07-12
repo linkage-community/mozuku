@@ -45,7 +45,7 @@ const RedirectToLogin = ({ location }: RouteComponentProps) => (
   <Redirect
     to={{
       pathname: '/login',
-      state: { from: location.pathname }
+      state: { from: location.pathname },
     }}
   />
 )

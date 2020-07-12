@@ -36,7 +36,7 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
       extension: $.string,
       mime: $.str,
       size: $.num,
-      url: $.str
+      url: $.str,
     }).throw(v)
   }
 
@@ -60,7 +60,7 @@ export class AlbumFileVariant implements Model<AlbumFileVariantBody> {
       extension,
       mime,
       size,
-      url: this.url.href
+      url: this.url.href,
     }
   }
 }
@@ -75,7 +75,7 @@ export default class AlbumFile implements Model<AlbumFileBody> {
       id: $.num,
       name: $.str,
       type: $.str, // FIXME: Please use constant value check instead of $.str (move to transform-ts?)
-      variants: $.arr()
+      variants: $.arr(),
     }).throw(f)
   }
 
@@ -84,11 +84,11 @@ export default class AlbumFile implements Model<AlbumFileBody> {
     this.id = file.id
     this.type = file.type
     this.fileName = file.name
-    file.variants.map(v => {
+    file.variants.map((v) => {
       const variant = new AlbumFileVariant(v)
       const newVariants = [
         ...(this.variants.get(variant.type) || []),
-        variant
+        variant,
       ].sort((a, b) => b.score - a.score)
       this.variants.set(variant.type, newVariants)
     })
@@ -113,13 +113,13 @@ export default class AlbumFile implements Model<AlbumFileBody> {
   thumbnailByMIME(mime: string) {
     const c = this.variants.get('thumbnail')!
     // TODO: ぱふぉーまんすもんだい
-    return c.find(v => v.mime === mime)
+    return c.find((v) => v.mime === mime)
   }
 
   directByMIME(mime: string) {
     const c = this.variants.get('image')!
     // TODO: ぱふぉーまんすもんだい
-    return c.find(v => v.mime === mime)
+    return c.find((v) => v.mime === mime)
   }
 
   unpack() {
@@ -128,7 +128,7 @@ export default class AlbumFile implements Model<AlbumFileBody> {
       name: this.fileName,
       variants: Array.from(this.variants.values())
         .reduce((c, v) => [...c, ...v], [])
-        .map(v => v.unpack())
+        .map((v) => v.unpack()),
     }
   }
 }
