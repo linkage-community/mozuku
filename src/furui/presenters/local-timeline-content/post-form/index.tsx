@@ -52,7 +52,7 @@ export default forwardRef<HTMLTextAreaElement, T>(
             onKeyDown={onKeyDown}
             onChange={onChange}
             onPaste={onPaste}
-            inputRef={ref!}
+            ref={ref!}
             placeholder="What's up Otaku?"
             value={draft}
           ></Textarea>
