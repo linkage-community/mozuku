@@ -1,5 +1,5 @@
-import * as React from 'react'
-const { useMemo } = React
+import React, { useMemo, useRef, useState, useReducer } from 'react'
+import { Overlay } from 'react-overlays'
 
 import { Post } from '../../models'
 import { DateTime } from '../../presenters'
@@ -60,11 +60,94 @@ const Body: React.FC<{
   )
 }
 
+const InReplyTo: React.FC<{
+  inReplyToId: number
+  inReplyToContent?: React.ReactNode
+}> = ({ inReplyToId, inReplyToContent }) => {
+  const url = new URL(config.sea)
+  url.pathname = `/posts/${inReplyToId}`
+  const href = url.href
+
+  const container = useRef<HTMLDivElement>(null)
+  const trigger = useRef<HTMLAnchorElement>(null)
+  // 固定状態からホバーを外しても(mouseLeave)ポップアップが出現されているようにするため、ポップアップがホバーされている状態(hovered)とクリックされて固定されている状態(locked)を区別する
+  // |        |---(mouseEnter)-->| hovered |             |        |
+  // |        |<--(mouseLeave)---|         |---(click)-->|        |
+  // | closed |--------------------------------(click)-->| locked |
+  // |        |<-------------------------------(click)---|        |
+  // |        |<---------------------------(rootClose)---|        |
+  const [showState, dispatch] = useReducer(
+    (
+      state: 'closed' | 'hovered' | 'locked',
+      action: 'click' | 'rootClose' | 'mouseEnter' | 'mouseLeave'
+    ) => {
+      switch (action) {
+        case 'click':
+          if (state === 'locked') return 'closed'
+          return 'locked'
+        case 'rootClose':
+          if (state === 'locked') return 'closed'
+          return state
+        case 'mouseEnter':
+          if (state === 'closed') return 'hovered'
+          return state
+        case 'mouseLeave':
+          if (state === 'hovered') return 'closed'
+          return state
+      }
+    },
+    'closed'
+  )
+  return (
+    <div
+      ref={container}
+      className={styles.body__inReplyTo}
+      onMouseLeave={() => dispatch('mouseLeave')}
+    >
+      <a
+        ref={trigger}
+        href={href}
+        target="_blank"
+        rel="noopener"
+        onClick={(e) => {
+          e.preventDefault()
+          dispatch('click')
+        }}
+        onMouseEnter={() => dispatch('mouseEnter')}
+      >
+        {'>>'}
+        {inReplyToId}
+      </a>
+      <Overlay
+        container={container}
+        target={trigger}
+        show={showState !== 'closed'}
+        placement="top-start"
+        // FIXME: リンクのクリックもrootCloseのクリック判定の対象になるので、固定状態であるとき以外発火しないようにする
+        // これをしないと、'click'と'rootClose'が同時に発行されて'closed'になってしまう
+        rootClose={showState === 'locked'}
+        onHide={() => dispatch('rootClose')}
+      >
+        {({ props }) => (
+          <div
+            {...props}
+            className={styles.overlay}
+            onClick={() => dispatch('click')}
+          >
+            {inReplyToContent}
+          </div>
+        )}
+      </Overlay>
+    </div>
+  )
+}
+
 type PostProps = {
   post: Post
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
   inReplyTo: number | null
+  inReplyToContent?: React.ReactNode
   setInReplyTo: (n: number | null) => void
 }
 export default ({
@@ -73,6 +156,7 @@ export default ({
   metaEnabled,
   setModalContent,
   inReplyTo,
+  inReplyToContent,
   setInReplyTo,
 }: PostProps) => {
   return useMemo(
@@ -123,19 +207,10 @@ export default ({
           </div>
         </div>
         {post.inReplyToId && (
-          <div className={styles.body__inReplyTo}>
-            <a
-              href={`${(() => {
-                const u = new URL(config.sea)
-                u.pathname = `/posts/${post.inReplyToId}`
-                return u.href
-              })()}`}
-              target="_blank"
-              rel="noopener"
-            >
-              >>{post.inReplyToId}
-            </a>
-          </div>
+          <InReplyTo
+            inReplyToId={post.inReplyToId}
+            inReplyToContent={inReplyToContent}
+          />
         )}
         <Body bodyNodes={post.nodes} className={styles.body} />
         {0 < post.files.length && (

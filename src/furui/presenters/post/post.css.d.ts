@@ -17,5 +17,6 @@ declare const styles: {
   readonly meta: string
   readonly enabled: string
   readonly meta__badge: string
+  readonly overlay: string
 }
 export = styles

@@ -1,76 +1,63 @@
-import * as React from 'react'
+import React from 'react'
 
-import { Post as PostModel, AlbumFile } from '../../../models'
-import { Post } from '../../../presenters'
+import { AlbumFile } from '../../../models'
 
 import * as styles from './timeline.css'
 
 import { InView } from 'react-intersection-observer'
 import FileModal from '../../../../components/file-modal'
 
-export default ({
-  posts,
-  readMore,
-  readMoreDisabled,
-  postMetaEnabled = false,
-  modalContent,
-  setModalContent,
-  onModalClose,
-  openInNewTab,
-  inReplyTo,
-  setInReplyTo,
-}: {
-  posts: PostModel[]
+export type TimelineProps = Readonly<{
   readMore: () => void
   readMoreDisabled: boolean
-  postMetaEnabled?: boolean
   modalContent: AlbumFile | null
-  setModalContent: (albumFile: AlbumFile | null) => void
   onModalClose: () => void
   openInNewTab: (path: string) => void
-  inReplyTo: number | null
-  setInReplyTo: (n: number | null) => void
-}) => (
-  <>
-    {modalContent && (
-      <FileModal
-        file={modalContent}
-        openInNewTab={openInNewTab}
-        onClose={onModalClose}
-      />
-    )}
-    <ul className={styles.timeline}>
-      {posts.map((post) => (
-        <li key={post.id}>
-          <Post
-            post={post}
-            metaEnabled={postMetaEnabled}
-            setModalContent={setModalContent}
-            inReplyTo={inReplyTo}
-            setInReplyTo={setInReplyTo}
-          />
-        </li>
-      ))}
-      <InView
-        as="li"
-        threshold={1.0}
-        onChange={(inView) => {
-          if (inView && 0 < posts.length) {
-            readMore()
-          }
-        }}
-      >
-        <button
-          className={styles.readmore_button}
-          disabled={readMoreDisabled}
-          onClick={(e) => {
-            e.preventDefault()
-            readMore()
+}>
+
+export const Timeline: React.FC<TimelineProps> = ({
+  children,
+  readMore,
+  readMoreDisabled,
+  modalContent,
+  onModalClose,
+  openInNewTab,
+}) => {
+  const empty = React.Children.count(children) === 0
+  return (
+    <>
+      {modalContent && (
+        <FileModal
+          file={modalContent}
+          openInNewTab={openInNewTab}
+          onClose={onModalClose}
+        />
+      )}
+      <ul className={styles.timeline}>
+        {children}
+        <InView
+          as="li"
+          threshold={1.0}
+          onChange={(inView) => {
+            if (inView && !empty) {
+              readMore()
+            }
           }}
         >
-          {readMoreDisabled ? 'LOADING...' : 'READ MORE'}
-        </button>
-      </InView>
-    </ul>
-  </>
-)
+          <button
+            className={styles.readmore_button}
+            disabled={readMoreDisabled}
+            onClick={(e) => {
+              e.preventDefault()
+              readMore()
+            }}
+          >
+            {readMoreDisabled ? 'LOADING...' : 'READ MORE'}
+          </button>
+        </InView>
+      </ul>
+    </>
+  )
+}
+
+export const TimelineItem: React.FC = ({ children }) => <li>{children}</li>

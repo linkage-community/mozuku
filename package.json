@@ -24,6 +24,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2",
+    "react-overlays": "^4.1.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-textarea-autosize": "^8.2.0",
@@ -50,7 +51,7 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --no-source-maps",
-    "gen-csstype": "tcm src && prettier \"./src/**/*.{css.d.ts}\"",
+    "gen-csstype": "tcm src && prettier --write \"./src/**/*.css.d.ts\"",
     "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
     "format": "yarn prettier --write",
     "prettier": "prettier \"./src/**/*.{html,css,pcss,ts,tsx}\"",
