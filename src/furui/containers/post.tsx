@@ -19,7 +19,6 @@ const PostContainer = ({
   return useObserver(() => {
     const post = appStore.posts.get(postId)
     if (post == null) {
-      console.log(appStore.posts)
       appStore.fetchPost(postId)
       return null
     }
