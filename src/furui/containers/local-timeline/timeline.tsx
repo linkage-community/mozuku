@@ -2,14 +2,13 @@ import * as React from 'react'
 const { useState, useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
+import { timelineStore, useTimeline } from '../../stores'
 import {
-  appStore,
-  PREFERENCE_DISPLAY_META_ENABLED,
-  timelineStore,
-  useTimeline,
-} from '../../stores'
-import Timeline from '../../presenters/local-timeline-content/timeline'
+  Timeline,
+  TimelineItem,
+} from '../../presenters/local-timeline-content/timeline'
 import { AlbumFile } from '../../models'
+import PostContainer from '../post'
 
 export default ({
   inReplyTo,
@@ -44,19 +43,23 @@ export default ({
     }
     return (
       <Timeline
-        posts={timelineStore.posts}
         readMore={timelineStore.readMore.bind(timelineStore)}
         readMoreDisabled={timelineStore.readMoreDisabled}
-        postMetaEnabled={appStore.getPreference(
-          PREFERENCE_DISPLAY_META_ENABLED
-        )}
         modalContent={modalContent}
-        setModalContent={setModalContent}
         onModalClose={onModalClose}
         openInNewTab={openTab}
-        inReplyTo={inReplyTo}
-        setInReplyTo={setInReplyTo}
-      />
+      >
+        {timelineStore.postIds.map((postId) => (
+          <TimelineItem key={postId}>
+            <PostContainer
+              postId={postId}
+              setModalContent={setModalContent}
+              inReplyTo={inReplyTo}
+              setInReplyTo={setInReplyTo}
+            />
+          </TimelineItem>
+        ))}
+      </Timeline>
     )
   })
 }
