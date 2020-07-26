@@ -16,7 +16,7 @@ import {
   LinkKind,
 } from '@linkage-community/bottlemail'
 
-import pictograph = require('pictograph')
+import * as pictograph from 'pictograph'
 import config from '../../../config'
 import Avatar from '../../../components/avatar'
 
