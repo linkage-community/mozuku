@@ -70,6 +70,12 @@ const InReplyTo: React.FC<{
 
   const container = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLAnchorElement>(null)
+  // 固定状態からホバーを外しても(mouseLeave)ポップアップが出現されているようにするため、ポップアップがホバーされている状態(hovered)とクリックされて固定されている状態(locked)を区別する
+  // |        |---(mouseEnter)-->| hovered |             |        |
+  // |        |<--(mouseLeave)---|         |---(click)-->|        |
+  // | closed |--------------------------------(click)-->| locked |
+  // |        |<-------------------------------(click)---|        |
+  // |        |<---------------------------(rootClose)---|        |
   const [showState, dispatch] = useReducer(
     (
       state: 'closed' | 'hovered' | 'locked',
@@ -80,7 +86,7 @@ const InReplyTo: React.FC<{
           if (state === 'locked') return 'closed'
           return 'locked'
         case 'rootClose':
-          if (state !== 'hovered') return 'closed'
+          if (state === 'locked') return 'closed'
           return state
         case 'mouseEnter':
           if (state === 'closed') return 'hovered'
@@ -117,6 +123,8 @@ const InReplyTo: React.FC<{
         target={trigger}
         show={showState !== 'closed'}
         placement="top-start"
+        // FIXME: リンクのクリックもrootCloseのクリック判定の対象になるので、固定状態であるとき以外発火しないようにする
+        // これをしないと、'click'と'rootClose'が同時に発行されて'closed'になってしまう
         rootClose={showState === 'locked'}
         onHide={() => dispatch('rootClose')}
       >
