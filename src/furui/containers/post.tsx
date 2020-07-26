@@ -18,7 +18,11 @@ const PostContainer = ({
 }: PostContainerProps) => {
   return useObserver(() => {
     const post = appStore.posts.get(postId)
-    if (post == null) return null
+    if (post == null) {
+      console.log(appStore.posts)
+      appStore.fetchPost(postId)
+      return null
+    }
 
     const metaEnabled = appStore.getPreference(PREFERENCE_DISPLAY_META_ENABLED)
 
