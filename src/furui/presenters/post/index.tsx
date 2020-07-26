@@ -1,5 +1,5 @@
-import * as React from 'react'
-const { useMemo } = React
+import React, { useMemo, useRef, useState } from 'react'
+import { Overlay } from 'react-overlays'
 
 import { Post } from '../../models'
 import { DateTime } from '../../presenters'
@@ -60,11 +60,59 @@ const Body: React.FC<{
   )
 }
 
+const InReplyTo: React.FC<{
+  inReplyToId: number
+  inReplyToContent?: React.ReactNode
+}> = ({ inReplyToId, inReplyToContent }) => {
+  const url = new URL(config.sea)
+  url.pathname = `/posts/${inReplyToId}`
+  const href = url.href
+
+  const container = useRef<HTMLDivElement>(null)
+  const trigger = useRef<HTMLAnchorElement>(null)
+  const [show, setShow] = useState(false)
+  const handleClick: React.DOMAttributes<HTMLAnchorElement>['onClick'] = (
+    event
+  ) => {
+    setShow((s) => !s)
+    event.preventDefault()
+  }
+  return (
+    <>
+      <div ref={container} className={styles.body__inReplyTo}>
+        <a
+          ref={trigger}
+          href={href}
+          target="_blank"
+          rel="noopener"
+          onClick={handleClick}
+        >
+          {'>>'}
+          {inReplyToId}
+        </a>
+        <Overlay
+          container={container}
+          target={trigger}
+          show={show}
+          placement="top-start"
+        >
+          {({ props }) => (
+            <div {...props}>
+              <div className={styles.overlay}>{inReplyToContent}</div>
+            </div>
+          )}
+        </Overlay>
+      </div>
+    </>
+  )
+}
+
 type PostProps = {
   post: Post
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
   inReplyTo: number | null
+  inReplyToContent?: React.ReactNode
   setInReplyTo: (n: number | null) => void
 }
 export default ({
@@ -73,6 +121,7 @@ export default ({
   metaEnabled,
   setModalContent,
   inReplyTo,
+  inReplyToContent,
   setInReplyTo,
 }: PostProps) => {
   return useMemo(
@@ -123,19 +172,10 @@ export default ({
           </div>
         </div>
         {post.inReplyToId && (
-          <div className={styles.body__inReplyTo}>
-            <a
-              href={`${(() => {
-                const u = new URL(config.sea)
-                u.pathname = `/posts/${post.inReplyToId}`
-                return u.href
-              })()}`}
-              target="_blank"
-              rel="noopener"
-            >
-              >>{post.inReplyToId}
-            </a>
-          </div>
+          <InReplyTo
+            inReplyToId={post.inReplyToId}
+            inReplyToContent={inReplyToContent}
+          />
         )}
         <Body bodyNodes={post.nodes} className={styles.body} />
         {0 < post.files.length && (

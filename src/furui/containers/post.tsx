@@ -29,6 +29,16 @@ const PostContainer = ({
         setModalContent={setModalContent}
         inReplyTo={inReplyTo}
         setInReplyTo={setInReplyTo}
+        inReplyToContent={
+          post.inReplyToId && (
+            <PostContainer
+              postId={post.inReplyToId}
+              setModalContent={setModalContent}
+              inReplyTo={inReplyTo}
+              setInReplyTo={setInReplyTo}
+            />
+          )
+        }
       />
     )
   })
