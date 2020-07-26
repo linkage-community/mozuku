@@ -18,7 +18,13 @@
 
 import * as React from 'react'
 import { render } from 'react-dom'
-import { Route, Switch, Redirect, RouteComponentProps } from 'react-router'
+import {
+  Route,
+  Switch,
+  Redirect,
+  RouteComponentProps,
+  StaticContext,
+} from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import usePromise from 'react-use-promise'
 
@@ -49,7 +55,9 @@ const RedirectToLogin = ({ location }: RouteComponentProps) => (
     }}
   />
 )
-const LoginWrapper = ({ location }: RouteComponentProps) => {
+const LoginWrapper = ({
+  location,
+}: RouteComponentProps<{}, StaticContext, { from: string }>) => {
   const next =
     (location.state && location.state.from) ||
     new URLSearchParams(location.search).get('next') ||

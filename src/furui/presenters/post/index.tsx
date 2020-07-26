@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useReducer } from 'react'
+import React, { useMemo, useRef, useReducer } from 'react'
 import { Overlay } from 'react-overlays'
 
 import { Post } from '../../models'
@@ -186,9 +186,7 @@ export default ({
               >
                 <span
                   className={`uil ${
-                    inReplyTo === post.id
-                      ? `uil-comment-dots ${styles.reply__rotate}`
-                      : 'uil-comment'
+                    inReplyTo === post.id ? `uil-comment-dots` : 'uil-comment'
                   }`}
                 />
               </button>
