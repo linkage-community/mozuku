@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useReducer } from 'react'
+import React, { useMemo, useRef, useState, useReducer, useEffect } from 'react'
 import { Overlay } from 'react-overlays'
 
 import { Post } from '../../models'
@@ -10,13 +10,15 @@ import Files from './files'
 import * as styles from './post.css'
 import { AlbumFile } from '../../models'
 
+import { useOutsideClick } from '../../../components/hooks'
+
 import {
   EmojiNameKind,
   MentionKind,
   LinkKind,
 } from '@linkage-community/bottlemail'
 
-import pictograph = require('pictograph')
+import * as pictograph from 'pictograph'
 import config from '../../../config'
 import Avatar from '../../../components/avatar'
 
@@ -60,6 +62,7 @@ const Body: React.FC<{
   )
 }
 
+const inReplyToInitialState = () => ({ lock: false, show: false })
 const InReplyTo: React.FC<{
   inReplyToId: number
   inReplyToContent?: React.ReactNode
@@ -70,34 +73,30 @@ const InReplyTo: React.FC<{
 
   const container = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLAnchorElement>(null)
-  // 固定状態からホバーを外しても(mouseLeave)ポップアップが出現されているようにするため、ポップアップがホバーされている状態(hovered)とクリックされて固定されている状態(locked)を区別する
-  // |        |---(mouseEnter)-->| hovered |             |        |
-  // |        |<--(mouseLeave)---|         |---(click)-->|        |
-  // | closed |--------------------------------(click)-->| locked |
-  // |        |<-------------------------------(click)---|        |
-  // |        |<---------------------------(rootClose)---|        |
-  const [showState, dispatch] = useReducer(
+
+  const [{ show }, dispatch] = useReducer(
     (
-      state: 'closed' | 'hovered' | 'locked',
-      action: 'click' | 'rootClose' | 'mouseEnter' | 'mouseLeave'
+      state: { show: boolean; lock: boolean },
+      action: 'click' | 'close' | 'mouseEnter' | 'mouseLeave'
     ) => {
       switch (action) {
         case 'click':
-          if (state === 'locked') return 'closed'
-          return 'locked'
-        case 'rootClose':
-          if (state === 'locked') return 'closed'
-          return state
+          return { show: true, lock: state.show }
+        case 'close':
+          return inReplyToInitialState()
         case 'mouseEnter':
-          if (state === 'closed') return 'hovered'
-          return state
+          if (state.lock) return state
+          return { show: true, lock: false }
         case 'mouseLeave':
-          if (state === 'hovered') return 'closed'
-          return state
+          if (state.lock) return state
+          return { show: false, lock: false }
       }
     },
-    'closed'
+    inReplyToInitialState()
   )
+
+  useOutsideClick(container, () => dispatch('close'))
+
   return (
     <div
       ref={container}
@@ -121,12 +120,9 @@ const InReplyTo: React.FC<{
       <Overlay
         container={container}
         target={trigger}
-        show={showState !== 'closed'}
+        show={show}
         placement="top-start"
-        // FIXME: リンクのクリックもrootCloseのクリック判定の対象になるので、固定状態であるとき以外発火しないようにする
-        // これをしないと、'click'と'rootClose'が同時に発行されて'closed'になってしまう
-        rootClose={showState === 'locked'}
-        onHide={() => dispatch('rootClose')}
+        rootClose={false}
       >
         {({ props }) => (
           <div
