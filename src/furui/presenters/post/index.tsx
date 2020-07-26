@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState, useReducer } from 'react'
 import { Overlay } from 'react-overlays'
 
 import { Post } from '../../models'
@@ -70,40 +70,67 @@ const InReplyTo: React.FC<{
 
   const container = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLAnchorElement>(null)
-  const [show, setShow] = useState(false)
-  const handleClick: React.DOMAttributes<HTMLAnchorElement>['onClick'] = (
-    event
-  ) => {
-    setShow((s) => !s)
-    event.preventDefault()
-  }
+  const [showState, dispatch] = useReducer(
+    (
+      state: 'closed' | 'hovered' | 'locked',
+      action: 'click' | 'rootClose' | 'mouseEnter' | 'mouseLeave'
+    ) => {
+      switch (action) {
+        case 'click':
+          if (state === 'locked') return 'closed'
+          return 'locked'
+        case 'rootClose':
+          if (state !== 'hovered') return 'closed'
+          return state
+        case 'mouseEnter':
+          if (state === 'closed') return 'hovered'
+          return state
+        case 'mouseLeave':
+          if (state === 'hovered') return 'closed'
+          return state
+      }
+    },
+    'closed'
+  )
   return (
-    <>
-      <div ref={container} className={styles.body__inReplyTo}>
-        <a
-          ref={trigger}
-          href={href}
-          target="_blank"
-          rel="noopener"
-          onClick={handleClick}
-        >
-          {'>>'}
-          {inReplyToId}
-        </a>
-        <Overlay
-          container={container}
-          target={trigger}
-          show={show}
-          placement="top-start"
-        >
-          {({ props }) => (
-            <div {...props}>
-              <div className={styles.overlay}>{inReplyToContent}</div>
-            </div>
-          )}
-        </Overlay>
-      </div>
-    </>
+    <div
+      ref={container}
+      className={styles.body__inReplyTo}
+      onMouseLeave={() => dispatch('mouseLeave')}
+    >
+      <a
+        ref={trigger}
+        href={href}
+        target="_blank"
+        rel="noopener"
+        onClick={(e) => {
+          e.preventDefault()
+          dispatch('click')
+        }}
+        onMouseEnter={() => dispatch('mouseEnter')}
+      >
+        {'>>'}
+        {inReplyToId}
+      </a>
+      <Overlay
+        container={container}
+        target={trigger}
+        show={showState !== 'closed'}
+        placement="top-start"
+        rootClose={showState === 'locked'}
+        onHide={() => dispatch('rootClose')}
+      >
+        {({ props }) => (
+          <div
+            {...props}
+            className={styles.overlay}
+            onClick={() => dispatch('click')}
+          >
+            {inReplyToContent}
+          </div>
+        )}
+      </Overlay>
+    </div>
   )
 }
 

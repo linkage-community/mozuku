@@ -105,8 +105,8 @@
 }
 
 .overlay {
-  z-index: 2;
-  width: 100%;
+  z-index: 1;
+  width: calc(100vh - 48px * 2);
   max-width: 720px;
   background-color: var(--color-foreground);
   border: 1px solid var(--color-border);
