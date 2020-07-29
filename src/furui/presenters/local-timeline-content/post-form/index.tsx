@@ -52,7 +52,8 @@ export default forwardRef<HTMLTextAreaElement, T>(
             onKeyDown={onKeyDown}
             onChange={onChange}
             onPaste={onPaste}
-            ref={ref!}
+            // FIXME: Textareaの型がおかしい(string & ...は明らかに不正)
+            ref={ref as any}
             placeholder="What's up Otaku?"
             value={draft}
           ></Textarea>

@@ -185,9 +185,7 @@ export default ({
               >
                 <span
                   className={`uil ${
-                    inReplyTo === post.id
-                      ? `uil-comment-dots ${styles.reply__rotate}`
-                      : 'uil-comment'
+                    inReplyTo === post.id ? `uil-comment-dots` : 'uil-comment'
                   }`}
                 />
               </button>
