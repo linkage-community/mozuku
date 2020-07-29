@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useReducer } from 'react'
-import { Overlay } from 'react-overlays'
+import { Overlay, useRootClose } from 'react-overlays'
 
 import { Post } from '../../models'
 import { DateTime } from '../../presenters'
@@ -74,18 +74,16 @@ const InReplyTo: React.FC<{
   // |        |---(mouseEnter)-->| hovered |             |        |
   // |        |<--(mouseLeave)---|         |---(click)-->|        |
   // | closed |--------------------------------(click)-->| locked |
-  // |        |<-------------------------------(click)---|        |
-  // |        |<---------------------------(rootClose)---|        |
+  // |        |<-------------------------------(close)---|        |
   const [showState, dispatch] = useReducer(
     (
       state: 'closed' | 'hovered' | 'locked',
-      action: 'click' | 'rootClose' | 'mouseEnter' | 'mouseLeave'
+      action: 'click' | 'close' | 'mouseEnter' | 'mouseLeave'
     ) => {
       switch (action) {
         case 'click':
-          if (state === 'locked') return 'closed'
           return 'locked'
-        case 'rootClose':
+        case 'close':
           if (state === 'locked') return 'closed'
           return state
         case 'mouseEnter':
@@ -98,6 +96,10 @@ const InReplyTo: React.FC<{
     },
     'closed'
   )
+  const show = showState !== 'closed'
+  // コンテナの外側をクリックされたら閉じる
+  useRootClose(container, () => dispatch('close'))
+
   return (
     <div
       ref={container}
@@ -111,6 +113,7 @@ const InReplyTo: React.FC<{
         rel="noopener"
         onClick={(e) => {
           e.preventDefault()
+          e.stopPropagation()
           dispatch('click')
         }}
         onMouseEnter={() => dispatch('mouseEnter')}
@@ -121,12 +124,8 @@ const InReplyTo: React.FC<{
       <Overlay
         container={container}
         target={trigger}
-        show={showState !== 'closed'}
+        show={show}
         placement="top-start"
-        // FIXME: リンクのクリックもrootCloseのクリック判定の対象になるので、固定状態であるとき以外発火しないようにする
-        // これをしないと、'click'と'rootClose'が同時に発行されて'closed'になってしまう
-        rootClose={showState === 'locked'}
-        onHide={() => dispatch('rootClose')}
       >
         {({ props }) => (
           <div
