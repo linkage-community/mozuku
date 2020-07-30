@@ -3,11 +3,25 @@ const { useState, useRef } = React
 
 import seaAPI from '../../../sea-api'
 import { appStore } from '../../stores'
+import parse, * as bottlemail from '@linkage-community/bottlemail'
 
 import { useBrowserHooks } from '../../../components/browser-provider'
 
 import PostForm from '../../presenters/local-timeline-content/post-form'
 import { AlbumFile } from '../../models'
+
+const removeUselessCharactorFromLink = (nodes: bottlemail.NodeType[]) =>
+  nodes
+    .map((n) => {
+      switch (n.kind) {
+        case bottlemail.LinkKind:
+          // bottlemail が除去するので、それに任せる
+          return n.value
+        default:
+          return n.raw
+      }
+    })
+    .join('')
 
 export default ({
   draftDisabled,
@@ -45,7 +59,7 @@ export default ({
           fileIds: number[]
           inReplyToId?: number
         } = {
-          text: draft,
+          text: removeUselessCharactorFromLink(parse(draft)),
           fileIds: files.map((file) => file.id),
         }
         if (inReplyTo) {
