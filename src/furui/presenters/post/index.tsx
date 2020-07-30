@@ -30,7 +30,7 @@ const Body: React.FC<{
         switch (node.kind) {
           case LinkKind:
             return (
-              <a key={i} href={node.raw} target="_blank">
+              <a key={i} href={node.value} target="_blank">
                 {(() => {
                   try {
                     return decodeURI(node.value)
