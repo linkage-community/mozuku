@@ -7,7 +7,7 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
-    "@linkage-community/bottlemail": "^2.1.0",
+    "@linkage-community/bottlemail": "^3.0.0",
     "autoprefixer": "^9.8.5",
     "axios": "^0.19.2",
     "cafy": "^15.2.1",
