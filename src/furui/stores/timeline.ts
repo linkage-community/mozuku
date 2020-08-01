@@ -212,7 +212,7 @@ class TimelineStore {
     const reconnect = async () => {
       this.closeStream()
       // memo: 接続性チェックも含む
-      const latestId = this.filteredPostIds[0]
+      const latestId = this.postIds[0]
       const kwargs = latestId ? { sinceId: latestId } : undefined
       await app.fetchMe()
       await this.openStream()
