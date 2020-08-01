@@ -159,13 +159,8 @@ class SApp {
   }
 
   async fetchPost(id: number) {
-    const query = new URLSearchParams()
-    query.set('count', '1')
-    query.set('maxId', (id + 1).toString(10))
-    const ps = await seaAPI.get(`/v1/timelines/public?${query.toString()}`)
-    if (!Array.isArray(ps) || ps.length !== 1)
-      throw new Error('invalid response')
-    this.setPosts(ps)
+    const p = await seaAPI.get(`/v1/posts/${id}`)
+    this.setPosts([p])
   }
 
   @observable isUploading: boolean = false
