@@ -61,16 +61,15 @@ class TimelineStore {
     this.unreadCount += posts.filter((p) => !this.shouldMute(p)).length
   }
 
-  @computed get posts() {
-    return this.postIds
-      .map((id) => {
-        const p = app.posts.get(id)
-        if (!p) throw new Error('なんかおかしい')
-        if (this.shouldMute(p)) return
-        return p
-      })
-      .filter((p) => !!p) as Post[]
+  @computed get filteredPostIds() {
+    return this.postIds.filter((id) => {
+      const p = app.posts.get(id)
+      if (!p) return false
+      if (this.shouldMute(p)) return false
+      return true
+    })
   }
+
   @computed get title() {
     return [
       this.streamConnected ? '⚡️' : '🌩️',
@@ -213,8 +212,8 @@ class TimelineStore {
     const reconnect = async () => {
       this.closeStream()
       // memo: 接続性チェックも含む
-      const latest = this.posts[0]
-      const kwargs = latest ? { sinceId: latest.id } : undefined
+      const latestId = this.filteredPostIds[0]
+      const kwargs = latestId ? { sinceId: latestId } : undefined
       await app.fetchMe()
       await this.openStream()
       await this.fetch(kwargs)
