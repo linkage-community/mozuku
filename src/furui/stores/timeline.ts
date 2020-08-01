@@ -25,7 +25,7 @@ type TimelineStoreDeps = {
 }
 
 class TimelineStore {
-  @observable postIds: number[] = []
+  @observable private postIds: number[] = []
   @observable private unreadCount: number = 0
   @observable private _hidden = app.hidden
   @computed
