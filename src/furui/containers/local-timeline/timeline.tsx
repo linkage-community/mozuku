@@ -49,7 +49,7 @@ export default ({
         onModalClose={onModalClose}
         openInNewTab={openTab}
       >
-        {timelineStore.postIds.map((postId) => (
+        {timelineStore.filteredPostIds.map((postId) => (
           <TimelineItem key={postId}>
             <PostContainer
               postId={postId}
