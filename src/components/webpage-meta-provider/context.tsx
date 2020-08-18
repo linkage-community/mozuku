@@ -22,16 +22,7 @@ const defaultValue: WebpageMetaContext = {
     return r.data
   },
 }
-// FIXME: Provider に value を *必ず* 渡す必要があるので {} as any で無意味な値を突っこんでいるが、本当にこれでいいのか?
 export const WebpageMetaContext = React.createContext<WebpageMetaContext>(
-  {} as any
+  defaultValue
 )
 WebpageMetaContext.displayName = 'WebpageMetaContext'
-
-export const WebpageMetaProvider: React.FC = ({ children }) => {
-  return (
-    <WebpageMetaContext.Provider value={defaultValue}>
-      {children}
-    </WebpageMetaContext.Provider>
-  )
-}
