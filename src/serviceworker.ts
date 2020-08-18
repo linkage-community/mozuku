@@ -6,7 +6,7 @@ self.addEventListener('fetch', (event: any) => {
   const fetchEvent = event
   const url = new URL(fetchEvent.request.url)
   if (url.hostname !== 'analizzatore.prezzemolo.org') return
-  url.host = 'ogp-syutoku-kun.herokuapp.com'
+  url.host = 'ogp-syutoku-kun.vercel.app'
   url.pathname = '/api/v1/fetch'
   fetchEvent.respondWith(fetch(url.href))
 })
