@@ -1,12 +1,12 @@
-self.addEventListener('activate', () => {
+const ctx: ServiceWorkerGlobalScope = self as any
+ctx.addEventListener('activate', (ev) => {
   console.log('ServiceWorker is activated.')
+  ev.waitUntil(async () => {
+    await ctx.registration.navigationPreload?.enable()
+  })
 })
 
-self.addEventListener('fetch', (event: any) => {
-  const fetchEvent = event
-  const url = new URL(fetchEvent.request.url)
-  if (url.hostname !== 'analizzatore.prezzemolo.org') return
-  url.host = 'ogp-syutoku-kun.herokuapp.com'
-  url.pathname = '/api/v1/fetch'
-  fetchEvent.respondWith(fetch(url.href))
+// To make the App installable, SW must have a 'fetch' event listener.
+ctx.addEventListener('fetch', () => {
+  /* noop */
 })

@@ -1,5 +1,6 @@
 import * as React from 'react'
-import riassumere, { interfaces as IRiassumere } from 'riassumere'
+import { interfaces as IRiassumere } from 'riassumere'
+import axios from 'axios'
 
 type WebpageMetaContext = {
   getDescription: (href: string) => Promise<IRiassumere.ISummary | undefined>
@@ -11,22 +12,17 @@ const defaultValue: WebpageMetaContext = {
     if (clawlCaches.has(href)) {
       return clawlCaches.get(href)
     }
-    const r = await riassumere(href)
-    // あり得ないので無視
-    if (Array.isArray(r)) return
-    clawlCaches.set(href, r)
-    return r
+    const r = await axios.get<IRiassumere.ISummary>(
+      `https://ogp-syutoku-kun.vercel.app/api/v1/fetch`,
+      {
+        params: { url: href },
+      }
+    )
+    clawlCaches.set(href, r.data)
+    return r.data
   },
 }
-// FIXME: Provider に value を *必ず* 渡す必要があるので {} as any で無意味な値を突っこんでいるが、本当にこれでいいのか?
 export const WebpageMetaContext = React.createContext<WebpageMetaContext>(
-  {} as any
+  defaultValue
 )
-
-export const WebpageMetaProvider: React.FC = ({ children }) => {
-  return (
-    <WebpageMetaContext.Provider value={defaultValue}>
-      {children}
-    </WebpageMetaContext.Provider>
-  )
-}
+WebpageMetaContext.displayName = 'WebpageMetaContext'
