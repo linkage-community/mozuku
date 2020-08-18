@@ -55,6 +55,7 @@
     "clean": "rimraf \"{dist/*.{png,html,js,map,css},.cache}\"",
     "format": "yarn prettier --write",
     "prettier": "prettier \"./src/**/*.{html,css,pcss,ts,tsx}\"",
+    "check-type": "tsc --noEmit --skipLibCheck",
     "test": "yarn prettier --check # && jest"
   },
   "husky": {
