@@ -14,7 +14,7 @@
     "date-fns": "^2.15.0",
     "date-fns-tz": "^1.0.10",
     "filesize": "^6.1.0",
-    "mobx": "^5.15.4",
+    "mobx": "^5.15.6",
     "mobx-react-lite": "^2.0.7",
     "parcel": "^1.12.4",
     "pictograph": "^2.3.0",
