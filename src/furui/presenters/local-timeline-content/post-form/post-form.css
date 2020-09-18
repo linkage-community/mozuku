@@ -21,8 +21,12 @@
   max-height: 50vh;
   padding: 12px 172px 12px 18px;
   appearance: none;
-  transition: height 0.2s;
+  transition: height, min-height 0.2s;
   resize: none;
+}
+
+.extendTextarea {
+  min-height: 84px;
 }
 
 .attachButton {

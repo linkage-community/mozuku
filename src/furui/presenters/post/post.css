@@ -47,12 +47,6 @@
 .time {
   display: inline-flex;
 }
-
-.reply {
-  margin-right: 8px;
-  width: unset;
-}
-
 .right {
   padding-left: 8px;
   margin-left: auto;

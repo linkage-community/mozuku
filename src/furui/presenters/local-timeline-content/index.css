@@ -29,7 +29,45 @@
   opacity: 0.8;
 }
 
+.dragAreaContainer {
+  transition: margin 0.2s;
+}
+
 .progressContainer {
   line-height: 0;
   height: 2px;
+}
+
+.replyAreaContainer {
+  transition: height 0.2s;
+}
+
+.replyArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0.25rem;
+  color: var(--color-caption);
+}
+
+.replyContent {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.replyContentText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.replyCancel {
+  font-size: 125%;
+}
+
+.replyAvatar {
+  width: 24px;
+  margin: 0 0.25rem;
+  border-radius: var(--image-border-radius-small);
 }
