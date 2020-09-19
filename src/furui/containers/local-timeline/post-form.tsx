@@ -8,7 +8,7 @@ import parse, * as bottlemail from '@linkage-community/bottlemail'
 import { useBrowserHooks } from '../../../components/browser-provider'
 
 import PostForm from '../../presenters/local-timeline-content/post-form'
-import { AlbumFile } from '../../models'
+import { AlbumFile, Post } from '../../models'
 
 const removeUselessCharactorFromLink = (nodes: bottlemail.NodeType[]) =>
   nodes
@@ -31,6 +31,7 @@ export default ({
   uploadAlbumFile,
   inReplyTo,
   setInReplyTo,
+  replyToPost,
 }: {
   draftDisabled: boolean
   setDraftDisabled: (b: boolean) => void
@@ -38,7 +39,8 @@ export default ({
   setFiles: (f: AlbumFile[]) => void
   uploadAlbumFile: (f: File) => void
   inReplyTo: number | null
-  setInReplyTo: (n: number | null) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
+  replyToPost: Post | null
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { useShortcut, usePreventUnload } = useBrowserHooks()
@@ -106,6 +108,9 @@ export default ({
       files={files}
       onFileCancelClick={onFileCancelClick}
       isUploading={appStore.isUploading}
+      inReplyTo={inReplyTo}
+      setInReplyTo={setInReplyTo}
+      replyToPost={replyToPost}
     />
   )
 }

@@ -49,7 +49,7 @@ export default ({
       onDrop={onDrop}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
-      style={{ marginTop: inReplyTo ? '-24px' : '0px' }}
+      style={{ marginTop: inReplyTo ? '-32px' : '0px' }}
       className={styles.dragAreaContainer}
     >
       <div className={styles.dragAreaBackgrond} hidden={!isDrop}>
@@ -64,30 +64,6 @@ export default ({
           strokeColor="var(--color-accent)"
         />
       </div>
-      <div
-        style={{ height: inReplyTo ? '24px' : '0px' }}
-        className={styles.replyAreaContainer}
-      >
-        {replyToPost && (
-          <div className={styles.replyArea}>
-            <div className={styles.replyContent}>
-              <img
-                className={styles.replyAvatar}
-                src={replyToPost.author.avatarFile?.thumbnail.url.href}
-              />
-              <div className={styles.replyContentText}>
-                @{replyToPost.author.screenName}: {replyToPost.text}
-              </div>
-            </div>
-            <div
-              className={styles.replyCancel}
-              onClick={() => setInReplyTo(null)}
-            >
-              <span className="uil uil-times" />
-            </div>
-          </div>
-        )}
-      </div>
       <PostForm
         draftDisabled={draftDisabled}
         setDraftDisabled={setDraftDisabled}
@@ -96,6 +72,7 @@ export default ({
         uploadAlbumFile={uploadAlbumFile}
         inReplyTo={inReplyTo}
         setInReplyTo={setInReplyTo}
+        replyToPost={replyToPost}
       />
       <Timeline setInReplyTo={setInReplyTo} />
     </div>
