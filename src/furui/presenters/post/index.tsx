@@ -168,6 +168,7 @@ export default ({
           }
         >
           <Avatar account={post.author} className={styles.icon__img} />
+          <div className="uil uil-corner-up-left-alt"></div>
         </div>
         <div className={styles.head}>
           <span

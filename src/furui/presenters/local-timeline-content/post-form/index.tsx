@@ -3,6 +3,7 @@ import * as styles from './post-form.css'
 import { AlbumFile, Post } from '../../../models'
 import Textarea from 'react-textarea-autosize'
 const { forwardRef } = React
+import Avatar from '../../../../components/avatar'
 
 type T = {
   draftDisabled: boolean
@@ -61,9 +62,9 @@ export default forwardRef<HTMLTextAreaElement, T>(
           {replyToPost && (
             <div className={styles.replyArea}>
               <div className={styles.replyContent}>
-                <img
+                <Avatar
+                  account={replyToPost.author}
                   className={styles.replyAvatar}
-                  src={replyToPost.author.avatarFile?.thumbnail.url.href}
                 />
                 <div className={styles.replyContentText}>
                   @{replyToPost.author.screenName}: {replyToPost.text}

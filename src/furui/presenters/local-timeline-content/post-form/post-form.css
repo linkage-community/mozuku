@@ -41,6 +41,7 @@
 
 .replyAvatar {
   width: 24px;
+  height: 24px;
   margin: 0 0.25rem;
   border-radius: var(--image-border-radius-small);
 }
