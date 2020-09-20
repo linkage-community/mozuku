@@ -34,7 +34,9 @@ export default () => {
   useEffect(() => {
     if (!inReplyTo) return
     const post = appStore.posts.get(inReplyTo)
-    if (!post) return
+    if (!post) {
+      console.error(`replayToPost can not shown, failed to get post: ${inReplyTo}`)
+    }
     setReplyToPost(post)
   }, [inReplyTo])
 
