@@ -1,8 +1,9 @@
 import * as React from 'react'
 import * as styles from './post-form.css'
-import { AlbumFile } from '../../../models'
+import { AlbumFile, Post } from '../../../models'
 import Textarea from 'react-textarea-autosize'
 const { forwardRef } = React
+import Avatar from '../../../../components/avatar'
 
 type T = {
   draftDisabled: boolean
@@ -14,6 +15,9 @@ type T = {
   files: AlbumFile[]
   onFileCancelClick: (n: number) => void
   isUploading: boolean
+  inReplyTo: number | null
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
+  replyToPost: Post | null
 }
 export default forwardRef<HTMLTextAreaElement, T>(
   (
@@ -27,6 +31,9 @@ export default forwardRef<HTMLTextAreaElement, T>(
       files,
       onFileCancelClick,
       isUploading,
+      inReplyTo,
+      setInReplyTo,
+      replyToPost,
     },
     ref
   ) => {
@@ -45,6 +52,33 @@ export default forwardRef<HTMLTextAreaElement, T>(
 
     return (
       <div className={styles.wrapper}>
+        <div
+          style={{
+            height: inReplyTo ? '32px' : '0px',
+            opacity: inReplyTo ? 1 : 0,
+          }}
+          className={styles.replyAreaContainer}
+        >
+          {replyToPost && (
+            <div className={styles.replyArea}>
+              <div className={styles.replyContent}>
+                <Avatar
+                  account={replyToPost.author}
+                  className={styles.replyAvatar}
+                />
+                <div className={styles.replyContentText}>
+                  @{replyToPost.author.screenName}: {replyToPost.text}
+                </div>
+              </div>
+              <div
+                className={styles.replyCancel}
+                onClick={() => setInReplyTo(null)}
+              >
+                <span className="uil uil-times" />
+              </div>
+            </div>
+          )}
+        </div>
         <form className={styles.postForm} onSubmit={onSubmit}>
           <Textarea
             className={styles.textarea}

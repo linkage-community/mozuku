@@ -5,7 +5,7 @@ import { Line } from 'rc-progress'
 import PostForm from '../../containers/local-timeline/post-form'
 import Timeline from '../../containers/local-timeline/timeline'
 import styles from './index.css'
-import { AlbumFile } from '../../models'
+import { AlbumFile, Post } from '../../models'
 
 export default ({
   onDrop,
@@ -20,6 +20,7 @@ export default ({
   setFiles,
   inReplyTo,
   setInReplyTo,
+  replyToPost,
 }: {
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void
   isDrop: boolean
@@ -32,7 +33,8 @@ export default ({
   files: AlbumFile[]
   setFiles: (a: AlbumFile[]) => void
   inReplyTo: number | null
-  setInReplyTo: (n: number | null) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
+  replyToPost: Post | null
 }) => {
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -43,7 +45,13 @@ export default ({
     setIsDrop(false)
   }
   return (
-    <div onDrop={onDrop} onDragOver={onDragOver} onDragLeave={onDragLeave}>
+    <div
+      onDrop={onDrop}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      style={{ marginTop: inReplyTo ? '-32px' : '0px' }}
+      className={styles.dragAreaContainer}
+    >
       <div className={styles.dragAreaBackgrond} hidden={!isDrop}>
         <div className={styles.dragArea}>
           <p>ファイルをドラッグしてアップロード</p>
@@ -64,8 +72,9 @@ export default ({
         uploadAlbumFile={uploadAlbumFile}
         inReplyTo={inReplyTo}
         setInReplyTo={setInReplyTo}
+        replyToPost={replyToPost}
       />
-      <Timeline inReplyTo={inReplyTo} setInReplyTo={setInReplyTo} />
+      <Timeline setInReplyTo={setInReplyTo} />
     </div>
   )
 }

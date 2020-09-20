@@ -10,6 +10,42 @@
   background-color: rgba(var(--color-text-raw), 0.025);
 }
 
+.replyAreaContainer {
+  transition: height 0.2s, opacity 0.2s;
+}
+
+.replyArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem;
+  color: var(--color-caption);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.replyContent {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.replyContentText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.replyCancel {
+  font-size: 125%;
+}
+
+.replyAvatar {
+  width: 24px;
+  height: 24px;
+  margin: 0 0.25rem;
+  border-radius: var(--image-border-radius-small);
+}
+
 .postForm {
   position: relative;
 }
@@ -24,7 +60,6 @@
   transition: height 0.2s;
   resize: none;
 }
-
 .attachButton {
   position: absolute;
   top: 12px;

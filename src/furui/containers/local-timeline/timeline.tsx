@@ -11,11 +11,9 @@ import { AlbumFile } from '../../models'
 import PostContainer from '../post'
 
 export default ({
-  inReplyTo,
   setInReplyTo,
 }: {
-  inReplyTo: number | null
-  setInReplyTo: (n: number | null) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
 }) => {
   useTimeline()
   const [modalContent, setModalContent] = useState(null as AlbumFile | null)
@@ -54,7 +52,6 @@ export default ({
             <PostContainer
               postId={postId}
               setModalContent={setModalContent}
-              inReplyTo={inReplyTo}
               setInReplyTo={setInReplyTo}
             />
           </TimelineItem>

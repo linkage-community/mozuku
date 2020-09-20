@@ -1,5 +1,11 @@
 declare const styles: {
   readonly wrapper: string
+  readonly replyAreaContainer: string
+  readonly replyArea: string
+  readonly replyContent: string
+  readonly replyContentText: string
+  readonly replyCancel: string
+  readonly replyAvatar: string
   readonly postForm: string
   readonly textarea: string
   readonly attachButton: string

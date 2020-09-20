@@ -29,6 +29,10 @@
   opacity: 0.8;
 }
 
+.dragAreaContainer {
+  transition: margin 0.2s;
+}
+
 .progressContainer {
   line-height: 0;
   height: 2px;

@@ -145,24 +145,30 @@ type PostProps = {
   post: Post
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
-  inReplyTo: number | null
   inReplyToContent?: React.ReactNode
-  setInReplyTo: (n: number | null) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
 }
 export default ({
   post,
   post: { author },
   metaEnabled,
   setModalContent,
-  inReplyTo,
   inReplyToContent,
   setInReplyTo,
 }: PostProps) => {
   return useMemo(
     () => (
       <div className={styles.post}>
-        <div className={styles.icon}>
+        <div
+          className={styles.icon}
+          onClick={() =>
+            setInReplyTo((inReplyTo) =>
+              inReplyTo === post.id ? null : post.id
+            )
+          }
+        >
           <Avatar account={post.author} className={styles.icon__img} />
+          <div className="uil uil-corner-up-left-alt"></div>
         </div>
         <div className={styles.head}>
           <span
@@ -177,18 +183,6 @@ export default ({
           <div className={styles.block}>
             <span className={styles.screenName}>@{author.screenName}</span>
             <span className={styles.right}>
-              <button
-                className={styles.reply}
-                onClick={() => {
-                  setInReplyTo(inReplyTo === post.id ? null : post.id)
-                }}
-              >
-                <span
-                  className={`uil ${
-                    inReplyTo === post.id ? `uil-comment-dots` : 'uil-comment'
-                  }`}
-                />
-              </button>
               <a
                 className={styles.time}
                 target="_blank"
@@ -229,6 +223,6 @@ export default ({
         </div>
       </div>
     ),
-    [author.name, author.avatarFile && author.avatarFile.id, inReplyTo]
+    [author.name, author.avatarFile && author.avatarFile.id]
   )
 }

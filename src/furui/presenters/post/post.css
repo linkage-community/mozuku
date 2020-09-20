@@ -14,6 +14,8 @@
   /* magic */
   height: 0;
   grid-column: 1;
+  color: var(--color-caption);
+  text-align: center;
 }
 
 .icon__img {
@@ -47,12 +49,6 @@
 .time {
   display: inline-flex;
 }
-
-.reply {
-  margin-right: 8px;
-  width: unset;
-}
-
 .right {
   padding-left: 8px;
   margin-left: auto;

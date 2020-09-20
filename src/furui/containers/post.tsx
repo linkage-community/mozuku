@@ -7,13 +7,11 @@ import { AlbumFile } from '../models'
 export type PostContainerProps = Readonly<{
   postId: number
   setModalContent: (albumfile: AlbumFile | null) => void
-  inReplyTo: number | null
-  setInReplyTo: (id: number | null) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
 }>
 const PostContainer = ({
   postId,
   setModalContent,
-  inReplyTo,
   setInReplyTo,
 }: PostContainerProps) => {
   return useObserver(() => {
@@ -30,14 +28,12 @@ const PostContainer = ({
         post={post}
         metaEnabled={metaEnabled}
         setModalContent={setModalContent}
-        inReplyTo={inReplyTo}
         setInReplyTo={setInReplyTo}
         inReplyToContent={
           post.inReplyToId && (
             <PostContainer
               postId={post.inReplyToId}
               setModalContent={setModalContent}
-              inReplyTo={inReplyTo}
               setInReplyTo={setInReplyTo}
             />
           )
