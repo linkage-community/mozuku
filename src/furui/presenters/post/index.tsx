@@ -30,7 +30,12 @@ const Body: React.FC<{
         switch (node.kind) {
           case LinkKind:
             return (
-              <a key={i} href={node.value} target="_blank" rel="noopener noreferrer">
+              <a
+                key={i}
+                href={node.value}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {(() => {
                   try {
                     return decodeURI(node.value)
