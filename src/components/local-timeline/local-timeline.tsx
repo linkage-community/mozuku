@@ -23,7 +23,7 @@ type Props = {
   uploadState: number
 }
 
-const LocalTimelinePage: React.FC<Props> = ({
+const LocalTimeline: React.FC<Props> = ({
   draftDisabled,
   files,
   inReplyTo,
@@ -46,6 +46,7 @@ const LocalTimelinePage: React.FC<Props> = ({
     e.preventDefault()
     setIsDrop(false)
   }
+
   return (
     <div
       className={styles.dragAreaContainer}
@@ -80,4 +81,4 @@ const LocalTimelinePage: React.FC<Props> = ({
     </div>
   )
 }
-export default LocalTimelinePage
+export default LocalTimeline
