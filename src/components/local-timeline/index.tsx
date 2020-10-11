@@ -3,7 +3,7 @@ const { useState, useEffect } = React
 
 import { AlbumFile, Post } from '../../furui/models'
 import { appStore } from '../../furui/stores'
-import LocalTimelinePane from './local-timeline'
+import LocalTimelineLayout from './local-timeline'
 
 const LocalTimeline: React.FC = () => {
   const [draftDisabled, setDraftDisabled] = useState(false)
@@ -44,7 +44,7 @@ const LocalTimeline: React.FC = () => {
   }, [inReplyTo])
 
   return (
-    <LocalTimelinePane
+    <LocalTimelineLayout
       draftDisabled={draftDisabled}
       files={files}
       inReplyTo={inReplyTo}
