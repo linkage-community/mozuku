@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { AlbumFile } from '../../../models'
+import { AlbumFile } from '../../furui/models'
 
 import * as styles from './timeline.css'
 
 import { InView } from 'react-intersection-observer'
-import FileModal from '../../../../components/file-modal'
+import FileModal from '../file-modal'
 
 export type TimelineProps = Readonly<{
   readMore: () => void

@@ -2,19 +2,16 @@ import * as React from 'react'
 const { useState, useEffect } = React
 import { useObserver } from 'mobx-react-lite'
 
-import { timelineStore, useTimeline } from '../../stores'
-import {
-  Timeline,
-  TimelineItem,
-} from '../../presenters/local-timeline-content/timeline'
-import { AlbumFile } from '../../models'
-import PostContainer from '../post'
+import { timelineStore, useTimeline } from '../../furui/stores'
+import { Timeline as TimelineLayout, TimelineItem } from './timeline'
+import { AlbumFile } from '../../furui/models'
+import PostContainer from '../../furui/containers/post'
 
-export default ({
-  setInReplyTo,
-}: {
+type Props = {
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
-}) => {
+}
+
+const Timeline: React.FC<Props> = ({ setInReplyTo }) => {
   useTimeline()
   const [modalContent, setModalContent] = useState(null as AlbumFile | null)
   const onModalClose = () => {
@@ -40,7 +37,7 @@ export default ({
       faviconElement.setAttribute('href', timelineStore.icon)
     }
     return (
-      <Timeline
+      <TimelineLayout
         readMore={timelineStore.readMore.bind(timelineStore)}
         readMoreDisabled={timelineStore.readMoreDisabled}
         modalContent={modalContent}
@@ -56,7 +53,8 @@ export default ({
             />
           </TimelineItem>
         ))}
-      </Timeline>
+      </TimelineLayout>
     )
   })
 }
+export default Timeline

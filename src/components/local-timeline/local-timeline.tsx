@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Line } from 'rc-progress'
 
 import PostForm from '../post-form'
-import Timeline from '../../furui/containers/local-timeline/timeline'
+import Timeline from '../timeline'
 import styles from './index.css'
 import { AlbumFile, Post } from '../../furui/models'
 
