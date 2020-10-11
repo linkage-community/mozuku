@@ -23,7 +23,7 @@ const removeUselessCharactorFromLink = (nodes: bottlemail.NodeType[]) =>
     })
     .join('')
 
-type Props = {
+export type PostFormProps = Readonly<{
   draftDisabled: boolean
   files: AlbumFile[]
   inReplyTo: number | null
@@ -32,9 +32,9 @@ type Props = {
   setFiles: (f: AlbumFile[]) => void
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
   uploadAlbumFile: (f: File) => void
-}
+}>
 
-const PostForm: React.FC<Props> = ({
+const PostForm: React.FC<PostFormProps> = ({
   draftDisabled,
   files,
   inReplyTo,

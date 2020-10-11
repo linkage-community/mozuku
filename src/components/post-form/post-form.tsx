@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize'
 const { forwardRef } = React
 import Avatar from '../avatar'
 
-type Props = {
+export type PostFormProps = Readonly<{
   draft: string
   draftDisabled: boolean
   files: AlbumFile[]
@@ -18,8 +18,9 @@ type Props = {
   setDraft: (t: string) => void
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
   submitDraft: () => void
-}
-const PostForm = forwardRef<HTMLTextAreaElement, Props>(
+}>
+
+const PostForm = forwardRef<HTMLTextAreaElement, PostFormProps>(
   (
     {
       draft,

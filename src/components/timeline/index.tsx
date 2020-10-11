@@ -7,11 +7,11 @@ import { Timeline as TimelineLayout, TimelineItem } from './timeline'
 import { AlbumFile } from '../../furui/models'
 import PostContainer from '../../furui/containers/post'
 
-type Props = {
+export type TimelineProps = Readonly<{
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
-}
+}>
 
-const Timeline: React.FC<Props> = ({ setInReplyTo }) => {
+const Timeline: React.FC<TimelineProps> = ({ setInReplyTo }) => {
   useTimeline()
   const [modalContent, setModalContent] = useState(null as AlbumFile | null)
   const onModalClose = () => {

@@ -7,7 +7,7 @@ import Timeline from '../timeline'
 import styles from './index.css'
 import { AlbumFile, Post } from '../../furui/models'
 
-type Props = {
+export type LocalTimelineProps = Readonly<{
   draftDisabled: boolean
   files: AlbumFile[]
   inReplyTo: number | null
@@ -21,9 +21,9 @@ type Props = {
   setIsDrop: (b: boolean) => void
   uploadAlbumFile: (a: File) => void
   uploadState: number
-}
+}>
 
-const LocalTimeline: React.FC<Props> = ({
+const LocalTimeline: React.FC<LocalTimelineProps> = ({
   draftDisabled,
   files,
   inReplyTo,
