@@ -20,7 +20,7 @@
     "pictograph": "^2.3.0",
     "postcss-modules": "^3.2.0",
     "prettier": "^2.0.5",
-    "rc-progress": "^3.0.0",
+    "rc-progress": "^3.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2",
