@@ -1,39 +1,40 @@
 import * as React from 'react'
 import * as styles from './post-form.css'
-import { AlbumFile, Post } from '../../../models'
+import { AlbumFile, Post } from '../../furui/models'
 import Textarea from 'react-textarea-autosize'
 const { forwardRef } = React
-import Avatar from '../../../../components/avatar'
+import Avatar from '../avatar'
 
-type T = {
-  draftDisabled: boolean
-  submitDraft: () => void
-  setDraft: (t: string) => void
+export type PostFormProps = Readonly<{
   draft: string
-  onPaste: (e: React.ClipboardEvent) => void
-  onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
+  draftDisabled: boolean
   files: AlbumFile[]
-  onFileCancelClick: (n: number) => void
-  isUploading: boolean
   inReplyTo: number | null
-  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
+  isUploading: boolean
+  onFileCancelClick: (n: number) => void
+  onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onPaste: (e: React.ClipboardEvent) => void
   replyToPost: Post | null
-}
-export default forwardRef<HTMLTextAreaElement, T>(
+  setDraft: (t: string) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
+  submitDraft: () => void
+}>
+
+const PostForm = forwardRef<HTMLTextAreaElement, PostFormProps>(
   (
     {
-      draftDisabled,
-      submitDraft,
-      setDraft,
       draft,
-      onPaste,
-      onFileSelect,
+      draftDisabled,
       files,
-      onFileCancelClick,
-      isUploading,
       inReplyTo,
-      setInReplyTo,
+      isUploading,
+      onFileCancelClick,
+      onFileSelect,
+      onPaste,
       replyToPost,
+      setDraft,
+      setInReplyTo,
+      submitDraft,
     },
     ref
   ) => {
@@ -144,3 +145,4 @@ export default forwardRef<HTMLTextAreaElement, T>(
     )
   }
 )
+export default PostForm

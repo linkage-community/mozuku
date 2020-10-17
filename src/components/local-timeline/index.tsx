@@ -1,17 +1,18 @@
 import * as React from 'react'
 const { useState, useEffect } = React
 
-import { LocalTimelinePage } from '../../presenters'
-import { AlbumFile, Post } from '../../models'
-import { appStore } from '../../stores'
+import { AlbumFile, Post } from '../../furui/models'
+import { appStore } from '../../furui/stores'
+import LocalTimelineLayout from './local-timeline'
 
-export default () => {
-  const [isDrop, setIsDrop] = useState(false)
-  const [uploadState, setUploadState] = useState(0)
-  const [files, setFiles] = useState([] as AlbumFile[])
+const LocalTimeline: React.FC = () => {
   const [draftDisabled, setDraftDisabled] = useState(false)
+  const [files, setFiles] = useState([] as AlbumFile[])
   const [inReplyTo, setInReplyTo] = useState<number | null>(null)
+  const [isDrop, setIsDrop] = useState(false)
   const [replyToPost, setReplyToPost] = useState<Post | null>(null)
+  const [uploadState, setUploadState] = useState(0)
+
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDrop(false)
@@ -43,20 +44,21 @@ export default () => {
   }, [inReplyTo])
 
   return (
-    <LocalTimelinePage
-      onDrop={onDrop}
+    <LocalTimelineLayout
+      draftDisabled={draftDisabled}
+      files={files}
+      inReplyTo={inReplyTo}
       isDrop={isDrop}
+      isUploading={appStore.isUploading}
+      onDrop={onDrop}
+      replyToPost={replyToPost}
+      setDraftDisabled={setDraftDisabled}
+      setFiles={setFiles}
+      setInReplyTo={setInReplyTo}
       setIsDrop={setIsDrop}
       uploadAlbumFile={uploadAlbumFile}
-      isUploading={appStore.isUploading}
       uploadState={uploadState}
-      draftDisabled={draftDisabled}
-      setDraftDisabled={setDraftDisabled}
-      files={files}
-      setFiles={setFiles}
-      inReplyTo={inReplyTo}
-      setInReplyTo={setInReplyTo}
-      replyToPost={replyToPost}
     />
   )
 }
+export default LocalTimeline

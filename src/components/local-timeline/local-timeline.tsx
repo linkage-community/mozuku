@@ -2,39 +2,41 @@ import * as React from 'react'
 
 import { Line } from 'rc-progress'
 
-import PostForm from '../../containers/local-timeline/post-form'
-import Timeline from '../../containers/local-timeline/timeline'
+import PostForm from '../post-form'
+import Timeline from '../timeline'
 import styles from './index.css'
-import { AlbumFile, Post } from '../../models'
+import { AlbumFile, Post } from '../../furui/models'
 
-export default ({
-  onDrop,
-  isDrop,
-  setIsDrop,
-  uploadAlbumFile,
-  isUploading,
-  uploadState,
-  draftDisabled,
-  setDraftDisabled,
-  files,
-  setFiles,
-  inReplyTo,
-  setInReplyTo,
-  replyToPost,
-}: {
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void
+export type LocalTimelineProps = Readonly<{
+  draftDisabled: boolean
+  files: AlbumFile[]
+  inReplyTo: number | null
   isDrop: boolean
+  isUploading: boolean
+  onDrop: (e: React.DragEvent<HTMLDivElement>) => void
+  replyToPost: Post | null
+  setDraftDisabled: (b: boolean) => void
+  setFiles: (a: AlbumFile[]) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
   setIsDrop: (b: boolean) => void
   uploadAlbumFile: (a: File) => void
-  isUploading: boolean
   uploadState: number
-  draftDisabled: boolean
-  setDraftDisabled: (b: boolean) => void
-  files: AlbumFile[]
-  setFiles: (a: AlbumFile[]) => void
-  inReplyTo: number | null
-  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
-  replyToPost: Post | null
+}>
+
+const LocalTimeline: React.FC<LocalTimelineProps> = ({
+  draftDisabled,
+  files,
+  inReplyTo,
+  isDrop,
+  isUploading,
+  onDrop,
+  replyToPost,
+  setDraftDisabled,
+  setFiles,
+  setInReplyTo,
+  setIsDrop,
+  uploadAlbumFile,
+  uploadState,
 }) => {
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -44,13 +46,14 @@ export default ({
     e.preventDefault()
     setIsDrop(false)
   }
+
   return (
     <div
-      onDrop={onDrop}
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      style={{ marginTop: inReplyTo ? '-32px' : '0px' }}
       className={styles.dragAreaContainer}
+      onDragLeave={onDragLeave}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      style={{ marginTop: inReplyTo ? '-32px' : '0px' }}
     >
       <div className={styles.dragAreaBackgrond} hidden={!isDrop}>
         <div className={styles.dragArea}>
@@ -60,21 +63,22 @@ export default ({
       <div className={styles.progressContainer} hidden={!isUploading}>
         <Line
           percent={uploadState}
-          strokeLinecap="square"
           strokeColor="var(--color-accent)"
+          strokeLinecap="square"
         />
       </div>
       <PostForm
         draftDisabled={draftDisabled}
-        setDraftDisabled={setDraftDisabled}
         files={files}
-        setFiles={setFiles}
-        uploadAlbumFile={uploadAlbumFile}
         inReplyTo={inReplyTo}
-        setInReplyTo={setInReplyTo}
         replyToPost={replyToPost}
+        setDraftDisabled={setDraftDisabled}
+        setFiles={setFiles}
+        setInReplyTo={setInReplyTo}
+        uploadAlbumFile={uploadAlbumFile}
       />
       <Timeline setInReplyTo={setInReplyTo} />
     </div>
   )
 }
+export default LocalTimeline

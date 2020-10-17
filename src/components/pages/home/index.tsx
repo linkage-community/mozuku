@@ -3,7 +3,7 @@ import { useObserver } from 'mobx-react-lite'
 
 import { appStore } from '../../../furui/stores'
 import AuthenticatedContainer from '../_authenticated_container'
-import { LocalTimeline } from '../../../furui/containers'
+import LocalTimeline from '../../local-timeline'
 
 const { useEffect } = React
 

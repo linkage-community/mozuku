@@ -1,14 +1,14 @@
 import * as React from 'react'
 const { useState, useRef } = React
 
-import seaAPI from '../../../sea-api'
-import { appStore } from '../../stores'
+import seaAPI from '../../sea-api'
+import { appStore } from '../../furui/stores'
 import parse, * as bottlemail from '@linkage-community/bottlemail'
 
-import { useBrowserHooks } from '../../../components/browser-provider'
+import { useBrowserHooks } from '../browser-provider'
 
-import PostForm from '../../presenters/local-timeline-content/post-form'
-import { AlbumFile, Post } from '../../models'
+import PostFormLayout from './post-form'
+import { AlbumFile, Post } from '../../furui/models'
 
 const removeUselessCharactorFromLink = (nodes: bottlemail.NodeType[]) =>
   nodes
@@ -23,24 +23,26 @@ const removeUselessCharactorFromLink = (nodes: bottlemail.NodeType[]) =>
     })
     .join('')
 
-export default ({
-  draftDisabled,
-  setDraftDisabled,
-  files,
-  setFiles,
-  uploadAlbumFile,
-  inReplyTo,
-  setInReplyTo,
-  replyToPost,
-}: {
+export type PostFormProps = Readonly<{
   draftDisabled: boolean
-  setDraftDisabled: (b: boolean) => void
   files: AlbumFile[]
-  setFiles: (f: AlbumFile[]) => void
-  uploadAlbumFile: (f: File) => void
   inReplyTo: number | null
-  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
   replyToPost: Post | null
+  setDraftDisabled: (b: boolean) => void
+  setFiles: (f: AlbumFile[]) => void
+  setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
+  uploadAlbumFile: (f: File) => void
+}>
+
+const PostForm: React.FC<PostFormProps> = ({
+  draftDisabled,
+  files,
+  inReplyTo,
+  replyToPost,
+  setDraftDisabled,
+  setFiles,
+  setInReplyTo,
+  uploadAlbumFile,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { useShortcut, usePreventUnload } = useBrowserHooks()
@@ -97,7 +99,7 @@ export default ({
   }
 
   return (
-    <PostForm
+    <PostFormLayout
       ref={textareaRef}
       draft={draft}
       setDraft={setDraft}
@@ -114,3 +116,4 @@ export default ({
     />
   )
 }
+export default PostForm
