@@ -1,14 +1,14 @@
 import React, { useMemo, useRef, useReducer } from 'react'
 import { Overlay, useRootClose } from 'react-overlays'
 
-import { Post } from '../../models'
-import { DateTime } from '../../../components/date-time'
-import { OGCard } from '../../../components/og-card'
+import { Post as PostModel } from '../../furui/models'
+import { DateTime } from '../date-time'
+import { OGCard } from '../og-card'
 
-import { Files } from '../../../components/files'
+import { Files } from '../files'
 
 import * as styles from './post.css'
-import { AlbumFile } from '../../models'
+import { AlbumFile } from '../../furui/models'
 
 import {
   EmojiNameKind,
@@ -17,11 +17,11 @@ import {
 } from '@linkage-community/bottlemail'
 
 import * as pictograph from 'pictograph'
-import config from '../../../config'
-import Avatar from '../../../components/avatar'
+import config from '../../config'
+import Avatar from '../avatar'
 
 const Body: React.FC<{
-  bodyNodes: Post['nodes']
+  bodyNodes: PostModel['nodes']
   className: string
 }> = ({ bodyNodes, className }) => {
   return (
@@ -147,13 +147,14 @@ const InReplyTo: React.FC<{
 }
 
 type PostProps = {
-  post: Post
+  post: PostModel
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
   inReplyToContent?: React.ReactNode
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
 }
-export default ({
+
+export const Post = ({
   post,
   post: { author },
   metaEnabled,

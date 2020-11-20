@@ -1,19 +1,15 @@
 import React from 'react'
 import { useObserver } from 'mobx-react-lite'
-import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../stores'
-import Post from '../presenters/post'
-import { AlbumFile } from '../models'
+import { appStore, PREFERENCE_DISPLAY_META_ENABLED } from '../../furui/stores'
+import { Post as Layout } from './post'
+import { AlbumFile } from '../../furui/models'
 
-export type PostContainerProps = Readonly<{
+export type PostProps = Readonly<{
   postId: number
   setModalContent: (albumfile: AlbumFile | null) => void
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
 }>
-const PostContainer = ({
-  postId,
-  setModalContent,
-  setInReplyTo,
-}: PostContainerProps) => {
+export const Post = ({ postId, setModalContent, setInReplyTo }: PostProps) => {
   return useObserver(() => {
     const post = appStore.posts.get(postId)
     if (post == null) {
@@ -24,14 +20,14 @@ const PostContainer = ({
     const metaEnabled = appStore.getPreference(PREFERENCE_DISPLAY_META_ENABLED)
 
     return (
-      <Post
+      <Layout
         post={post}
         metaEnabled={metaEnabled}
         setModalContent={setModalContent}
         setInReplyTo={setInReplyTo}
         inReplyToContent={
           post.inReplyToId && (
-            <PostContainer
+            <Post
               postId={post.inReplyToId}
               setModalContent={setModalContent}
               setInReplyTo={setInReplyTo}
@@ -42,5 +38,3 @@ const PostContainer = ({
     )
   })
 }
-
-export default PostContainer
