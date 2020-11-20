@@ -1,10 +1,10 @@
 import * as React from 'react'
 import filesize from 'filesize'
-import AlbumFile from '../../../models/album-file'
+import type AlbumFile from '../../furui/models/album-file'
 
 import * as styles from './image.css'
 
-const Nothing: React.FC = function Nothing() {
+export const Nothing: React.FC = () => {
   return (
     <div className={styles.image}>
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
@@ -16,10 +16,12 @@ const Nothing: React.FC = function Nothing() {
   )
 }
 
-const Image: React.FC<{
+export type ImageProps = {
   image: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}> = ({ image, openFileModal }) => {
+}
+
+export const Image: React.FC<ImageProps> = ({ image, openFileModal }) => {
   return (
     <div className={styles.image}>
       <picture>
@@ -35,10 +37,12 @@ const Image: React.FC<{
   )
 }
 
-const Video: React.FC<{
+export type VideoProps = {
   video: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}> = ({ video, openFileModal }) => {
+}
+
+export const Video: React.FC<VideoProps> = ({ video, openFileModal }) => {
   return (
     <div className={styles.image}>
       <img
@@ -55,10 +59,12 @@ const Video: React.FC<{
   )
 }
 
-const File: React.FC<{
+export type FileProps = {
   file: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}> = ({ file, openFileModal }) => {
+}
+
+export const File: React.FC<FileProps> = ({ file, openFileModal }) => {
   if (file.thumbnail == null) {
     return <Nothing />
   }
@@ -71,31 +77,3 @@ const File: React.FC<{
       return <></>
   }
 }
-
-export default React.memo(
-  ({
-    albumFiles: files,
-    setModalContent,
-  }: {
-    albumFiles: AlbumFile[]
-    setModalContent: (albumFile: AlbumFile | null) => void
-  }) => {
-    const openFileModal = (file: AlbumFile) => {
-      history.pushState(
-        history.state,
-        file.fileName,
-        `#${file.type}_${file.id}`
-      )
-      setModalContent(file)
-    }
-
-    return (
-      <div className={styles.images}>
-        {files.map((im, k) => (
-          <File file={im} openFileModal={openFileModal} key={k} />
-        ))}
-      </div>
-    )
-  },
-  (prev, next) => prev.albumFiles.length === next.albumFiles.length
-)

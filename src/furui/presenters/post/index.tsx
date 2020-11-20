@@ -5,7 +5,7 @@ import { Post } from '../../models'
 import { DateTime } from '../../presenters'
 import { OGCard } from '../../../components/og-card'
 
-import Files from './files'
+import { Files } from '../../../components/files'
 
 import * as styles from './post.css'
 import { AlbumFile } from '../../models'
