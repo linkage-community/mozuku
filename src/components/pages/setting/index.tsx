@@ -6,7 +6,7 @@ import {
   PREFERENCE_DISPLAY_META_ENABLED,
 } from '../../../furui/stores'
 import seaAPI from '../../../sea-api'
-import { Setting } from '../../../furui/presenters'
+import { Setting } from './setting'
 import timeline from '../../../furui/stores/timeline'
 import {
   PREFERENCE_NOTICE_WHEN_MENTIONED,
