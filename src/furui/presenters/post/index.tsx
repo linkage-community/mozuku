@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useReducer } from 'react'
 import { Overlay, useRootClose } from 'react-overlays'
 
 import { Post } from '../../models'
-import { DateTime } from '../../presenters'
+import { DateTime } from '../../../components/date-time'
 import { OGCard } from '../../../components/og-card'
 
 import { Files } from '../../../components/files'
