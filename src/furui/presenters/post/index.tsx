@@ -3,7 +3,7 @@ import { Overlay, useRootClose } from 'react-overlays'
 
 import { Post } from '../../models'
 import { DateTime } from '../../presenters'
-import { OGCard } from '../../containers'
+import { OGCard } from '../../../components/og-card'
 
 import Files from './files'
 
