@@ -8,8 +8,13 @@ export type OGCardProps = Readonly<{
   className?: string
 }>
 
-export const OGCard: React.FC<OGCardProps> = ({ url, className }) => {
-  if (!appStore.getPreference(PREFERENCE_DISPLAY_OGCARD)) return null
+const OGCardContent: React.FC<OGCardProps> = ({ className, url }) => {
   const r = useWebpageMeta(url)
   return r ? <Layout className={className} url={url} {...r} /> : null
+}
+
+export const OGCard: React.FC<OGCardProps> = (props) => {
+  return appStore.getPreference(PREFERENCE_DISPLAY_OGCARD) ? (
+    <OGCardContent {...props} />
+  ) : null
 }
