@@ -14,7 +14,7 @@ type TConfig = {
   muteComputedApp: boolean
 }
 
-export type SettingProps = {
+export type SettingProps = Readonly<{
   currentConfig: TConfig
   currentName?: string
   logout: () => void
@@ -27,7 +27,7 @@ export type SettingProps = {
   onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
   update: ({ name, avatar }: { name?: string; avatar?: File }) => Promise<void>
   updateDisabled: boolean
-}
+}>
 
 export const Setting = ({
   currentConfig,

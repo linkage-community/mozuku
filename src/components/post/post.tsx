@@ -20,10 +20,12 @@ import * as pictograph from 'pictograph'
 import config from '../../config'
 import Avatar from '../avatar'
 
-const Body: React.FC<{
+type BodyProps = Readonly<{
   bodyNodes: PostModel['nodes']
   className: string
-}> = ({ bodyNodes, className }) => {
+}>
+
+const Body: React.FC<BodyProps> = ({ bodyNodes, className }) => {
   return (
     <div className={className}>
       {bodyNodes.map((node, i) => {
@@ -65,10 +67,15 @@ const Body: React.FC<{
   )
 }
 
-const InReplyTo: React.FC<{
+type InReplyToProps = Readonly<{
   inReplyToId: number
   inReplyToContent?: React.ReactNode
-}> = ({ inReplyToId, inReplyToContent }) => {
+}>
+
+const InReplyTo: React.FC<InReplyToProps> = ({
+  inReplyToId,
+  inReplyToContent,
+}) => {
   const url = new URL(config.sea)
   url.pathname = `/posts/${inReplyToId}`
   const href = url.href
@@ -146,13 +153,13 @@ const InReplyTo: React.FC<{
   )
 }
 
-type PostProps = {
+type PostProps = Readonly<{
   post: PostModel
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
   inReplyToContent?: React.ReactNode
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
-}
+}>
 
 export const Post = ({
   post,

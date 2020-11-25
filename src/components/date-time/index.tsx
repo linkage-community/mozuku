@@ -3,10 +3,10 @@ const { useMemo } = React
 import { format } from 'date-fns-tz'
 import { useRelativeTimeRepresent } from '../hooks'
 
-export type DateTimeProps = {
+export type DateTimeProps = Readonly<{
   dt: Date
   className?: string
-}
+}>
 
 export const DateTime = ({ dt, className }: DateTimeProps) => {
   const relativeTimeRepresent = useRelativeTimeRepresent(dt)

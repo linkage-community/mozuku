@@ -4,14 +4,13 @@ import { File } from './files'
 
 import * as styles from './image.css'
 
+export type FilesProps = Readonly<{
+  albumFiles: AlbumFile[]
+  setModalContent: (albumFile: AlbumFile | null) => void
+}>
+
 export const Files = React.memo(
-  ({
-    albumFiles: files,
-    setModalContent,
-  }: {
-    albumFiles: AlbumFile[]
-    setModalContent: (albumFile: AlbumFile | null) => void
-  }) => {
+  ({ albumFiles: files, setModalContent }: FilesProps) => {
     const openFileModal = (file: AlbumFile) => {
       history.pushState(
         history.state,

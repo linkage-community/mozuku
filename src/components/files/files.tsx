@@ -16,10 +16,10 @@ export const Nothing: React.FC = () => {
   )
 }
 
-export type ImageProps = {
+export type ImageProps = Readonly<{
   image: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}
+}>
 
 export const Image: React.FC<ImageProps> = ({ image, openFileModal }) => {
   return (
@@ -37,10 +37,10 @@ export const Image: React.FC<ImageProps> = ({ image, openFileModal }) => {
   )
 }
 
-export type VideoProps = {
+export type VideoProps = Readonly<{
   video: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}
+}>
 
 export const Video: React.FC<VideoProps> = ({ video, openFileModal }) => {
   return (
@@ -59,10 +59,10 @@ export const Video: React.FC<VideoProps> = ({ video, openFileModal }) => {
   )
 }
 
-export type FileProps = {
+export type FileProps = Readonly<{
   file: AlbumFile
   openFileModal: (albumFile: AlbumFile) => void
-}
+}>
 
 export const File: React.FC<FileProps> = ({ file, openFileModal }) => {
   if (file.thumbnail == null) {
