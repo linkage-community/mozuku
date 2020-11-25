@@ -9,24 +9,20 @@ export type FilesProps = Readonly<{
   setModalContent: (albumFile: AlbumFile | null) => void
 }>
 
-export const Files = React.memo(
-  function Files({ albumFiles: files, setModalContent }: FilesProps) {
-    const openFileModal = (file: AlbumFile) => {
-      history.pushState(
-        history.state,
-        file.fileName,
-        `#${file.type}_${file.id}`
-      )
-      setModalContent(file)
-    }
+export const Files = React.memo(function Files({
+  albumFiles: files,
+  setModalContent,
+}: FilesProps) {
+  const openFileModal = (file: AlbumFile) => {
+    history.pushState(history.state, file.fileName, `#${file.type}_${file.id}`)
+    setModalContent(file)
+  }
 
-    return (
-      <div className={styles.images}>
-        {files.map((im, k) => (
-          <File file={im} openFileModal={openFileModal} key={k} />
-        ))}
-      </div>
-    )
-  },
-  (prev, next) => prev.albumFiles.length === next.albumFiles.length
-)
+  return (
+    <div className={styles.images}>
+      {files.map((im, k) => (
+        <File file={im} openFileModal={openFileModal} key={k} />
+      ))}
+    </div>
+  )
+})
