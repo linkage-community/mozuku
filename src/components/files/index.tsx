@@ -10,7 +10,7 @@ export type FilesProps = Readonly<{
 }>
 
 export const Files = React.memo(
-  ({ albumFiles: files, setModalContent }: FilesProps) => {
+  function Files({ albumFiles: files, setModalContent }: FilesProps) {
     const openFileModal = (file: AlbumFile) => {
       history.pushState(
         history.state,
