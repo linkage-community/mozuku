@@ -5,12 +5,17 @@ import { ISummary } from 'riassumere/built/interfaces'
 
 export type OGCardProps = Readonly<
   ISummary & {
-    className: string
+    className?: string
     url: string
   }
 >
 
-export const OGCard = ({ className, description, title, url }: OGCardProps) => {
+export const OGCard = ({
+  className = '',
+  description,
+  title,
+  url,
+}: OGCardProps) => {
   return (
     <blockquote className={[styles.ogcard, className].join(' ')}>
       <a href={url} rel="noopener noreferrer" target="_target">
