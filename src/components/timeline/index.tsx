@@ -5,7 +5,7 @@ import { useObserver } from 'mobx-react-lite'
 import { timelineStore, useTimeline } from '../../furui/stores'
 import { Timeline as TimelineLayout, TimelineItem } from './timeline'
 import { AlbumFile } from '../../furui/models'
-import PostContainer from '../../furui/containers/post'
+import { Post } from '../post'
 
 export type TimelineProps = Readonly<{
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
@@ -46,7 +46,7 @@ const Timeline: React.FC<TimelineProps> = ({ setInReplyTo }) => {
       >
         {timelineStore.filteredPostIds.map((postId) => (
           <TimelineItem key={postId}>
-            <PostContainer
+            <Post
               postId={postId}
               setModalContent={setModalContent}
               setInReplyTo={setInReplyTo}

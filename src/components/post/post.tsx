@@ -1,14 +1,14 @@
 import React, { useMemo, useRef, useReducer } from 'react'
 import { Overlay, useRootClose } from 'react-overlays'
 
-import { Post } from '../../models'
-import { DateTime } from '../../presenters'
-import { OGCard } from '../../containers'
+import { Post as PostModel } from '../../furui/models'
+import { DateTime } from '../date-time'
+import { OGCard } from '../og-card'
 
-import Files from './files'
+import { Files } from '../files'
 
 import * as styles from './post.css'
-import { AlbumFile } from '../../models'
+import { AlbumFile } from '../../furui/models'
 
 import {
   EmojiNameKind,
@@ -17,13 +17,15 @@ import {
 } from '@linkage-community/bottlemail'
 
 import * as pictograph from 'pictograph'
-import config from '../../../config'
-import Avatar from '../../../components/avatar'
+import config from '../../config'
+import Avatar from '../avatar'
 
-const Body: React.FC<{
-  bodyNodes: Post['nodes']
+type BodyProps = Readonly<{
+  bodyNodes: PostModel['nodes']
   className: string
-}> = ({ bodyNodes, className }) => {
+}>
+
+const Body: React.FC<BodyProps> = ({ bodyNodes, className }) => {
   return (
     <div className={className}>
       {bodyNodes.map((node, i) => {
@@ -65,10 +67,15 @@ const Body: React.FC<{
   )
 }
 
-const InReplyTo: React.FC<{
+type InReplyToProps = Readonly<{
   inReplyToId: number
   inReplyToContent?: React.ReactNode
-}> = ({ inReplyToId, inReplyToContent }) => {
+}>
+
+const InReplyTo: React.FC<InReplyToProps> = ({
+  inReplyToId,
+  inReplyToContent,
+}) => {
   const url = new URL(config.sea)
   url.pathname = `/posts/${inReplyToId}`
   const href = url.href
@@ -146,14 +153,15 @@ const InReplyTo: React.FC<{
   )
 }
 
-type PostProps = {
-  post: Post
+type PostProps = Readonly<{
+  post: PostModel
   metaEnabled: boolean
   setModalContent: (albumFile: AlbumFile | null) => void
   inReplyToContent?: React.ReactNode
   setInReplyTo: React.Dispatch<React.SetStateAction<number | null>>
-}
-export default ({
+}>
+
+export const Post = ({
   post,
   post: { author },
   metaEnabled,

@@ -4,7 +4,7 @@ const { useCallback, useRef } = React
 import Config from '../../../config'
 
 import * as styles from './setting.css'
-import { useBrowserHooks } from '../../../components/browser-provider'
+import { useBrowserHooks } from '../../browser-provider'
 
 type TConfig = {
   showMetaEnabled: boolean
@@ -14,31 +14,33 @@ type TConfig = {
   muteComputedApp: boolean
 }
 
-export default ({
-  updateDisabled,
-  update,
-  onUpdateShowMetaCheckbox,
-  onUpdateEnableNotificationCheckBox,
-  onUpdateEnableOGCard,
-  onUpdateForceDarkTheme,
-  onUpdateMuteComputedApp,
-  currentName,
-  currentConfig,
-  logout,
-}: {
-  updateDisabled: boolean
-  update: ({ name, avatar }: { name?: string; avatar?: File }) => Promise<void>
-  onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
+export type SettingProps = Readonly<{
+  currentConfig: TConfig
+  currentName?: string
+  logout: () => void
   onUpdateEnableNotificationCheckBox: (
     e: React.ChangeEvent<HTMLInputElement>
   ) => void
   onUpdateEnableOGCard: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUpdateForceDarkTheme: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUpdateMuteComputedApp: (e: React.ChangeEvent<HTMLInputElement>) => void
-  currentName?: string
-  currentConfig: TConfig
-  logout: () => void
-}) => {
+  onUpdateShowMetaCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void
+  update: ({ name, avatar }: { name?: string; avatar?: File }) => Promise<void>
+  updateDisabled: boolean
+}>
+
+export const Setting = ({
+  currentConfig,
+  currentName,
+  logout,
+  onUpdateEnableNotificationCheckBox,
+  onUpdateEnableOGCard,
+  onUpdateForceDarkTheme,
+  onUpdateMuteComputedApp,
+  onUpdateShowMetaCheckbox,
+  update,
+  updateDisabled,
+}: SettingProps) => {
   const { usePreventUnload } = useBrowserHooks()
   usePreventUnload(() => true)
   const refName = useRef<HTMLInputElement>(null)
