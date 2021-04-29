@@ -1,0 +1,63 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "12:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 99
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 15.0.0
+  - dependency-name: filesize
+    versions:
+    - 6.2.2
+    - 6.3.0
+  - dependency-name: typed-css-modules
+    versions:
+    - 0.6.5
+    - 0.6.6
+    - 0.6.7
+  - dependency-name: date-fns
+    versions:
+    - 2.17.0
+    - 2.18.0
+    - 2.19.0
+    - 2.20.0
+    - 2.20.1
+    - 2.20.2
+    - 2.20.3
+    - 2.21.0
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+    - 4.0.2
+  - dependency-name: husky
+    versions:
+    - 5.0.9
+    - 5.1.0
+    - 5.1.1
+    - 5.1.2
+    - 5.1.3
+    - 5.2.0
+  - dependency-name: react-textarea-autosize
+    versions:
+    - 8.3.0
+    - 8.3.1
+  - dependency-name: react-overlays
+    versions:
+    - 4.1.1
+    - 5.0.0
+  - dependency-name: date-fns-tz
+    versions:
+    - 1.1.1
+    - 1.1.2
+    - 1.1.3
+  - dependency-name: node-notifier
+    versions:
+    - 8.0.1
+  - dependency-name: react-intersection-observer
+    versions:
+    - 8.31.0
