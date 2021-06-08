@@ -38,7 +38,7 @@
     "@types/node": "^15.12.1",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
-    "@types/react-router": "^5.1.14",
+    "@types/react-router": "^5.1.15",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-textarea-autosize": "^4.3.5",
     "husky": "^4.3.8",
